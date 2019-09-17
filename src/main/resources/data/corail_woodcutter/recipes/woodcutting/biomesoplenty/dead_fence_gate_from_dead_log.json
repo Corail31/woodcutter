@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:dead_log"},"result":"biomesoplenty:dead_fence_gate","count":1}

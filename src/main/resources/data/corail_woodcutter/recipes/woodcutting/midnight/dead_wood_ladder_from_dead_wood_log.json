@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"midnight"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"midnight:dead_wood_log"},"result":"midnight:dead_wood_ladder","count":4}

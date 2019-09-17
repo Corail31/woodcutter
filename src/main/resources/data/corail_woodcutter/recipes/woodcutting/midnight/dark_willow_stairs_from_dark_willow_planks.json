@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"midnight"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"midnight:dark_willow_planks"},"result":"midnight:dark_willow_stairs","count":1}

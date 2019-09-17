@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"midnight"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"midnight:shadowroot_log"},"result":"midnight:shadowroot_fence","count":4}

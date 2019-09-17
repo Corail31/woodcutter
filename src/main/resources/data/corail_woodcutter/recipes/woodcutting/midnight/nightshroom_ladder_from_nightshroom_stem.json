@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"midnight"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"midnight:nightshroom_stem"},"result":"midnight:nightshroom_ladder","count":4}

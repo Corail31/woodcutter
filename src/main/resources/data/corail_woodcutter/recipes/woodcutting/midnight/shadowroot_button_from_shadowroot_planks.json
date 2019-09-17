@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"midnight"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"midnight:shadowroot_planks"},"result":"midnight:shadowroot_button","count":1}

@@ -1,0 +1,71 @@
+buildscript {
+    repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+    }
+}
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'idea'
+
+version = '1.0.7'
+group = 'ovh.corail'
+archivesBaseName = 'corail_woodcutter'
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+minecraft {
+    mappings channel: 'snapshot', version: '20190820-1.14.3'
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', '' //SCAN,REGISTRIES,REGISTRYDUMP
+            property 'forge.logging.console.level', 'info'
+            mods {
+                corail_woodcutter {
+                    source sourceSets.main
+                }
+            }
+        }
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', '' //SCAN,REGISTRIES,REGISTRYDUMP
+            property 'forge.logging.console.level', 'info'
+            mods {
+                corail_woodcutter {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+repositories {
+    maven { url = "http://dvs1.progwml6.com/files/maven" }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.14.4-28.1.1'
+    runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.11")
+    compileOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.11:api")
+    // this part is only used to generate the recipes (not included)
+    //compileOnly files("modlib/BiomesOPlenty-1.14.4-9.0.0.189-deobf.jar")
+    //compileOnly files("modlib/themidnight-0.4.4-api.jar")
+}
+
+jar {
+    manifest {
+        attributes([
+            "Specification-Title": "Corail Woodcutter",
+            "Specification-Vendor": "Corail31",
+            "Specification-Version": "1",
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"Corail31",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
