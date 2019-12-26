@@ -1,6 +1,6 @@
 package ovh.corail.woodcutter.compatibility;
 
-import mezz.jei.api.IModPlugin;
+/*import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
@@ -15,11 +15,11 @@ import ovh.corail.woodcutter.registry.ModRecipeTypes;
 import javax.annotation.Nonnull;
 import java.util.Collection;
 
-import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
+import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;*/
 
-@JeiPlugin
-public class IntegrationJEI implements IModPlugin {
-    @Override
+//@JeiPlugin
+public class IntegrationJEI { // TODO disabled // implements IModPlugin {
+    /*@Override
     @Nonnull
     public ResourceLocation getPluginUid() {
         return new ResourceLocation(MOD_ID, "woodcutting");
@@ -39,5 +39,5 @@ public class IntegrationJEI implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(ModBlocks.createRandomStack(), new ResourceLocation(MOD_ID, "woodcutting"));
-    }
+    }*/
 }
