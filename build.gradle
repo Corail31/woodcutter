@@ -17,7 +17,7 @@ archivesBaseName = 'corail_woodcutter'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 minecraft {
-    mappings channel: 'snapshot', version: '20190820-1.14.3'
+    mappings channel: 'snapshot', version: '20190719-1.14.3'
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client {
@@ -48,10 +48,10 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.1'
-    runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.11")
-    compileOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.11:api")
-    // this part is only used to generate the recipes (not included)
+    minecraft 'net.minecraftforge:forge:1.15.1-30.0.16'
+    //runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.11")
+    //compileOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.11:api")
+    // this part is only used to generate the json (not included)
     //compileOnly files("modlib/BiomesOPlenty-1.14.4-9.0.0.189-deobf.jar")
     //compileOnly files("modlib/themidnight-0.4.4-api.jar")
 }
