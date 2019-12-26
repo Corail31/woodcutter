@@ -13,7 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.IWorldPosCallable;
@@ -50,10 +50,10 @@ public class WoodcutterBlock extends Block {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         player.openContainer(state.getContainer(worldIn, pos));
         //player.addStat(Stats.INTERACT_WITH_STONECUTTER);
-        return true;
+        return ActionResultType.SUCCESS;
     }
 
     @Override
@@ -73,18 +73,8 @@ public class WoodcutterBlock extends Block {
     }
 
     @Override
-    public boolean isSolid(BlockState state) {
-        return true;
-    }
-
-    @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
-    }
-
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
     }
 
     @Override
