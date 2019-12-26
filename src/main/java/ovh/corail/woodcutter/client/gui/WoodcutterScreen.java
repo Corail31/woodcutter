@@ -1,6 +1,6 @@
 package ovh.corail.woodcutter.client.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -45,7 +45,7 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         this.renderBackground();
-        GlStateManager.color4f(1f, 1f, 1f, 1f);
+        RenderSystem.color4f(1f, 1f, 1f, 1f);
         getMinecraft().getTextureManager().bindTexture(BACKGROUND_TEXTURE);
         int i = this.guiLeft;
         int j = this.guiTop;
@@ -77,7 +77,6 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
     }
 
     private void func_214142_b(int p_214142_1_, int p_214142_2_, int p_214142_3_) {
-        RenderHelper.enableGUIStandardItemLighting();
         List<WoodcuttingRecipe> list = this.container.getRecipeList();
 
         for (int i = this.recipeIndexOffset; i < p_214142_3_ && i < this.container.getRecipeListSize(); ++i) {
