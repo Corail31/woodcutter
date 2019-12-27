@@ -22,7 +22,7 @@ import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 public class ModBlocks {
     enum WoodcutterVariant {OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARK_OAK}
 
-    enum WoodcutterBOPVariant {CHERRY, DEAD, ETHEREAL, FIR, HELLBARK, JACARANDA, MAGIC, MAHOGANY, PALM, REDWOOD, UMBRAN, WILLOW}
+    enum WoodcutterBOPVariant {CHERRY, DEAD, FIR, HELLBARK, JACARANDA, MAGIC, MAHOGANY, PALM, REDWOOD, UMBRAN, WILLOW}
 
     enum WoodcutterMidnightVariant {BOGSHROOM, DARK_WILLOW, DEAD_WOOD, DEWSHROOM, NIGHTSHROOM, SHADOWROOT, VIRIDSHROOM}
 
