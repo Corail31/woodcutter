@@ -77,6 +77,7 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
     }
 
     private void func_214142_b(int p_214142_1_, int p_214142_2_, int p_214142_3_) {
+        RenderHelper.func_227780_a_(); // TODO check this
         List<WoodcuttingRecipe> list = this.container.getRecipeList();
 
         for (int i = this.recipeIndexOffset; i < p_214142_3_ && i < this.container.getRecipeListSize(); ++i) {
