@@ -45,15 +45,15 @@ minecraft {
 
 repositories {
     maven { url = "http://dvs1.progwml6.com/files/maven" }
+    flatDir { dirs 'modlib' }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.15.1-30.0.18'
     //runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.11")
     //compileOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.11:api")
-    runtimeOnly fg.deobf(files("modlib/jei-1.15.1-6.0.0.9999.jar"))
-    compileOnly fg.deobf(files("modlib/jei-1.15.1-6.0.0.9999-api.jar"))
-    // this part is only used to generate the json (not included)
+    runtimeOnly fg.deobf("modlib:jei:1.15.1-6.0.0.9999")
+    compileOnly "modlib:jei:1.15.1-6.0.0.9999:api"
     //compileOnly files("modlib/BiomesOPlenty-1.14.4-9.0.0.189-deobf.jar")
     //compileOnly files("modlib/themidnight-0.4.4-api.jar")
 }

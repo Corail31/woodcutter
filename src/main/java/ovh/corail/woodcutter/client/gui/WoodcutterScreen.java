@@ -77,7 +77,7 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
     }
 
     private void func_214142_b(int p_214142_1_, int p_214142_2_, int p_214142_3_) {
-        RenderHelper.func_227780_a_(); // TODO check this
+        //RenderHelper.func_227780_a_(); // TODO check this
         List<WoodcuttingRecipe> list = this.container.getRecipeList();
 
         for (int i = this.recipeIndexOffset; i < p_214142_3_ && i < this.container.getRecipeListSize(); ++i) {
@@ -92,7 +92,7 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
     }
 
     @Override
-    public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+    public boolean mouseClicked(double mouseX, double mouseY, int buttonId) {
         this.isRecipeClicked = false;
         if (this.hasInput) {
             int i = this.guiLeft + 52;
@@ -101,10 +101,10 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
 
             for (int l = this.recipeIndexOffset; l < k; ++l) {
                 int i1 = l - this.recipeIndexOffset;
-                double d0 = p_mouseClicked_1_ - (double) (i + i1 % 4 * 16);
-                double d1 = p_mouseClicked_3_ - (double) (j + i1 / 4 * 18);
-                if (d0 >= 0.0D && d1 >= 0.0D && d0 < 16.0D && d1 < 18.0D && this.container.enchantItem(getMinecraft().player, l)) {
-                    Minecraft.getInstance().getSoundHandler().play(SimpleSound.master(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
+                double d0 = mouseX - (double) (i + i1 % 4 * 16);
+                double d1 = mouseY - (double) (j + i1 / 4 * 18);
+                if (d0 >= 0d && d1 >= 0d && d0 < 16d && d1 < 18d && this.container.enchantItem(getMinecraft().player, l)) {
+                    Minecraft.getInstance().getSoundHandler().play(SimpleSound.master(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1f));
                     getMinecraft().playerController.sendEnchantPacket((this.container).windowId, l);
                     return true;
                 }
@@ -112,32 +112,32 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
 
             i = this.guiLeft + 119;
             j = this.guiTop + 9;
-            if (p_mouseClicked_1_ >= (double) i && p_mouseClicked_1_ < (double) (i + 12) && p_mouseClicked_3_ >= (double) j && p_mouseClicked_3_ < (double) (j + 54)) {
+            if (mouseX >= (double) i && mouseX < (double) (i + 12) && mouseY >= (double) j && mouseY < (double) (j + 54)) {
                 this.isRecipeClicked = true;
             }
         }
 
-        return super.mouseClicked(p_mouseClicked_1_, p_mouseClicked_3_, p_mouseClicked_5_);
+        return super.mouseClicked(mouseX, mouseY, buttonId);
     }
 
     @Override
-    public boolean mouseDragged(double p_mouseDragged_1_, double p_mouseDragged_3_, int p_mouseDragged_5_, double p_mouseDragged_6_, double p_mouseDragged_8_) {
-        if (this.isRecipeClicked && this.canScroll()) {
+    public boolean mouseDragged(double dragX, double dragY, int buttonId, double p_mouseDragged_6_, double p_mouseDragged_8_) {
+        if (this.isRecipeClicked && canScroll()) {
             int i = this.guiTop + 14;
             int j = i + 54;
-            this.sliderProgress = ((float) p_mouseDragged_3_ - (float) i - 7.5F) / ((float) (j - i) - 15.0F);
-            this.sliderProgress = MathHelper.clamp(this.sliderProgress, 0.0F, 1.0F);
-            this.recipeIndexOffset = (int) ((double) (this.sliderProgress * (float) this.getHiddenRows()) + 0.5D) * 4;
+            this.sliderProgress = ((float) dragY - (float) i - 7.5f) / ((float) (j - i) - 15f);
+            this.sliderProgress = MathHelper.clamp(this.sliderProgress, 0f, 1f);
+            this.recipeIndexOffset = (int) ((double) (this.sliderProgress * (float) this.getHiddenRows()) + 0.5d) * 4;
             return true;
         } else {
-            return super.mouseDragged(p_mouseDragged_1_, p_mouseDragged_3_, p_mouseDragged_5_, p_mouseDragged_6_, p_mouseDragged_8_);
+            return super.mouseDragged(dragX, dragY, buttonId, p_mouseDragged_6_, p_mouseDragged_8_);
         }
     }
 
     @Override
     public boolean mouseScrolled(double p_mouseScrolled_1_, double p_mouseScrolled_3_, double p_mouseScrolled_5_) {
-        if (this.canScroll()) {
-            int i = this.getHiddenRows();
+        if (canScroll()) {
+            int i = getHiddenRows();
             this.sliderProgress = (float) ((double) this.sliderProgress - p_mouseScrolled_5_ / (double) i);
             this.sliderProgress = MathHelper.clamp(this.sliderProgress, 0.0F, 1.0F);
             this.recipeIndexOffset = (int) ((double) (this.sliderProgress * (float) i) + 0.5D) * 4;
