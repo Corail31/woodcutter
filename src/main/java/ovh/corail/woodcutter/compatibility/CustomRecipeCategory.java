@@ -8,33 +8,34 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.SingleItemRecipe;
 import net.minecraft.util.ResourceLocation;
-import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
-import ovh.corail.woodcutter.registry.ModBlocks;
 
-import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
-
-public class WoodcuttingRecipeCategory implements IRecipeCategory<WoodcuttingRecipe> {
+public class CustomRecipeCategory<T extends SingleItemRecipe> implements IRecipeCategory<T> {
     private static final ResourceLocation RECIPE_GUI_VANILLA = new ResourceLocation("jei", "textures/gui/gui_vanilla.png");
-    private static final ResourceLocation UID = new ResourceLocation(MOD_ID, "woodcutting");
+    private final ResourceLocation uid;
     private static final int WIDTH = 116, HEIGHT = 18;
     private final IDrawable background, icon;
     private final String localizedName;
+    private final Class<T> tClass;
 
-    WoodcuttingRecipeCategory(IGuiHelper guiHelper) {
+    CustomRecipeCategory(String translationKey, ResourceLocation uid, ItemStack icon, Class<T> tClass, IGuiHelper guiHelper) {
+        this.uid = uid;
         this.background = guiHelper.drawableBuilder(RECIPE_GUI_VANILLA, 49, 168, WIDTH, HEIGHT).addPadding(0, 0, 40, 0).build();
-        this.icon = guiHelper.createDrawableIngredient(ModBlocks.createRandomStack());
-        this.localizedName = I18n.format("container.corail_woodcutter.woodcutter");
+        this.icon = guiHelper.createDrawableIngredient(icon);
+        this.localizedName = I18n.format(translationKey);
+        this.tClass = tClass;
     }
 
     @Override
     public ResourceLocation getUid() {
-        return UID;
+        return this.uid;
     }
 
     @Override
-    public Class<WoodcuttingRecipe> getRecipeClass() {
-        return WoodcuttingRecipe.class;
+    public Class<T> getRecipeClass() {
+        return this.tClass;
     }
 
     @Override
@@ -53,13 +54,13 @@ public class WoodcuttingRecipeCategory implements IRecipeCategory<WoodcuttingRec
     }
 
     @Override
-    public void setIngredients(WoodcuttingRecipe recipe, IIngredients ingredients) {
+    public void setIngredients(T recipe, IIngredients ingredients) {
         ingredients.setInputIngredients(recipe.getIngredients());
         ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, WoodcuttingRecipe recipe, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, T recipe, IIngredients ingredients) {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
         guiItemStacks.init(0, true, 40, 0);
         guiItemStacks.init(1, false, 98, 0);
