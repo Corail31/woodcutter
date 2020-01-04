@@ -164,7 +164,7 @@ public class WoodcutterContainer extends Container {
 
     @Override
     public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
-        return false;
+        return slotIn.inventory != this.inventory && super.canMergeSlot(stack, slotIn);
     }
 
     @Override

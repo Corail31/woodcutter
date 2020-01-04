@@ -36,6 +36,7 @@ import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class WoodcutterBlock extends Block {
+    private static final TranslationTextComponent TRANSLATION = new TranslationTextComponent("container.corail_woodcutter.woodcutter");
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(0d, 0d, 0d, 16d, 9d, 16d);
 
@@ -51,15 +52,17 @@ public class WoodcutterBlock extends Block {
 
     @Override
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        player.openContainer(state.getContainer(worldIn, pos));
-        //player.addStat(Stats.INTERACT_WITH_STONECUTTER);
+        if (!worldIn.isRemote) {
+            player.openContainer(state.getContainer(worldIn, pos));
+            //player.addStat(Stats.INTERACT_WITH_STONECUTTER);
+        }
         return true;
     }
 
     @Override
     @Nullable
     public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
-        return new SimpleNamedContainerProvider((id, playerInventory, player) -> new WoodcutterContainer(id, playerInventory, IWorldPosCallable.of(worldIn, pos)), new TranslationTextComponent("container.corail_woodcutter.woodcutter"));
+        return new SimpleNamedContainerProvider((id, playerInventory, player) -> new WoodcutterContainer(id, playerInventory, IWorldPosCallable.of(worldIn, pos)), TRANSLATION);
     }
 
     @Override

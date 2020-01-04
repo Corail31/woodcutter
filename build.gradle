@@ -48,10 +48,9 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.1'
-    runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.11")
-    compileOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.11:api")
-    // this part is only used to generate the recipes (not included)
+    minecraft 'net.minecraftforge:forge:1.14.4-28.1.92'
+    runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.27")
+    compileOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.27:api")
     //compileOnly files("modlib/BiomesOPlenty-1.14.4-9.0.0.189-deobf.jar")
     //compileOnly files("modlib/themidnight-0.4.4-api.jar")
 }
