@@ -1,6 +1,7 @@
 package ovh.corail.woodcutter.registry;
 
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.SingleItemRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -13,7 +14,7 @@ import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 @ObjectHolder(MOD_ID)
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModRecipeSerializers {
-    public static final IRecipeSerializer<WoodcuttingRecipe> WOODCUTTING = new WoodcuttingRecipe.Serializer<>(WoodcuttingRecipe::new);
+    public static final IRecipeSerializer<WoodcuttingRecipe> WOODCUTTING = new SingleItemRecipe.Serializer<WoodcuttingRecipe>(WoodcuttingRecipe::new) {};
 
     @SubscribeEvent
     public static void onRegisterSerializers(final RegistryEvent.Register<IRecipeSerializer<?>> event) {
