@@ -14,7 +14,7 @@ public class ModRecipeTypes {
     private static <T extends IRecipe<?>> IRecipeType<T> registerRecipeType(final String key) {
         return Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(MOD_ID, key), new IRecipeType<T>() {
             public String toString() {
-                return key;
+                return MOD_ID + ":" + key;
             }
         });
     }
