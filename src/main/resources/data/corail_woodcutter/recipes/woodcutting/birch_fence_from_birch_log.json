@@ -1,1 +1,1 @@
-{"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:birch_log"},"result":"minecraft:birch_fence","count":4}
+{"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:birch_logs"},"result":"minecraft:birch_fence","count":4}

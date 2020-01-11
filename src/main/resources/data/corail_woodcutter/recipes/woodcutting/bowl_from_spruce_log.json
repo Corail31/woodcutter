@@ -1,1 +1,1 @@
-{"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:spruce_log"},"result":"minecraft:bowl","count":4}
+{"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:spruce_logs"},"result":"minecraft:bowl","count":4}
