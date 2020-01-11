@@ -1,1 +1,1 @@
-{"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:dark_oak_log"},"result":"minecraft:dark_oak_door","count":4}
+{"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:dark_oak_logs"},"result":"minecraft:dark_oak_door","count":4}

@@ -1,1 +1,1 @@
-{"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:oak_log"},"result":"minecraft:ladder","count":4}
+{"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:oak_logs"},"result":"minecraft:ladder","count":4}

@@ -1,1 +1,1 @@
-{"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:jungle_log"},"result":"minecraft:jungle_fence","count":4}
+{"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:jungle_logs"},"result":"minecraft:jungle_fence","count":4}

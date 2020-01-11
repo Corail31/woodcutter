@@ -1,1 +1,1 @@
-{"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:acacia_log"},"result":"minecraft:acacia_door","count":4}
+{"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:acacia_logs"},"result":"minecraft:acacia_door","count":4}
