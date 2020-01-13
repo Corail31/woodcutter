@@ -6,6 +6,9 @@ import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
@@ -28,6 +31,17 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
     public WoodcutterScreen(WoodcutterContainer containerIn, PlayerInventory playerInv, ITextComponent title) {
         super(containerIn, playerInv, title);
         containerIn.setInventoryUpdateListener(this::func_214145_d);
+    }
+
+    @Override
+    protected void handleMouseClick(Slot slotIn, int slotId, int mouseButton, ClickType type) {
+        if (type == ClickType.PICKUP && slotId == 0 && mouseButton == 0 && slotIn != null && slotIn.slotNumber == 0) {
+            if (!this.playerInventory.getItemStack().isEmpty() && !slotIn.getStack().isEmpty() && !Container.areItemsAndTagsEqual(this.playerInventory.getItemStack(), slotIn.getStack())) {
+                this.sliderProgress = 0f;
+                this.recipeIndexOffset = 0;
+            }
+        }
+        super.handleMouseClick(slotIn, slotId, mouseButton, type);
     }
 
     @Override
