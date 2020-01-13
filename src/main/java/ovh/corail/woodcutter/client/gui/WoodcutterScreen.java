@@ -24,7 +24,7 @@ import java.util.List;
 public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
     private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation("textures/gui/container/stonecutter.png");
     private float sliderProgress;
-    private boolean isRecipeClicked;
+    private boolean isSliderClicked;
     private int recipeIndexOffset;
     private boolean hasInput;
 
@@ -107,7 +107,7 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int buttonId) {
-        this.isRecipeClicked = false;
+        this.isSliderClicked = false;
         if (this.hasInput) {
             int i = this.guiLeft + 52;
             int j = this.guiTop + 14;
@@ -125,9 +125,11 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
             }
 
             i = this.guiLeft + 119;
-            j = this.guiTop + 9;
+            j = this.guiTop + 14;
             if (mouseX >= (double) i && mouseX < (double) (i + 12) && mouseY >= (double) j && mouseY < (double) (j + 54)) {
-                this.isRecipeClicked = true;
+                this.isSliderClicked = true;
+                this.sliderProgress = MathHelper.clamp((float) (mouseY - j - 7.5f) / 40f, 0f, 1f);
+                this.recipeIndexOffset = (int) ((double) (this.sliderProgress * (float) getHiddenRows()) + 0.5d) * 4;
             }
         }
 
@@ -136,7 +138,7 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
 
     @Override
     public boolean mouseDragged(double p_mouseDragged_1_, double p_mouseDragged_3_, int p_mouseDragged_5_, double p_mouseDragged_6_, double p_mouseDragged_8_) {
-        if (this.isRecipeClicked && this.canScroll()) {
+        if (this.isSliderClicked && this.canScroll()) {
             int i = this.guiTop + 14;
             int j = i + 54;
             this.sliderProgress = ((float) p_mouseDragged_3_ - (float) i - 7.5F) / ((float) (j - i) - 15.0F);
