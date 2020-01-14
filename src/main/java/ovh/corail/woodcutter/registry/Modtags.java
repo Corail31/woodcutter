@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
-public class Modtags {
+public class ModTags {
     public static class Items {
         public static final Tag<Item> ALLOWED_ITEMS = tag("allowed_items");
 

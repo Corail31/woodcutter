@@ -22,7 +22,7 @@ import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
 import ovh.corail.woodcutter.registry.ModBlocks;
 import ovh.corail.woodcutter.registry.ModContainers;
 import ovh.corail.woodcutter.registry.ModRecipeTypes;
-import ovh.corail.woodcutter.registry.Modtags;
+import ovh.corail.woodcutter.registry.ModTags;
 
 import java.util.List;
 
@@ -185,7 +185,7 @@ public class WoodcutterContainer extends Container {
                 if (!this.mergeItemStack(itemstack1, 2, 38, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (item.isIn(Modtags.Items.ALLOWED_ITEMS)) {
+            } else if (item.isIn(ModTags.Items.ALLOWED_ITEMS)) {
                 if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
                     return ItemStack.EMPTY;
                 }
