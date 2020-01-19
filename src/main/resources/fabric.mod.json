@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "corail_woodcutter",
+  "version": "${version}",
+
+  "name": "Corail Woodcutter",
+  "description": "The wooden version of the StoneCutter",
+  "authors": [
+    "Corail31, Gegy1000"
+  ],
+  "contact": {
+    "homepage": "http://minecraft.curseforge.com/projects/corail-woodcutter/",
+    "sources": "https://github.com/Corail31/woodcutter/issues/"
+  },
+
+  "license": "GNU General Public License",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "ovh.corail.woodcutter.WoodCutterMod"
+    ],
+    "client": [
+      "ovh.corail.woodcutter.ClientInitializer"
+    ]
+  },
+  "mixins": [
+    "corail_woodcutter.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.2",
+    "fabric": "*",
+    "minecraft": "1.15.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}
