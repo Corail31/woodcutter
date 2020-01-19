@@ -1,6 +1,0 @@
-{
-    "parent": "corail_woodcutter:block/woodcutter",
-    "textures": {
-        "base": "biomesoplenty:block/jacaranda_planks"
-    }
-}

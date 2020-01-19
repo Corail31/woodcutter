@@ -2,7 +2,6 @@
   "replace": false,
   "values": [
     "#minecraft:logs",
-    "#minecraft:planks",
-    "#midnight:planks"
+    "#minecraft:planks"
   ]
 }
