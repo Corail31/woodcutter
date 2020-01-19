@@ -1,9 +1,7 @@
 package ovh.corail.woodcutter.registry;
 
 import net.minecraft.item.Item;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.tag.Tag;
 
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
