@@ -8,9 +8,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.CuttingRecipe;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.StonecuttingRecipe;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
 import net.minecraft.util.PacketByteBuf;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import ovh.corail.woodcutter.registry.ModBlocks;
 import ovh.corail.woodcutter.registry.ModRecipeSerializers;
@@ -34,7 +35,7 @@ public class WoodcuttingRecipe extends CuttingRecipe {
     }
 
     @SuppressWarnings("unchecked")
-    public static class CustomSerializer<T extends CuttingRecipe> implements RecipeSerializer<T> {
+    public static class CustomSerializer<T extends WoodcuttingRecipe> implements RecipeSerializer<T> {
         final RecipeFactory<T> recipeFactory;
 
         public CustomSerializer(RecipeFactory<T> recipeFactory) {
@@ -43,17 +44,33 @@ public class WoodcuttingRecipe extends CuttingRecipe {
 
         @Override
         public T read(Identifier id, JsonObject json) {
-            return (T) STONECUTTING.read(id, json);
+            String s = JsonHelper.getString(json, "group", "");
+            Ingredient ingredient;
+            if (JsonHelper.hasArray(json, "ingredient")) {
+                ingredient = Ingredient.fromJson(JsonHelper.getArray(json, "ingredient"));
+            } else {
+                ingredient = Ingredient.fromJson(JsonHelper.getObject(json, "ingredient"));
+            }
+
+            String s1 = JsonHelper.getString(json, "result");
+            int i = JsonHelper.getInt(json, "count");
+            ItemStack itemstack = new ItemStack(Registry.ITEM.get(new Identifier(s1)), i);
+            return this.recipeFactory.create(id, s, ingredient, itemstack);
         }
 
         @Override
         public T read(Identifier id, PacketByteBuf buf) {
-            return (T) STONECUTTING.read(id, buf);
+            String s = buf.readString(32767);
+            Ingredient ingredient = Ingredient.fromPacket(buf);
+            ItemStack itemstack = buf.readItemStack();
+            return this.recipeFactory.create(id, s, ingredient, itemstack);
         }
 
         @Override
         public void write(PacketByteBuf buf, T recipe) {
-            STONECUTTING.write(buf, (StonecuttingRecipe) recipe);
+            buf.writeString(recipe.group);
+            recipe.input.write(buf);
+            buf.writeItemStack(recipe.output);
         }
 
         public interface RecipeFactory<T extends CuttingRecipe> {

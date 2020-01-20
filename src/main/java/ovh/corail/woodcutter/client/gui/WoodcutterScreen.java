@@ -34,6 +34,10 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
         containerIn.setInventoryUpdateListener(this::onInventoryChange);
     }
 
+    public WoodcutterScreen(Container container) {
+        this((WoodcutterContainer)container, ((WoodcutterContainer)container).playerInventory, WoodcutterBlock.TRANSLATION);
+    }
+
     @SuppressWarnings("all")
     @Nonnull
     private MinecraftClient getMinecraft() {

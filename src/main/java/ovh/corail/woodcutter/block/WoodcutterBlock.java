@@ -1,5 +1,6 @@
 package ovh.corail.woodcutter.block;
 
+import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.tools.FabricToolTags;
 import net.fabricmc.fabric.impl.mining.level.ToolManager;
 import net.minecraft.block.Block;
@@ -30,6 +31,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import ovh.corail.woodcutter.inventory.WoodcutterContainer;
+import ovh.corail.woodcutter.registry.ModContainers;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -55,7 +57,7 @@ public class WoodcutterBlock extends Block {
     @Override
     public ActionResult onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockHitResult hit) {
         if (!worldIn.isClient) {
-            player.openContainer(state.createContainerProvider(worldIn, pos));
+            ContainerProviderRegistry.INSTANCE.openContainer(ModContainers.WOODCUTTER_ID, player, buf -> buf.writeBlockPos(pos));
             //player.incrementStat(Stats.INTERACT_WITH_STONECUTTER);
         }
         return ActionResult.SUCCESS;

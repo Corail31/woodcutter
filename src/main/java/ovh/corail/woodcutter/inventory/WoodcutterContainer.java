@@ -5,7 +5,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.container.BlockContext;
 import net.minecraft.container.Container;
-import net.minecraft.container.ContainerType;
 import net.minecraft.container.Property;
 import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,11 +16,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
 import ovh.corail.woodcutter.registry.ModBlocks;
-import ovh.corail.woodcutter.registry.ModContainers;
 import ovh.corail.woodcutter.registry.ModRecipeTypes;
 import ovh.corail.woodcutter.registry.ModTags;
 
@@ -48,13 +48,19 @@ public class WoodcutterContainer extends Container {
         }
     };
     private final CraftingResultInventory resultInventory = new CraftingResultInventory();
+    public PlayerInventory playerInventory;
 
     public WoodcutterContainer(int id, PlayerInventory playerInventory) {
         this(id, playerInventory, BlockContext.EMPTY);
     }
 
+    public WoodcutterContainer(int syncId, Identifier id, PlayerEntity player, PacketByteBuf buf) {
+        this(syncId, player.inventory);
+    }
+
     public WoodcutterContainer(int id, PlayerInventory playerInventory, final BlockContext blockContext) {
-        super(ModContainers.WOODCUTTER, id);
+        super(null, id); //ModContainers.WOODCUTTER
+        this.playerInventory = playerInventory;
         this.blockContext = blockContext;
         this.world = playerInventory.player.world;
         this.inputSlot = addSlot(new Slot(this.inventory, 0, 20, 33));
@@ -154,10 +160,10 @@ public class WoodcutterContainer extends Container {
         sendContentUpdates();
     }
 
-    @Override
+    /*@Override
     public ContainerType<?> getType() {
         return ModContainers.WOODCUTTER;
-    }
+    }*/
 
     @Environment(EnvType.CLIENT)
     public void setInventoryUpdateListener(Runnable runnable) {
