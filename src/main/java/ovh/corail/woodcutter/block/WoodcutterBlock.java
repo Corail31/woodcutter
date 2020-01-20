@@ -9,9 +9,6 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.Material;
-import net.minecraft.client.network.ClientDummyContainerProvider;
-import net.minecraft.container.BlockContext;
-import net.minecraft.container.NameableContainerProvider;
 import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -30,10 +27,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import ovh.corail.woodcutter.inventory.WoodcutterContainer;
 import ovh.corail.woodcutter.registry.ModContainers;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,12 +56,6 @@ public class WoodcutterBlock extends Block {
             //player.incrementStat(Stats.INTERACT_WITH_STONECUTTER);
         }
         return ActionResult.SUCCESS;
-    }
-
-    @Override
-    @Nullable
-    public NameableContainerProvider createContainerProvider(BlockState state, World worldIn, BlockPos pos) {
-        return new ClientDummyContainerProvider((id, playerInventory, player) -> new WoodcutterContainer(id, playerInventory, BlockContext.create(worldIn, pos)), TRANSLATION);
     }
 
     @Override
