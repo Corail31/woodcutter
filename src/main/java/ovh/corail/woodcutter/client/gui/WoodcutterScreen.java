@@ -14,6 +14,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import ovh.corail.woodcutter.block.WoodcutterBlock;
 import ovh.corail.woodcutter.inventory.WoodcutterContainer;
 import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
 
@@ -119,7 +120,7 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
                 int i1 = l - this.recipeIndexOffset;
                 double d0 = mouseX - (double) (i + i1 % 4 * 16);
                 double d1 = mouseY - (double) (j + i1 / 4 * 18);
-                if (d0 >= 0d && d1 >= 0d && d0 < 16d && d1 < 18d && this.container.enchantItem(getMinecraft().player, l)) {
+                if (d0 >= 0d && d1 >= 0d && d0 < 16d && d1 < 18d && this.container.onButtonClick(getMinecraft().player, l)) {
                     getMinecraft().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1f));
                     getMinecraft().interactionManager.clickButton(this.container.syncId, l);
                     return true;
