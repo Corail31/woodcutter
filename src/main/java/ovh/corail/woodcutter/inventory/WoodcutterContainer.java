@@ -55,7 +55,7 @@ public class WoodcutterContainer extends Container {
     }
 
     public WoodcutterContainer(int syncId, Identifier id, PlayerEntity player, PacketByteBuf buf) {
-        this(syncId, player.inventory);
+        this(syncId, player.inventory, BlockContext.create(player.world, buf.readBlockPos()));
     }
 
     public WoodcutterContainer(int id, PlayerInventory playerInventory, final BlockContext blockContext) {
