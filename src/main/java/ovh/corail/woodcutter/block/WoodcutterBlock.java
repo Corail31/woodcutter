@@ -51,7 +51,7 @@ public class WoodcutterBlock extends Block {
     }
 
     @Override
-    public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote) {
             player.openContainer(state.getContainer(worldIn, pos));
             //player.addStat(Stats.INTERACT_WITH_STONECUTTER);
@@ -71,7 +71,7 @@ public class WoodcutterBlock extends Block {
     }
 
     @Override
-    public boolean func_220074_n(BlockState state) {
+    public boolean isTransparent(BlockState state) {
         return true;
     }
 

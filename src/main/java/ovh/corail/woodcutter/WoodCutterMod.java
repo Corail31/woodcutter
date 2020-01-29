@@ -25,6 +25,6 @@ public class WoodCutterMod {
 
     private void clientSetup(FMLClientSetupEvent event) {
         ScreenManager.registerFactory(ModContainers.WOODCUTTER, WoodcutterScreen::new);
-        ModBlocks.WOODCUTTERS.forEach(block -> RenderTypeLookup.setRenderLayer(block, RenderType.func_228643_e_()));
+        ModBlocks.WOODCUTTERS.forEach(block -> RenderTypeLookup.setRenderLayer(block, RenderType.cutout()));
     }
 }

@@ -11,13 +11,13 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-version = '1.1.0'
+version = '1.1.1'
 group = 'ovh.corail'
 archivesBaseName = 'corail_woodcutter'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 minecraft {
-    mappings channel: 'snapshot', version: '20190719-1.14.3'
+    mappings channel: 'snapshot', version: '20200122-1.15.1'
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client {
@@ -48,9 +48,9 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.1-30.0.36'
-    runtimeOnly fg.deobf("mezz.jei:jei-1.15.1:6.0.0.1")
-    compileOnly fg.deobf("mezz.jei:jei-1.15.1:6.0.0.1:api")
+    minecraft 'net.minecraftforge:forge:1.15.2-31.0.12'
+    runtimeOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.2")
+    compileOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.2:api")
 }
 
 jar {
