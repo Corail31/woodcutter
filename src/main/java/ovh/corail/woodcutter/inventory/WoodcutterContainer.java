@@ -59,7 +59,7 @@ public class WoodcutterContainer extends Container {
     }
 
     public WoodcutterContainer(int id, PlayerInventory playerInventory, final BlockContext blockContext) {
-        super(null, id); //ModContainers.WOODCUTTER
+        super(null, id);
         this.playerInventory = playerInventory;
         this.blockContext = blockContext;
         this.world = playerInventory.player.world;
@@ -159,11 +159,6 @@ public class WoodcutterContainer extends Container {
         }
         sendContentUpdates();
     }
-
-    /*@Override
-    public ContainerType<?> getType() {
-        return ModContainers.WOODCUTTER;
-    }*/
 
     @Environment(EnvType.CLIENT)
     public void setInventoryUpdateListener(Runnable runnable) {

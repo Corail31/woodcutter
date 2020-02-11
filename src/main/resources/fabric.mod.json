@@ -24,16 +24,10 @@
       "ovh.corail.woodcutter.ClientInitializer"
     ]
   },
-  "mixins": [
-    "corail_woodcutter.mixins.json"
-  ],
 
   "depends": {
     "fabricloader": ">=0.7.2",
     "fabric": "*",
-    "minecraft": "1.15.x"
-  },
-  "suggests": {
-    "flamingo": "*"
+    "minecraft": ">=1.15.1"
   }
 }
