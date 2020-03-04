@@ -31,16 +31,11 @@ public class RecipeManagerMixin {
                 String result = JsonHelper.getString(entry.getValue(), "result");
                 if (result.contains(":")) {
                     String domain = result.split(":")[0];
-                    if (!mods.computeIfAbsent(domain, k -> isModLoaded(domain))) {
-                        //System.out.println("skipping recipe " + result);
+                    if (!mods.computeIfAbsent(domain, FabricLoader.getInstance()::isModLoaded)) {
                         it.remove();
                     }
                 }
             }
         }
-    }
-
-    private boolean isModLoaded(String modid) {
-        return FabricLoader.getInstance().isModLoaded(modid);
     }
 }
