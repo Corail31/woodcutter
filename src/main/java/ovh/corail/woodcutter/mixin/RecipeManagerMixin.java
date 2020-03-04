@@ -31,17 +31,18 @@ public class RecipeManagerMixin {
                 String result = JsonHelper.getString(entry.getValue(), "result", "");
                 if (result.contains(":") && !mods.computeIfAbsent(result.split(":")[0], FabricLoader.getInstance()::isModLoaded)) {
                     it.remove();
-                }
-                JsonObject obj = JsonHelper.hasArray(entry.getValue(), "ingredient") ? null : JsonHelper.getObject(entry.getValue(), "ingredient", null);
-                if (obj != null && obj.isJsonObject()) {
-                    String ingredient = "";
-                    if (obj.has("tag")) {
-                        ingredient = JsonHelper.getString(obj, "tag", "");
-                    } else if (obj.has("item")) {
-                        ingredient = JsonHelper.getString(obj, "item", "");
-                    }
-                    if (ingredient.contains(":") && !mods.computeIfAbsent(ingredient.split(":")[0], FabricLoader.getInstance()::isModLoaded)) {
-                        it.remove();
+                } else {
+                    JsonObject obj = JsonHelper.hasArray(entry.getValue(), "ingredient") ? null : JsonHelper.getObject(entry.getValue(), "ingredient", null);
+                    if (obj != null && obj.isJsonObject()) {
+                        String ingredient = "";
+                        if (obj.has("tag")) {
+                            ingredient = JsonHelper.getString(obj, "tag", "");
+                        } else if (obj.has("item")) {
+                            ingredient = JsonHelper.getString(obj, "item", "");
+                        }
+                        if (ingredient.contains(":") && !mods.computeIfAbsent(ingredient.split(":")[0], FabricLoader.getInstance()::isModLoaded)) {
+                            it.remove();
+                        }
                     }
                 }
             }
