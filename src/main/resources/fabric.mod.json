@@ -24,6 +24,9 @@
       "ovh.corail.woodcutter.ClientInitializer"
     ]
   },
+  "mixins": [
+    "corail_woodcutter.mixins.json"
+  ],
 
   "depends": {
     "fabricloader": ">=0.7.2",
