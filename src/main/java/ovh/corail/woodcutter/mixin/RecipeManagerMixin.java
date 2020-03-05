@@ -15,7 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import static ovh.corail.woodcutter.WoodCutterMod.LOGGER;
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
 @Mixin(RecipeManager.class)
@@ -31,6 +33,7 @@ public class RecipeManagerMixin {
                 String result = JsonHelper.getString(entry.getValue(), "result", "");
                 if (result.contains(":") && !mods.computeIfAbsent(result.split(":")[0], FabricLoader.getInstance()::isModLoaded)) {
                     it.remove();
+                    LOGGER.debug(MOD_ID + ": disabling recipe " + entry.getKey().toString());
                 } else {
                     JsonObject obj = JsonHelper.hasArray(entry.getValue(), "ingredient") ? null : JsonHelper.getObject(entry.getValue(), "ingredient", null);
                     if (obj != null && obj.isJsonObject()) {
@@ -42,10 +45,15 @@ public class RecipeManagerMixin {
                         }
                         if (ingredient.contains(":") && !mods.computeIfAbsent(ingredient.split(":")[0], FabricLoader.getInstance()::isModLoaded)) {
                             it.remove();
+                            LOGGER.debug(MOD_ID + ": disabling recipe " + entry.getKey().toString());
                         }
                     }
                 }
             }
+        }
+        String toDisplay = mods.entrySet().stream().filter(entry -> !entry.getValue()).map(Map.Entry::getKey).collect(Collectors.joining(", "));
+        if (!toDisplay.isEmpty()) {
+            LOGGER.info(MOD_ID + ": some recipes have been disabled for the following domains : " + toDisplay);
         }
     }
 }
