@@ -1,23 +1,26 @@
 package ovh.corail.woodcutter.mixin;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
 import net.minecraft.util.profiler.Profiler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static ovh.corail.woodcutter.WoodCutterMod.LOGGER;
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
@@ -36,20 +39,12 @@ public class RecipeManagerMixin {
                 if (result.contains(":") && !mods.computeIfAbsent(result.split(":")[0], FabricLoader.getInstance()::isModLoaded)) {
                     it.remove();
                     LOGGER.debug(String.format("%s: disabling recipe %s", MOD_ID, entry.getKey().toString()));
-                } else {
-                    JsonObject obj = getObject(entry.getValue(), "ingredient");
-                    if (obj != null) {
-                        String ingredient = "";
-                        if (obj.has("tag")) {
-                            ingredient = getString(obj, "tag");
-                        } else if (obj.has("item")) {
-                            ingredient = getString(obj, "item");
-                        }
-                        if (ingredient.contains(":") && !mods.computeIfAbsent(ingredient.split(":")[0], FabricLoader.getInstance()::isModLoaded)) {
-                            it.remove();
-                            LOGGER.debug(String.format("%s: disabling recipe %s", MOD_ID, entry.getKey().toString()));
-                        }
-                    }
+                } else if (getIngredients(entry.getValue()).stream().anyMatch(element -> {
+                    String ingredient = getIngredientString(element);
+                    return ingredient.contains(":") && !mods.computeIfAbsent(ingredient.split(":")[0], FabricLoader.getInstance()::isModLoaded);
+                })) {
+                    it.remove();
+                    LOGGER.debug(String.format("%s: disabling recipe %s", MOD_ID, entry.getKey().toString()));
                 }
             }
         }
@@ -59,14 +54,26 @@ public class RecipeManagerMixin {
         }
     }
 
+    private String getIngredientString(JsonObject object) {
+        String ingredient;
+        return (ingredient = getString(object, "tag")).isEmpty() ? getString(object, "item") : ingredient;
+    }
+
     private String getString(JsonObject object, String element) {
         JsonElement jsonElement;
         return object.has(element) && (jsonElement = object.get(element)).isJsonPrimitive() ? jsonElement.getAsString() : "";
     }
 
-    @Nullable
-    private JsonObject getObject(JsonObject object, String element) {
-        JsonElement jsonElement;
-        return !JsonHelper.hasArray(object, element) && object.has(element) && (jsonElement = object.get(element)).isJsonObject() ? jsonElement.getAsJsonObject() : null;
+    private List<JsonObject> getIngredients(JsonObject object) {
+        if (object.has("ingredient")) {
+            JsonElement jsonElement = object.get("ingredient");
+            if (jsonElement.isJsonObject()) {
+                return Collections.singletonList((JsonObject) jsonElement);
+            } else if (jsonElement.isJsonArray()) {
+                JsonArray jsonArray = jsonElement.getAsJsonArray();
+                return IntStream.range(0, jsonArray.size()).mapToObj(jsonArray::get).filter(JsonObject.class::isInstance).map(JsonObject.class::cast).collect(Collectors.toList());
+            }
+        }
+        return new ArrayList<>();
     }
 }
