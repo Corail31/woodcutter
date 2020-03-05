@@ -29,11 +29,11 @@ public class RecipeManagerMixin {
         Map<String, Boolean> mods = new HashMap<>();
         while (it.hasNext()) {
             Map.Entry<Identifier, JsonObject> entry = it.next();
-            if (MOD_ID.equals(entry.getKey().getNamespace()) && customRecipeType.equals(JsonHelper.getString(entry.getValue(), "type"))) {
+            if (customRecipeType.equals(JsonHelper.getString(entry.getValue(), "type"))) {
                 String result = JsonHelper.getString(entry.getValue(), "result", "");
                 if (result.contains(":") && !mods.computeIfAbsent(result.split(":")[0], FabricLoader.getInstance()::isModLoaded)) {
                     it.remove();
-                    LOGGER.debug(MOD_ID + ": disabling recipe " + entry.getKey().toString());
+                    LOGGER.debug(String.format("%s: disabling recipe %s", MOD_ID, entry.getKey().toString()));
                 } else {
                     JsonObject obj = JsonHelper.hasArray(entry.getValue(), "ingredient") ? null : JsonHelper.getObject(entry.getValue(), "ingredient", null);
                     if (obj != null && obj.isJsonObject()) {
@@ -45,7 +45,7 @@ public class RecipeManagerMixin {
                         }
                         if (ingredient.contains(":") && !mods.computeIfAbsent(ingredient.split(":")[0], FabricLoader.getInstance()::isModLoaded)) {
                             it.remove();
-                            LOGGER.debug(MOD_ID + ": disabling recipe " + entry.getKey().toString());
+                            LOGGER.debug(String.format("%s: disabling recipe %s", MOD_ID, entry.getKey().toString()));
                         }
                     }
                 }
@@ -53,7 +53,7 @@ public class RecipeManagerMixin {
         }
         String toDisplay = mods.entrySet().stream().filter(entry -> !entry.getValue()).map(Map.Entry::getKey).collect(Collectors.joining(", "));
         if (!toDisplay.isEmpty()) {
-            LOGGER.info(MOD_ID + ": some recipes have been disabled for the following domains : " + toDisplay);
+            LOGGER.info(String.format("%s: some recipes have been disabled for the following domains : %s", MOD_ID, toDisplay));
         }
     }
 }
