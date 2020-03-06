@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "#minecraft:logs",
-    "#minecraft:planks",
-    "#minecraft:crimson_stems",
-    "#minecraft:warped_stems"
-  ]
-}
