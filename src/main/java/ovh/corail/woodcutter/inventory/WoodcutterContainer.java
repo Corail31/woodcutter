@@ -173,7 +173,7 @@ public class WoodcutterContainer extends Container {
     @Override
     public ItemStack transferSlot(PlayerEntity playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
-        Slot slot = this.slotList.get(index);
+        Slot slot = this.slots.get(index);
         if (slot != null && slot.hasStack()) {
             ItemStack itemstack1 = slot.getStack();
             Item item = itemstack1.getItem();

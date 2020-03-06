@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
+import net.minecraft.client.gui.screen.ingame.ContainerScreen;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.container.Container;
 import net.minecraft.container.Slot;
@@ -18,11 +18,10 @@ import ovh.corail.woodcutter.block.WoodcutterBlock;
 import ovh.corail.woodcutter.inventory.WoodcutterContainer;
 import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 @Environment(EnvType.CLIENT)
-public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContainer> {
+public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
     private static final Identifier BACKGROUND_TEXTURE = new Identifier("textures/gui/container/stonecutter.png");
     private float sliderProgress;
     private boolean isSliderClicked;
@@ -38,10 +37,8 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
         this((WoodcutterContainer)container, ((WoodcutterContainer)container).playerInventory, WoodcutterBlock.TRANSLATION);
     }
 
-    @SuppressWarnings("all")
-    @Nonnull
     private MinecraftClient getMinecraft() {
-        return this.minecraft;
+        return MinecraftClient.getInstance();
     }
 
     @Override
@@ -63,8 +60,8 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
 
     @Override
     protected void drawForeground(int mouseX, int mouseY) {
-        this.font.draw(this.title.asFormattedString(), 8f, 4f, 4210752);
-        this.font.draw(this.playerInventory.getDisplayName().asFormattedString(), 8f, (float) (this.containerHeight - 94), 4210752);
+        this.textRenderer.draw(this.title.asFormattedString(), 8f, 4f, 4210752);
+        this.textRenderer.draw(this.playerInventory.getDisplayName().asFormattedString(), 8f, (float) (this.containerHeight - 94), 4210752);
     }
 
     @Override
