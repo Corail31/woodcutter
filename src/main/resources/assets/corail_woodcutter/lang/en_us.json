@@ -6,5 +6,7 @@
   "block.corail_woodcutter.jungle_woodcutter": "Jungle Sawmill",
   "block.corail_woodcutter.acacia_woodcutter": "Acacia Sawmill",
   "block.corail_woodcutter.dark_oak_woodcutter": "Dark Oak Sawmill",
+  "block.corail_woodcutter.crimson_woodcutter": "Crimson Sawmill",
+  "block.corail_woodcutter.warped_woodcutter": "Warped Sawmill",
   "container.corail_woodcutter.woodcutter": "Sawmill"
 }

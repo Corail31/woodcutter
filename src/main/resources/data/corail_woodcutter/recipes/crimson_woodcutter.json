@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "woodcutter",
+  "pattern": [
+    " 1 ",
+    "000"
+  ],
+  "key": {
+    "0": {
+      "item": "minecraft:crimson_planks"
+    },
+    "1": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "corail_woodcutter:crimson_woodcutter"
+  }
+}

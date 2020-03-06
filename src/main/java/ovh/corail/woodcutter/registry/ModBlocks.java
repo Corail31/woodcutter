@@ -16,7 +16,7 @@ import java.util.Set;
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
 public class ModBlocks {
-    enum WoodcutterVariant { OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARK_OAK }
+    enum WoodcutterVariant { OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARK_OAK, CRIMSON, WARPED }
 
     public static final Set<Block> WOODCUTTERS = new HashSet<>();
     private static final Random RANDOM = new Random();
