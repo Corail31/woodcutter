@@ -69,16 +69,16 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
         int l = this.guiLeft + 52;
         int i1 = this.guiTop + 14;
         int j1 = this.recipeIndexOffset + 12;
-        this.func_214141_a(mouseX, mouseY, l, i1, j1);
-        this.func_214142_b(l, i1, j1);
+        this.renderRecipeBackground(mouseX, mouseY, l, i1, j1);
+        this.renderRecipeIcons(l, i1, j1);
     }
 
-    private void func_214141_a(int mouseX, int mouseY, int p_214141_3_, int p_214141_4_, int p_214141_5_) {
-        for (int i = this.recipeIndexOffset; i < p_214141_5_ && i < this.container.getRecipeListSize(); ++i) {
+    private void renderRecipeBackground(int mouseX, int mouseY, int x, int y, int scrollOffset) {
+        for (int i = this.recipeIndexOffset; i < scrollOffset && i < this.container.getRecipeListSize(); ++i) {
             int j = i - this.recipeIndexOffset;
-            int k = p_214141_3_ + j % 4 * 16;
+            int k = x + j % 4 * 16;
             int l = j / 4;
-            int i1 = p_214141_4_ + l * 18 + 2;
+            int i1 = y + l * 18 + 2;
             int j1 = this.ySize;
             if (i == this.container.func_217073_e()) {
                 j1 += 18;
@@ -90,16 +90,16 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
         }
     }
 
-    private void func_214142_b(int p_214142_1_, int p_214142_2_, int p_214142_3_) {
+    private void renderRecipeIcons(int x, int y, int scrollOffset) {
         //RenderHelper.func_227780_a_(); // TODO check this
         List<WoodcuttingRecipe> list = this.container.getRecipeList();
 
-        for (int i = this.recipeIndexOffset; i < p_214142_3_ && i < this.container.getRecipeListSize(); ++i) {
+        for (int i = this.recipeIndexOffset; i < scrollOffset && i < this.container.getRecipeListSize(); ++i) {
             int j = i - this.recipeIndexOffset;
-            int k = p_214142_1_ + j % 4 * 16;
+            int k = x + j % 4 * 16;
             int l = j / 4;
-            int i1 = p_214142_2_ + l * 18 + 2;
-            this.minecraft.getItemRenderer().renderItemAndEffectIntoGUI(list.get(i).getRecipeOutput(), k, i1);
+            int i1 = y + l * 18 + 2;
+            getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(list.get(i).getRecipeOutput(), k, i1);
         }
 
         RenderHelper.disableStandardItemLighting();

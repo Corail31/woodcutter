@@ -17,7 +17,7 @@ import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 @ObjectHolder(MOD_ID)
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModPointOfInterestTypes {
-    public static final PointOfInterestType WOODSMITH = new PointOfInterestType("woodsmith", getAllStates(), 1, 1);
+    private static final PointOfInterestType WOODSMITH = new PointOfInterestType("woodsmith", getAllStates(), 1, poi -> false, 1);
 
     @SubscribeEvent
     public static void onRegisterPointOfInterestTypes(final RegistryEvent.Register<PointOfInterestType> event) {

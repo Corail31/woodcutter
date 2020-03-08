@@ -1,6 +1,5 @@
 package ovh.corail.woodcutter.inventory;
 
-import com.google.common.collect.Lists;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftResultInventory;
@@ -22,17 +21,17 @@ import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
 import ovh.corail.woodcutter.registry.ModBlocks;
 import ovh.corail.woodcutter.registry.ModContainers;
 import ovh.corail.woodcutter.registry.ModRecipeTypes;
-import ovh.corail.woodcutter.registry.ModTags;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WoodcutterContainer extends Container {
     private final IWorldPosCallable iWorldPosCallable;
-    private final IntReferenceHolder intReferenceHolder = IntReferenceHolder.single();
+    private final IntReferenceHolder selectedRecipe = IntReferenceHolder.single();
     private final World world;
-    private List<WoodcuttingRecipe> recipes = Lists.newArrayList();
+    private List<WoodcuttingRecipe> recipes = new ArrayList<>();
     private ItemStack result = ItemStack.EMPTY;
-    private long timeElapsed;
+    private long lastTakeTime;
     private final Slot inputSlot;
     private final Slot outputSlot;
     private Runnable inventoryUpdateListener = () -> {
@@ -71,9 +70,9 @@ public class WoodcutterContainer extends Container {
                 stack.getItem().onCreated(stack, thePlayer.world, thePlayer);
                 iWorldPosCallable.consume((world, pos) -> {
                     long l = world.getGameTime();
-                    if (timeElapsed != l) {
+                    if (lastTakeTime != l) {
                         world.playSound(null, pos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundCategory.BLOCKS, 1f, 1f);
-                        timeElapsed = l;
+                        lastTakeTime = l;
                     }
                 });
                 return super.onTake(thePlayer, stack);
@@ -87,12 +86,12 @@ public class WoodcutterContainer extends Container {
         for (int k = 0; k < 9; ++k) {
             addSlot(new Slot(playerInventory, k, 8 + k * 18, 142));
         }
-        trackInt(this.intReferenceHolder);
+        trackInt(this.selectedRecipe);
     }
 
     @OnlyIn(Dist.CLIENT)
     public int func_217073_e() {
-        return this.intReferenceHolder.get();
+        return this.selectedRecipe.get();
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -118,7 +117,7 @@ public class WoodcutterContainer extends Container {
     @Override
     public boolean enchantItem(PlayerEntity playerIn, int id) {
         if (id >= 0 && id < this.recipes.size()) {
-            this.intReferenceHolder.set(id);
+            this.selectedRecipe.set(id);
             func_217082_i();
         }
         return true;
@@ -135,7 +134,7 @@ public class WoodcutterContainer extends Container {
 
     private void updateAvailableRecipes(IInventory inventoryIn, ItemStack stack) {
         this.recipes.clear();
-        this.intReferenceHolder.set(-1);
+        this.selectedRecipe.set(-1);
         this.outputSlot.putStack(ItemStack.EMPTY);
         if (!stack.isEmpty()) {
             this.recipes = this.world.getRecipeManager().getRecipes(ModRecipeTypes.WOODCUTTING, inventoryIn, this.world);
@@ -144,7 +143,7 @@ public class WoodcutterContainer extends Container {
 
     private void func_217082_i() {
         if (!this.recipes.isEmpty()) {
-            WoodcuttingRecipe recipe = this.recipes.get(this.intReferenceHolder.get());
+            WoodcuttingRecipe recipe = this.recipes.get(this.selectedRecipe.get());
             this.outputSlot.putStack(recipe.getCraftingResult(this.inventory));
         } else {
             this.outputSlot.putStack(ItemStack.EMPTY);
@@ -185,7 +184,7 @@ public class WoodcutterContainer extends Container {
                 if (!this.mergeItemStack(itemstack1, 2, 38, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (item.isIn(ModTags.Items.ALLOWED_ITEMS)) {
+            } else if (this.world.getRecipeManager().getRecipe(ModRecipeTypes.WOODCUTTING, new Inventory(itemstack1), this.world).isPresent()) {
                 if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
                     return ItemStack.EMPTY;
                 }
