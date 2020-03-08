@@ -10,7 +10,6 @@ import ovh.corail.woodcutter.registry.ModPointOfInterestTypes;
 import ovh.corail.woodcutter.registry.ModRecipeSerializers;
 import ovh.corail.woodcutter.registry.ModRecipeTypes;
 import ovh.corail.woodcutter.registry.ModTabs;
-import ovh.corail.woodcutter.registry.ModTags;
 
 public class WoodCutterMod implements ModInitializer {
     public static final String MOD_ID = "corail_woodcutter";
@@ -19,7 +18,7 @@ public class WoodCutterMod implements ModInitializer {
     @Override
     @SuppressWarnings("UnstableApiUsage")
 	public void onInitialize() {
-        Reflection.initialize(ModTabs.class, ModTags.class, ModRecipeTypes.class);
+        Reflection.initialize(ModTabs.class, ModRecipeTypes.class);
         ModRecipeSerializers.init();
         ModContainers.init();
         ModBlocks.init();

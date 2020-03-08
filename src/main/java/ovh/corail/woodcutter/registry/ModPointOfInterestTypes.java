@@ -9,23 +9,20 @@ import net.minecraft.world.poi.PointOfInterestType;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
 import java.util.Set;
+import java.util.function.Predicate;
 
+import static net.minecraft.world.biome.Biome.LOGGER;
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
 public class ModPointOfInterestTypes {
-    public static Constructor<?> CONSTRUCTOR = Arrays.stream(PointOfInterestType.class.getDeclaredConstructors()).filter(constructor -> constructor.getParameterCount() == 4).findFirst().orElse(null);
-    static {
-        if (CONSTRUCTOR == null) {
-            throw new Error("Impossible to instanciate a new PointOfInterestType");
-        }
-        CONSTRUCTOR.setAccessible(true);
-    }
-    public static final PointOfInterestType WOODSMITH = createPOI();
+    private static final PointOfInterestType WOODSMITH = createPOI();
 
     public static void init() {
-        Registry.register(Registry.POINT_OF_INTEREST_TYPE, new Identifier(MOD_ID, "woodsmith"), WOODSMITH);
+        if (WOODSMITH != null) {
+            Registry.register(Registry.POINT_OF_INTEREST_TYPE, new Identifier(MOD_ID, "woodsmith"), WOODSMITH);
+            LOGGER.info(String.format("%s: Register a new PointOfInterestType", MOD_ID));
+        }
     }
 
     private static Set<BlockState> getAllStates() {
@@ -36,14 +33,16 @@ public class ModPointOfInterestTypes {
         return builder.build();
     }
 
+    private static final Predicate<PointOfInterestType> UNUSED = (pointOfInterestType) -> false;
+
     private static PointOfInterestType createPOI() {
-        if (CONSTRUCTOR == null) {
-            return null;
-        }
         try {
-            return (PointOfInterestType) CONSTRUCTOR.newInstance("woodsmith", getAllStates(), 1, 1);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            return null;
+            Constructor<?> constructor = PointOfInterestType.class.getDeclaredConstructor(String.class, Set.class, int.class, Predicate.class, int.class);
+            constructor.setAccessible(true);
+            return (PointOfInterestType) constructor.newInstance("woodsmith", getAllStates(), 1, UNUSED, 1);
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            LOGGER.info(String.format("%s: Impossible to instanciate a new PointOfInterestType", MOD_ID));
         }
+        return null;
     }
 }

@@ -71,7 +71,7 @@ public class RecipeManagerMixin {
                 return Collections.singletonList((JsonObject) jsonElement);
             } else if (jsonElement.isJsonArray()) {
                 JsonArray jsonArray = jsonElement.getAsJsonArray();
-                return IntStream.range(0, jsonArray.size()).mapToObj(jsonArray::get).filter(JsonObject.class::isInstance).map(JsonObject.class::cast).collect(Collectors.toList());
+                return IntStream.range(0, jsonArray.size()).mapToObj(jsonArray::get).filter(JsonElement::isJsonObject).map(JsonElement::getAsJsonObject).collect(Collectors.toList());
             }
         }
         return new ArrayList<>();

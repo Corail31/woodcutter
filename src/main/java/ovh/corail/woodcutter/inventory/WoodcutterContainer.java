@@ -1,6 +1,5 @@
 package ovh.corail.woodcutter.inventory;
 
-import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.container.BlockContext;
@@ -18,23 +17,21 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
 import ovh.corail.woodcutter.registry.ModBlocks;
 import ovh.corail.woodcutter.registry.ModRecipeTypes;
-import ovh.corail.woodcutter.registry.ModTags;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
 
 public class WoodcutterContainer extends Container {
     private final BlockContext blockContext;
-    private final Property intReferenceHolder = Property.create();
+    private final Property selectedRecipe = Property.create();
     private final World world;
-    private List<WoodcuttingRecipe> recipes = Lists.newArrayList();
+    private List<WoodcuttingRecipe> recipes = new ArrayList<>();
     private ItemStack result = ItemStack.EMPTY;
-    private long timeElapsed;
+    private long lastTakeTime;
     private final Slot inputSlot;
     private final Slot outputSlot;
     private Runnable inventoryUpdateListener = () -> {
@@ -79,9 +76,9 @@ public class WoodcutterContainer extends Container {
                 stack.getItem().onCraft(stack, thePlayer.world, thePlayer);
                 blockContext.run((world, pos) -> {
                     long l = world.getTime();
-                    if (timeElapsed != l) {
+                    if (lastTakeTime != l) {
                         world.playSound(null, pos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundCategory.BLOCKS, 1f, 1f);
-                        timeElapsed = l;
+                        lastTakeTime = l;
                     }
                 });
                 return super.onTakeItem(thePlayer, stack);
@@ -95,12 +92,12 @@ public class WoodcutterContainer extends Container {
         for (int k = 0; k < 9; ++k) {
             addSlot(new Slot(playerInventory, k, 8 + k * 18, 142));
         }
-        addProperty(this.intReferenceHolder);
+        addProperty(this.selectedRecipe);
     }
 
     @Environment(EnvType.CLIENT)
     public int getSelectedRecipe() {
-        return this.intReferenceHolder.get();
+        return this.selectedRecipe.get();
     }
 
     @Environment(EnvType.CLIENT)
@@ -126,7 +123,7 @@ public class WoodcutterContainer extends Container {
     @Override
     public boolean onButtonClick(PlayerEntity playerIn, int id) {
         if (id >= 0 && id < this.recipes.size()) {
-            this.intReferenceHolder.set(id);
+            this.selectedRecipe.set(id);
             populateResult();
         }
         return true;
@@ -143,7 +140,7 @@ public class WoodcutterContainer extends Container {
 
     private void updateInput(Inventory inventoryIn, ItemStack stack) {
         this.recipes.clear();
-        this.intReferenceHolder.set(-1);
+        this.selectedRecipe.set(-1);
         this.outputSlot.setStack(ItemStack.EMPTY);
         if (!stack.isEmpty()) {
             this.recipes = this.world.getRecipeManager().getAllMatches(ModRecipeTypes.WOODCUTTING, inventoryIn, this.world);
@@ -152,7 +149,7 @@ public class WoodcutterContainer extends Container {
 
     private void populateResult() {
         if (!this.recipes.isEmpty()) {
-            WoodcuttingRecipe recipe = this.recipes.get(this.intReferenceHolder.get());
+            WoodcuttingRecipe recipe = this.recipes.get(this.selectedRecipe.get());
             this.outputSlot.setStack(recipe.craft(this.inventory));
         } else {
             this.outputSlot.setStack(ItemStack.EMPTY);
@@ -188,7 +185,7 @@ public class WoodcutterContainer extends Container {
                 if (!this.insertItem(itemstack1, 2, 38, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (item.isIn(ModTags.Items.ALLOWED_ITEMS)) {
+            } else if (this.world.getRecipeManager().getFirstMatch(ModRecipeTypes.WOODCUTTING, new BasicInventory(itemstack1), this.world).isPresent()) {
                 if (!this.insertItem(itemstack1, 0, 1, false)) {
                     return ItemStack.EMPTY;
                 }
@@ -217,6 +214,8 @@ public class WoodcutterContainer extends Container {
     public void close(PlayerEntity playerIn) {
         super.close(playerIn);
         this.resultInventory.removeInvStack(1);
-        this.blockContext.run((BiConsumer<World, BlockPos>) (world, pos) -> dropInventory(playerIn, playerIn.world, this.inventory));
+        this.blockContext.run((world, pos) -> {
+            dropInventory(playerIn, playerIn.world, this.inventory);
+        });
     }
 }
