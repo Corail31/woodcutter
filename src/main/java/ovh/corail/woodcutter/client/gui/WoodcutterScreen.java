@@ -18,6 +18,7 @@ import ovh.corail.woodcutter.block.WoodcutterBlock;
 import ovh.corail.woodcutter.inventory.WoodcutterContainer;
 import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 @Environment(EnvType.CLIENT)
@@ -37,10 +38,9 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
         this((WoodcutterContainer)container, ((WoodcutterContainer)container).playerInventory, WoodcutterBlock.TRANSLATION);
     }
 
+    @SuppressWarnings("all")
+    @Nonnull
     private MinecraftClient getMinecraft() {
-        if (this.client == null) {
-            this.client = MinecraftClient.getInstance();
-        }
         return this.client;
     }
 
