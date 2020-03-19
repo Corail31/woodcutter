@@ -2,10 +2,6 @@ package ovh.corail.woodcutter.inventory;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.container.BlockContext;
-import net.minecraft.container.Container;
-import net.minecraft.container.Property;
-import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.BasicInventory;
@@ -13,10 +9,14 @@ import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.Property;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.PacketByteBuf;
 import net.minecraft.world.World;
 import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
 import ovh.corail.woodcutter.registry.ModBlocks;
@@ -25,8 +25,8 @@ import ovh.corail.woodcutter.registry.ModRecipeTypes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WoodcutterContainer extends Container {
-    private final BlockContext blockContext;
+public class WoodcutterContainer extends ScreenHandler {
+    private final ScreenHandlerContext blockContext;
     private final Property selectedRecipe = Property.create();
     private final World world;
     private List<WoodcuttingRecipe> recipes = new ArrayList<>();
@@ -48,14 +48,14 @@ public class WoodcutterContainer extends Container {
     public PlayerInventory playerInventory;
 
     public WoodcutterContainer(int id, PlayerInventory playerInventory) {
-        this(id, playerInventory, BlockContext.EMPTY);
+        this(id, playerInventory, ScreenHandlerContext.EMPTY);
     }
 
     public WoodcutterContainer(int syncId, Identifier id, PlayerEntity player, PacketByteBuf buf) {
-        this(syncId, player.inventory, BlockContext.create(player.world, buf.readBlockPos()));
+        this(syncId, player.inventory, ScreenHandlerContext.create(player.world, buf.readBlockPos()));
     }
 
-    public WoodcutterContainer(int id, PlayerInventory playerInventory, final BlockContext blockContext) {
+    public WoodcutterContainer(int id, PlayerInventory playerInventory, final ScreenHandlerContext blockContext) {
         super(null, id);
         this.playerInventory = playerInventory;
         this.blockContext = blockContext;
