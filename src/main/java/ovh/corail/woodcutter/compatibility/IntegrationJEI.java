@@ -55,7 +55,7 @@ public class IntegrationJEI implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(ModBlocks.createRandomStack(), WOOD_RL);
+        ModBlocks.WOODCUTTERS.forEach(woodcutter -> registration.addRecipeCatalyst(new ItemStack(woodcutter), WOOD_RL));
         if (ConfigWoodcutter.client.stonecuttingSupportInJEI.get()) {
             registration.addRecipeCatalyst(new ItemStack(Blocks.STONECUTTER), STONE_RL);
         }
