@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+	"corail_woodcutter:oak_woodcutter",
+	"corail_woodcutter:birch_woodcutter",
+	"corail_woodcutter:spruce_woodcutter",
+	"corail_woodcutter:jungle_woodcutter",
+	"corail_woodcutter:acacia_woodcutter",
+	"corail_woodcutter:dark_oak_woodcutter"
+  ]
+}
