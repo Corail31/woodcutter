@@ -6,6 +6,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.sound.PositionedSoundInstance;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
@@ -56,36 +57,37 @@ public class WoodcutterScreen extends HandledScreen<WoodcutterContainer> {
     }
 
     @Override
-    public void render(int mouseX, int mouseY, float partialTick) {
-        super.render(mouseX, mouseY, partialTick);
-        this.drawMouseoverTooltip(mouseX, mouseY);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTick) {
+        super.render(matrixStack, mouseX, mouseY, partialTick);
+        drawMouseoverTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawForeground(int mouseX, int mouseY) {
-        this.textRenderer.draw(this.title.asFormattedString(), 8f, 4f, 4210752);
-        this.textRenderer.draw(this.playerInventory.getDisplayName().asFormattedString(), 8f, (float) (this.backgroundHeight - 94), 4210752);
+    protected void drawForeground(MatrixStack matrixStack, int mouseX, int mouseY) {
+        // draw
+        this.textRenderer.method_27528(matrixStack, this.title, 8f, 4f, 4210752);
+        this.textRenderer.method_27528(matrixStack, this.playerInventory.getDisplayName(), 8f, (float) (this.backgroundHeight - 94), 4210752);
     }
 
     @Override
-    protected void drawBackground(float partialTicks, int mouseX, int mouseY) {
-        this.renderBackground();
+    protected void drawBackground(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+        this.renderBackground(matrixStack);
         RenderSystem.color4f(1f, 1f, 1f, 1f);
         getMinecraft().getTextureManager().bindTexture(BACKGROUND_TEXTURE);
         int i = this.x;
         int j = this.y;
-        this.drawTexture(i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
+        this.drawTexture(matrixStack, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
         int k = (int) (41.0F * this.sliderProgress);
-        this.drawTexture(i + 119, j + 15 + k, 176 + (this.canScroll() ? 0 : 12), 0, 12, 15);
+        this.drawTexture(matrixStack, i + 119, j + 15 + k, 176 + (this.canScroll() ? 0 : 12), 0, 12, 15);
         int l = this.x + 52;
         int i1 = this.y + 14;
         int j1 = this.recipeIndexOffset + 12;
-        this.renderRecipeBackground(mouseX, mouseY, l, i1, j1);
+        this.renderRecipeBackground(matrixStack, mouseX, mouseY, l, i1, j1);
         this.renderRecipeIcons(l, i1, j1);
     }
 
-    protected void drawMouseoverTooltip(int mouseX, int mouseY) {
-        super.drawMouseoverTooltip(mouseX, mouseY);
+    protected void drawMouseoverTooltip(MatrixStack matrixStack, int mouseX, int mouseY) {
+        super.drawMouseoverTooltip(matrixStack, mouseX, mouseY);
         if (this.hasInput) {
             int i = this.x + 52;
             int j = this.y + 14;
@@ -96,13 +98,13 @@ public class WoodcutterScreen extends HandledScreen<WoodcutterContainer> {
                 int n = i + m % 4 * 16;
                 int o = j + m / 4 * 18 + 2;
                 if (mouseX >= n && mouseX < n + 16 && mouseY >= o && mouseY < o + 18) {
-                    this.renderTooltip((list.get(l)).getOutput(), mouseX, mouseY);
+                    this.renderTooltip(matrixStack, (list.get(l)).getOutput(), mouseX, mouseY);
                 }
             }
         }
     }
 
-    private void renderRecipeBackground(int mouseX, int mouseY, int x, int y, int scrollOffset) {
+    private void renderRecipeBackground(MatrixStack matrixStack, int mouseX, int mouseY, int x, int y, int scrollOffset) {
         for (int i = this.recipeIndexOffset; i < scrollOffset && i < this.handler.getRecipeListSize(); ++i) {
             int j = i - this.recipeIndexOffset;
             int k = x + j % 4 * 16;
@@ -115,7 +117,7 @@ public class WoodcutterScreen extends HandledScreen<WoodcutterContainer> {
                 j1 += 36;
             }
 
-            this.drawTexture(k, i1 - 1, 0, j1, 16, 18);
+            this.drawTexture(matrixStack, k, i1 - 1, 0, j1, 16, 18);
         }
     }
 

@@ -213,7 +213,7 @@ public class WoodcutterContainer extends ScreenHandler {
     @Override
     public void close(PlayerEntity playerIn) {
         super.close(playerIn);
-        this.resultInventory.removeInvStack(1);
+        this.resultInventory.removeStack(1);
         this.blockContext.run((world, pos) -> {
             dropInventory(playerIn, playerIn.world, this.inventory);
         });
