@@ -1,8 +1,8 @@
 package ovh.corail.woodcutter.block;
 
+import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.tools.FabricToolTags;
-import net.fabricmc.fabric.impl.mining.level.ToolManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlacementEnvironment;
 import net.minecraft.block.BlockRenderType;
@@ -39,8 +39,7 @@ public class WoodcutterBlock extends Block {
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0d, 0d, 0d, 16d, 9d, 16d);
 
     public WoodcutterBlock() {
-        super(Settings.of(Material.WOOD).strength(3.5f, 3.5f));
-        ToolManager.entry(this).putBreakByTool(FabricToolTags.AXES, 0);
+        super(FabricBlockSettings.of(Material.WOOD).strength(3.5f, 3.5f).breakByTool(FabricToolTags.AXES, 0).build());
         setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
     }
 
