@@ -3,9 +3,7 @@ package ovh.corail.woodcutter;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import ovh.corail.woodcutter.client.gui.WoodcutterScreen;
@@ -19,7 +17,6 @@ public class WoodCutterMod {
     public static final String MOD_ID = "corail_woodcutter";
 
     public WoodCutterMod() {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigWoodcutter.CLIENT_SPEC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
     }
 

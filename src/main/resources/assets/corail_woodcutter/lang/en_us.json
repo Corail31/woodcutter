@@ -23,6 +23,5 @@
   "block.corail_woodcutter.nightshroom_woodcutter": "Nightshroom Sawmill",
   "block.corail_woodcutter.shadowroot_woodcutter": "Shadowroot Sawmill",
   "block.corail_woodcutter.viridshroom_woodcutter": "Viridshroom Sawmill",
-  "container.corail_woodcutter.woodcutter": "Sawmill",
-  "woodcutter.config.stonecutting_support_in_jei": "Display the stonecutting recipes in a custom category in JEI - depending if you're on a server or singleplayer, this option requires to relog on the server or restart your client"
+  "container.corail_woodcutter.woodcutter": "Sawmill"
 }

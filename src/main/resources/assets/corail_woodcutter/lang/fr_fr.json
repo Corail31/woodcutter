@@ -23,6 +23,5 @@
   "block.corail_woodcutter.nightshroom_woodcutter": "Scierie en ChampiNuit",
   "block.corail_woodcutter.shadowroot_woodcutter": "Scierie en Ombreracine",
   "block.corail_woodcutter.viridshroom_woodcutter": "Scierie en ChampiViride",
-  "container.corail_woodcutter.woodcutter": "Scierie",
-  "woodcutter.config.stonecutting_support_in_jei": "Affiche les recettes de tailleur de pierre dans une catégorie personalisée dans JEI - dépendant de si vous êtes sur un serveur ou en jeu solo, cette option requiert de vous reconnecter au serveur ou de relancer votre client"
+  "container.corail_woodcutter.woodcutter": "Scierie"
 }
