@@ -1,25 +1,27 @@
-modLoader="javafml" #mandatory
-loaderVersion="[30,)" #mandatory
-[[mods]] #mandatory
-modId="corail_woodcutter" #mandatory
-version="${file.jarVersion}" #mandatory
-displayName="Corail Woodcutter" #mandatory
-updateJSONURL="https://raw.githubusercontent.com/Corail31/trash/master/update_woodcutter.json" #optional
-displayURL="https://www.curseforge.com/minecraft/mc-mods/corail-woodcutter" #optional
-credits="Special thanks to the Forge and FML guys." #optional
-authors="Corail31, Gegy1000" #optional
+modLoader="javafml"
+loaderVersion="[36,37)"
+issueTrackerURL="https://github.com/Corail31/woodcutter/issues"
+license="GNU GPL v3"
+[[mods]]
+modId="corail_woodcutter"
+version="${file.jarVersion}"
+displayName="Corail Woodcutter"
+updateJSONURL="https://raw.githubusercontent.com/Corail31/trash/master/update_woodcutter.json"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/corail-woodcutter"
+credits="Special thanks to the Forge and FML guys."
+authors="Corail31, Gegy1000"
 description='''
 The wooden version of the StoneCutter
 '''
-[[dependencies.corail_woodcutter]] #optional
-    modId="forge" #mandatory
-    mandatory=true #mandatory
-    versionRange="[30.0.16,)" #mandatory
+[[dependencies.corail_woodcutter]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36.0,37)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.corail_woodcutter]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.15.1,1.16)"
+    versionRange="[1.16.5,1.17)"
     ordering="NONE"
     side="BOTH"

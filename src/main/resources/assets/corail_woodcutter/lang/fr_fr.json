@@ -5,6 +5,8 @@
   "block.corail_woodcutter.jungle_woodcutter": "Scierie en Acajou",
   "block.corail_woodcutter.acacia_woodcutter": "Scierie en Acacia",
   "block.corail_woodcutter.dark_oak_woodcutter": "Scierie en Chêne Noir",
+  "block.corail_woodcutter.crimson_woodcutter": "Scierie Carmin",
+  "block.corail_woodcutter.warped_woodcutter": "Scierie Pervertie",
   "block.corail_woodcutter.cherry_woodcutter": "Scierie en Cerisier",
   "block.corail_woodcutter.dead_woodcutter": "Scierie en Bois Mort",
   "block.corail_woodcutter.fir_woodcutter": "Scierie en Épicéa",
@@ -23,5 +25,8 @@
   "block.corail_woodcutter.nightshroom_woodcutter": "Scierie en ChampiNuit",
   "block.corail_woodcutter.shadowroot_woodcutter": "Scierie en Ombreracine",
   "block.corail_woodcutter.viridshroom_woodcutter": "Scierie en ChampiViride",
-  "container.corail_woodcutter.woodcutter": "Scierie"
+  "container.corail_woodcutter.woodcutter": "Scierie",
+  "item.corail_woodcutter.woodcutter.desc": "Un bloc pour l'artisanat du bois étant similaire au tailleur de pierre",
+  "item.corail_woodcutter.woodcutter.inventory": "Clic droit en t'accroupissant pour l'ouvrir depuis l'inventaire",
+  "woodcutter.config.general.open_woodcutter_in_inventory": "Autorise à utiliser la scierie à partir de l'inventaire avec le clic droit tout en s'accroupissant"
 }

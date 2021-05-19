@@ -5,6 +5,8 @@
   "block.corail_woodcutter.jungle_woodcutter": "丛林木锯木机",
   "block.corail_woodcutter.acacia_woodcutter": "金合欢木锯木机",
   "block.corail_woodcutter.dark_oak_woodcutter": "深色橡木锯木机",
+  "block.corail_woodcutter.crimson_woodcutter": "Crimson Sawmill",
+  "block.corail_woodcutter.warped_woodcutter": "Warped Sawmill",
   "block.corail_woodcutter.cherry_woodcutter": "樱花木锯木机",
   "block.corail_woodcutter.dead_woodcutter": "垂死木锯木机",
   "block.corail_woodcutter.fir_woodcutter": "杉木锯木机",
@@ -23,5 +25,8 @@
   "block.corail_woodcutter.nightshroom_woodcutter": "暗夜菇锯木机",
   "block.corail_woodcutter.shadowroot_woodcutter": "暗影根锯木机",
   "block.corail_woodcutter.viridshroom_woodcutter": "翠碧菇锯木机",
-  "container.corail_woodcutter.woodcutter": "锯木机"
+  "container.corail_woodcutter.woodcutter": "锯木机",
+  "item.corail_woodcutter.woodcutter.desc": "A block for wood craftsmanship being similar to the stonecutter",
+  "item.corail_woodcutter.woodcutter.inventory": "Right-click by sneaking to open it in inventory",
+  "woodcutter.config.general.open_woodcutter_in_inventory": "Allows to open the woodcutter in inventory with right-click while sneaking"
 }

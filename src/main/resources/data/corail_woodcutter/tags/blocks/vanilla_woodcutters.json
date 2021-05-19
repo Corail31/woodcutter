@@ -6,6 +6,8 @@
 	"corail_woodcutter:spruce_woodcutter",
 	"corail_woodcutter:jungle_woodcutter",
 	"corail_woodcutter:acacia_woodcutter",
-	"corail_woodcutter:dark_oak_woodcutter"
+	"corail_woodcutter:dark_oak_woodcutter",
+	"corail_woodcutter:crimson_woodcutter",
+	"corail_woodcutter:warped_woodcutter"
   ]
 }

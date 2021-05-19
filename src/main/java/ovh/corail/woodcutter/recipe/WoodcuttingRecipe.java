@@ -25,4 +25,9 @@ public class WoodcuttingRecipe extends SingleItemRecipe {
     public ItemStack getIcon() {
         return ModBlocks.createRandomStack();
     }
+
+    @Override
+    public boolean isDynamic() {
+        return true;
+    }
 }
