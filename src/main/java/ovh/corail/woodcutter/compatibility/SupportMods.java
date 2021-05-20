@@ -6,7 +6,8 @@ import net.minecraftforge.fml.ModList;
 import java.util.Optional;
 
 public enum SupportMods implements IStringSerializable {
-    BIOMESOPLENTY("biomesoplenty");
+    BIOMESOPLENTY("biomesoplenty"),
+    QUARK("quark");
 
     private final String modid;
     private final boolean loaded;

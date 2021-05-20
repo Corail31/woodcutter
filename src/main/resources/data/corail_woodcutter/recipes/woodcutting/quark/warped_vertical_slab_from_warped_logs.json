@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:item_exists","item":"quark:warped_vertical_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:warped_logs"},"result":"quark:warped_vertical_slab","count":8}

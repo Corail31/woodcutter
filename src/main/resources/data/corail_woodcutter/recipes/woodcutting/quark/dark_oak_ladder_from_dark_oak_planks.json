@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:item_exists","item":"quark:dark_oak_ladder"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:dark_oak_planks"},"result":"quark:dark_oak_ladder","count":1}

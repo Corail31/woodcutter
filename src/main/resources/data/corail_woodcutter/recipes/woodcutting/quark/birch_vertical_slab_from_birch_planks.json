@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:item_exists","item":"quark:birch_vertical_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:birch_planks"},"result":"quark:birch_vertical_slab","count":2}

@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:item_exists","item":"quark:crimson_ladder"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:crimson_planks"},"result":"quark:crimson_ladder","count":1}

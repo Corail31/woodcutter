@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:item_exists","item":"quark:jungle_ladder"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:jungle_planks"},"result":"quark:jungle_ladder","count":1}

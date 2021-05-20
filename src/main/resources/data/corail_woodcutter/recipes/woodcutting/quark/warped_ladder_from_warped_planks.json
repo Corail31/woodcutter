@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:item_exists","item":"quark:warped_ladder"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:warped_planks"},"result":"quark:warped_ladder","count":1}

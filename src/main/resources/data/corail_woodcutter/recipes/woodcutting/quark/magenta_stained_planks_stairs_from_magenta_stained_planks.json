@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:item_exists","item":"quark:magenta_stained_planks"},{"type":"forge:item_exists","item":"quark:magenta_stained_planks_stairs"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"quark:magenta_stained_planks"},"result":"quark:magenta_stained_planks_stairs","count":1}

@@ -22,20 +22,6 @@ import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModBlocks {
-    enum WoodcutterVariant {OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARK_OAK, CRIMSON, WARPED}
-
-    public enum WoodcutterBOPVariant implements IStringSerializable {
-        CHERRY, DEAD, FIR, HELLBARK, JACARANDA, MAGIC, MAHOGANY, PALM, REDWOOD, UMBRAN, WILLOW;
-        private final String name;
-        WoodcutterBOPVariant() {
-            this.name = name().toLowerCase(Locale.US);
-        }
-
-        @Override
-        public String getString() {
-            return this.name;
-        }
-    }
 
     public static final Set<Block> WOODCUTTERS = new HashSet<>();
     public static final Set<Item> WOODCUTTER_ITEMS = new HashSet<>();
@@ -44,12 +30,17 @@ public class ModBlocks {
 
     @SubscribeEvent
     public static void onRegisterBlocks(final RegistryEvent.Register<Block> event) {
-        for (WoodcutterVariant variant : WoodcutterVariant.values()) {
-            registerWoodcutter(event.getRegistry(), variant.name().toLowerCase(Locale.US));
+        for (VanillaWoodVariant variant : VanillaWoodVariant.values()) {
+            registerWoodcutter(event.getRegistry(), variant.getString());
         }
         if (SupportMods.BIOMESOPLENTY.isLoaded()) {
-            for (WoodcutterBOPVariant variant : WoodcutterBOPVariant.values()) {
+            for (BOPWoodVariant variant : BOPWoodVariant.values()) {
                 ModBlocks.registerWoodcutter(event.getRegistry(), variant.getString());
+            }
+        }
+        if (SupportMods.QUARK.isLoaded()) {
+            for (QuarkWoodVariant variant : QuarkWoodVariant.values()) {
+                ModBlocks.registerWoodcutter(event.getRegistry(), variant.getString() + "_stained");
             }
         }
     }
@@ -74,5 +65,48 @@ public class ModBlocks {
             RANDOM_STACK = new ItemStack(ModBlocks.WOODCUTTERS.stream().skip(RANDOM.nextInt(ModBlocks.WOODCUTTERS.size())).findFirst().orElse(Blocks.STONECUTTER));
         }
         return RANDOM_STACK;
+    }
+
+    public enum VanillaWoodVariant implements IStringSerializable {
+        OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARK_OAK, CRIMSON, WARPED;
+        private final String name;
+        VanillaWoodVariant() {
+            this.name = name().toLowerCase(Locale.US);
+        }
+
+        @Override
+        public String getString() {
+            return this.name;
+        }
+    }
+
+    public enum BOPWoodVariant implements IStringSerializable {
+        CHERRY, DEAD, FIR, HELLBARK, JACARANDA, MAGIC, MAHOGANY, PALM, REDWOOD, UMBRAN, WILLOW;
+        private final String name;
+        BOPWoodVariant() {
+            this.name = name().toLowerCase(Locale.US);
+        }
+
+        @Override
+        public String getString() {
+            return this.name;
+        }
+    }
+
+    public enum QuarkWoodVariant implements IStringSerializable {
+        BLACK, BLUE, BROWN, CYAN, GRAY, GREEN, LIGHT_BLUE, LIGHT_GRAY, LIME, MAGENTA, ORANGE, PINK, PURPLE, RED, WHITE, YELLOW;
+        private final String name;
+        QuarkWoodVariant() {
+            this.name = name().toLowerCase(Locale.US);
+        }
+
+        @Override
+        public String getString() {
+            return this.name;
+        }
+
+        public String getPlankName() {
+            return this.name + "_stained_planks";
+        }
     }
 }

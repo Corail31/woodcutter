@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:item_exists","item":"quark:spruce_ladder"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:spruce_logs"},"result":"quark:spruce_ladder","count":4}
