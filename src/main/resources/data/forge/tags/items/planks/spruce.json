@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:spruce_planks"
+  ],
+  "optional": [
+    "quark:vertical_spruce_planks"
+  ]
+}

@@ -2,5 +2,34 @@
   "replace": false,
   "values": [
     "#corail_woodcutter:vanilla_woodcutters"
+  ],
+  "optional": [
+    "corail_woodcutter:cherry_woodcutter",
+    "corail_woodcutter:dead_woodcutter",
+    "corail_woodcutter:fir_woodcutter",
+    "corail_woodcutter:hellbark_woodcutter",
+    "corail_woodcutter:jacaranda_woodcutter",
+    "corail_woodcutter:magic_woodcutter",
+    "corail_woodcutter:mahogany_woodcutter",
+    "corail_woodcutter:palm_woodcutter",
+    "corail_woodcutter:redwood_woodcutter",
+    "corail_woodcutter:umbran_woodcutter",
+    "corail_woodcutter:willow_woodcutter",
+    "corail_woodcutter:black_stained_woodcutter",
+    "corail_woodcutter:blue_stained_woodcutter",
+    "corail_woodcutter:brown_stained_woodcutter",
+    "corail_woodcutter:cyan_stained_woodcutter",
+    "corail_woodcutter:gray_stained_woodcutter",
+    "corail_woodcutter:green_stained_woodcutter",
+    "corail_woodcutter:light_blue_stained_woodcutter",
+    "corail_woodcutter:light_gray_stained_woodcutter",
+    "corail_woodcutter:lime_stained_woodcutter",
+    "corail_woodcutter:magenta_stained_woodcutter",
+    "corail_woodcutter:orange_stained_woodcutter",
+    "corail_woodcutter:pink_stained_woodcutter",
+    "corail_woodcutter:purple_stained_woodcutter",
+    "corail_woodcutter:red_stained_woodcutter",
+    "corail_woodcutter:white_stained_woodcutter",
+    "corail_woodcutter:yellow_stained_woodcutter"
   ]
 }

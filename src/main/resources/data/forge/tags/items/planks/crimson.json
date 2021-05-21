@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:crimson_planks"
+  ],
+  "optional": [
+    "quark:vertical_crimson_planks"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:dark_oak_planks"
+  ],
+  "optional": [
+    "quark:vertical_dark_oak_planks"
+  ]
+}

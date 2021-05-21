@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:jungle_planks"
+  ],
+  "optional": [
+    "quark:vertical_jungle_planks"
+  ]
+}
