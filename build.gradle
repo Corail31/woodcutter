@@ -51,7 +51,7 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.0.0'
     runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.98")
     compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.98:api")
-    compile fg.deobf("curse.maven:biomesoplenty-220318:3300293")
+    runtimeOnly fg.deobf("curse.maven:biomesoplenty-220318:3300293")
 }
 
 jar {
