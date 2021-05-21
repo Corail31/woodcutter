@@ -1,0 +1,22 @@
+{
+	"conditions": [{
+		"type": "forge:item_exists",
+		"item": "quark:pink_stained_planks"
+	}],
+	"parent": "corail_woodcutter:recipes/root",
+	"rewards": {
+		"recipes": [
+			"corail_woodcutter:pink_stained_woodcutter"
+		]
+	},
+	"criteria": {
+		"has_ingredient": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "quark:pink_stained_planks"
+				}]
+			}
+		}
+	}
+}
