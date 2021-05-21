@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:item_exists","item":"quark:jungle_vertical_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:jungle_planks"},"result":"quark:jungle_vertical_slab","count":2}
+{"conditions":[{"type":"forge:item_exists","item":"quark:jungle_vertical_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"forge:planks/jungle"},"result":"quark:jungle_vertical_slab","count":2}

@@ -1,1 +1,1 @@
-{"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:warped_planks"},"result":"minecraft:warped_trapdoor","count":1}
+{"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"forge:planks/warped"},"result":"minecraft:warped_trapdoor","count":1}

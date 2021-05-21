@@ -1,1 +1,1 @@
-{"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:jungle_planks"},"result":"minecraft:jungle_door","count":1}
+{"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"forge:planks/jungle"},"result":"minecraft:jungle_door","count":1}

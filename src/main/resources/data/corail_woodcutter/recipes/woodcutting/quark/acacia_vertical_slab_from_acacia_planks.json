@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:item_exists","item":"quark:acacia_vertical_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:acacia_planks"},"result":"quark:acacia_vertical_slab","count":2}
+{"conditions":[{"type":"forge:item_exists","item":"quark:acacia_vertical_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"forge:planks/acacia"},"result":"quark:acacia_vertical_slab","count":2}

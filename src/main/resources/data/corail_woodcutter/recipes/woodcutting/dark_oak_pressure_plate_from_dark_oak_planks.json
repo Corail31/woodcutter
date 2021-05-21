@@ -1,1 +1,1 @@
-{"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:dark_oak_planks"},"result":"minecraft:dark_oak_pressure_plate","count":1}
+{"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"forge:planks/dark_oak"},"result":"minecraft:dark_oak_pressure_plate","count":1}

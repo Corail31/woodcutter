@@ -1,1 +1,1 @@
-{"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:birch_planks"},"result":"minecraft:birch_button","count":1}
+{"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"forge:planks/birch"},"result":"minecraft:birch_button","count":1}

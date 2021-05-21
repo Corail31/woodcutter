@@ -1,1 +1,1 @@
-{"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:spruce_planks"},"result":"minecraft:spruce_slab","count":2}
+{"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"forge:planks/spruce"},"result":"minecraft:spruce_slab","count":2}
