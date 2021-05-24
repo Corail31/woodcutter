@@ -43,6 +43,11 @@ public class ModBlocks {
                 ModBlocks.registerWoodcutter(event.getRegistry(), variant.getString() + "_stained");
             }
         }
+        if (SupportMods.TWILIGHT_FOREST.isLoaded()) {
+            for (TFWoodVariant variant : TFWoodVariant.values()) {
+                ModBlocks.registerWoodcutter(event.getRegistry(), variant.getString());
+            }
+        }
     }
 
     @SubscribeEvent
@@ -70,6 +75,7 @@ public class ModBlocks {
     public enum VanillaWoodVariant implements IStringSerializable {
         OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARK_OAK, CRIMSON, WARPED;
         private final String name;
+
         VanillaWoodVariant() {
             this.name = name().toLowerCase(Locale.US);
         }
@@ -83,6 +89,7 @@ public class ModBlocks {
     public enum BOPWoodVariant implements IStringSerializable {
         CHERRY, DEAD, FIR, HELLBARK, JACARANDA, MAGIC, MAHOGANY, PALM, REDWOOD, UMBRAN, WILLOW;
         private final String name;
+
         BOPWoodVariant() {
             this.name = name().toLowerCase(Locale.US);
         }
@@ -95,9 +102,11 @@ public class ModBlocks {
 
     public enum QuarkWoodVariant implements IStringSerializable {
         BLACK, BLUE, BROWN, CYAN, GRAY, GREEN, LIGHT_BLUE, LIGHT_GRAY, LIME, MAGENTA, ORANGE, PINK, PURPLE, RED, WHITE, YELLOW;
-        private final String name;
+        private final String name, plankName;
+
         QuarkWoodVariant() {
             this.name = name().toLowerCase(Locale.US);
+            this.plankName = this.name + "_stained_planks";
         }
 
         @Override
@@ -106,7 +115,36 @@ public class ModBlocks {
         }
 
         public String getPlankName() {
-            return this.name + "_stained_planks";
+            return this.plankName;
+        }
+    }
+
+    public enum TFWoodVariant implements IStringSerializable {
+        TWILIGHT_OAK, CANOPY, MANGROVE, DARK("darkwood"), TIME("timewood"), TRANS("transwood"), MINE("mining"), SORT("sortwood");
+
+        private final String name, logTag;
+
+        TFWoodVariant(String logTag) {
+            this.name = name().toLowerCase(Locale.US);
+            this.logTag = logTag + "_logs";
+        }
+
+        TFWoodVariant() {
+            this.name = name().toLowerCase(Locale.US);
+            this.logTag = this.name + "_logs";
+        }
+
+        @Override
+        public String getString() {
+            return this.name;
+        }
+
+        public String getLogTag() {
+            return this.logTag;
+        }
+
+        public String getSignName() {
+            return (this == DARK ? "darkwood" : this.name) + "_sign";
         }
     }
 }

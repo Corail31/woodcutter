@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:mangrove_button"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"twilightforest:mangrove_logs"},"result":"twilightforest:mangrove_button","count":4}

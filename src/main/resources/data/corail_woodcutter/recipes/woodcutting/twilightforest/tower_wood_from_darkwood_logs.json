@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:tower_wood"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"twilightforest:darkwood_logs"},"result":"twilightforest:tower_wood","count":1}

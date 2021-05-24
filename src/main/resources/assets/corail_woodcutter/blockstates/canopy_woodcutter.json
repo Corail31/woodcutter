@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "corail_woodcutter:block/canopy_woodcutter" },
+        "facing=south": { "model": "corail_woodcutter:block/canopy_woodcutter", "y": 180 },
+        "facing=west": { "model": "corail_woodcutter:block/canopy_woodcutter", "y": 270 },
+        "facing=east": { "model": "corail_woodcutter:block/canopy_woodcutter", "y": 90 }
+    }
+}

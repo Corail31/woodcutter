@@ -1,0 +1,22 @@
+{
+	"conditions": [{
+		"type": "forge:item_exists",
+		"item": "twilightforest:dark_planks"
+	}],
+	"parent": "corail_woodcutter:recipes/root",
+	"rewards": {
+		"recipes": [
+			"corail_woodcutter:dark_woodcutter"
+		]
+	},
+	"criteria": {
+		"has_ingredient": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "twilightforest:dark_planks"
+				}]
+			}
+		}
+	}
+}

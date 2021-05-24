@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:mine_button"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"twilightforest:mine_planks"},"result":"twilightforest:mine_button","count":1}

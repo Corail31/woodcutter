@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:mangrove_gate"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"twilightforest:mangrove_logs"},"result":"twilightforest:mangrove_gate","count":1}

@@ -30,6 +30,14 @@
     "corail_woodcutter:purple_stained_woodcutter",
     "corail_woodcutter:red_stained_woodcutter",
     "corail_woodcutter:white_stained_woodcutter",
-    "corail_woodcutter:yellow_stained_woodcutter"
+    "corail_woodcutter:yellow_stained_woodcutter",
+	"corail_woodcutter:twilight_oak_woodcutter",
+	"corail_woodcutter:canopy_woodcutter",
+	"corail_woodcutter:mangrove_woodcutter",
+	"corail_woodcutter:dark_woodcutter",
+	"corail_woodcutter:time_woodcutter",
+	"corail_woodcutter:trans_woodcutter",
+	"corail_woodcutter:mine_woodcutter",
+	"corail_woodcutter:sort_woodcutter"
   ]
 }

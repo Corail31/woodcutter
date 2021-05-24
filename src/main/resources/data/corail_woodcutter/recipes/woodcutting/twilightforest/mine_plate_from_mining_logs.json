@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:mine_plate"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"twilightforest:mining_logs"},"result":"twilightforest:mine_plate","count":4}

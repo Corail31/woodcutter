@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:sort_button"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"twilightforest:sort_planks"},"result":"twilightforest:sort_button","count":1}

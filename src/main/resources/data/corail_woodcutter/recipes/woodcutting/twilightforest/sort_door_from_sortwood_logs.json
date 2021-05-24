@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:sort_door"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"twilightforest:sortwood_logs"},"result":"twilightforest:sort_door","count":4}

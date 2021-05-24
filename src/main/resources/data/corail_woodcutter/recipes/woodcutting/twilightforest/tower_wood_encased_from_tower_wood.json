@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:tower_wood"},{"type":"forge:item_exists","item":"twilightforest:tower_wood_encased"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"twilightforest:tower_wood"},"result":"twilightforest:tower_wood_encased","count":1}

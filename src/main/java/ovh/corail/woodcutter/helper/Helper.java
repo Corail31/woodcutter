@@ -4,6 +4,7 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.world.World;
@@ -39,7 +40,7 @@ public class Helper {
                 .collect(Collectors.toList());
     }
 
-    private static final Comparator<WoodcuttingRecipe> recipeComparator = (r1, r2) -> {
+    public static final Comparator<IRecipe<IInventory>> recipeComparator = (r1, r2) -> {
         ResourceLocation registryName1 = r1.getRecipeOutput().getItem().getRegistryName();
         ResourceLocation registryName2 = r2.getRecipeOutput().getItem().getRegistryName();
         assert registryName1 != null && registryName2 != null;

@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:trans_stairs"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"twilightforest:trans_planks"},"result":"twilightforest:trans_stairs","count":1}

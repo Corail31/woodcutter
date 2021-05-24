@@ -6,16 +6,16 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import ovh.corail.woodcutter.helper.Helper;
 import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
 import ovh.corail.woodcutter.registry.ModBlocks;
 import ovh.corail.woodcutter.registry.ModRecipeTypes;
 import ovh.corail.woodcutter.registry.ModTabs;
 
-import java.util.Collection;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
@@ -35,8 +35,9 @@ public class IntegrationJEI implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        Collection<IRecipe<IInventory>> recipes = Minecraft.getInstance().world.getRecipeManager().getRecipes(ModRecipeTypes.WOODCUTTING).values();
-        registration.addRecipes(recipes, WOOD_RL);
+        Optional.ofNullable(Minecraft.getInstance().world).ifPresent(w -> {
+            registration.addRecipes(w.getRecipeManager().getRecipes(ModRecipeTypes.WOODCUTTING).values().stream().sorted(Helper.recipeComparator).collect(Collectors.toList()), WOOD_RL);
+        });
     }
 
     @Override

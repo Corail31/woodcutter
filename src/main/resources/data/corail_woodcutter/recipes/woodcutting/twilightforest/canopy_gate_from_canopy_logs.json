@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:canopy_gate"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"twilightforest:canopy_logs"},"result":"twilightforest:canopy_gate","count":1}

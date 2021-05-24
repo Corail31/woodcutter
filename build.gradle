@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-version = '1.2.2'
+version = '1.2.3'
 group = 'ovh.corail'
 archivesBaseName = 'corail_woodcutter'
 
@@ -43,15 +43,17 @@ minecraft {
 }
 
 repositories {
-    maven { url = "http://dvs1.progwml6.com/files/maven" }
-    maven { url = "https://www.cursemaven.com" }
+    maven { url = "http://dvs1.progwml6.com/files/maven" } // JEI
+    maven { url = "https://modmaven.dev/"} // TF
+    maven { url = "https://www.cursemaven.com" } // BOP
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.0.0'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.1.0'
     runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.98")
     compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.98:api")
     runtimeOnly fg.deobf("curse.maven:biomesoplenty-220318:3300293")
+    runtimeOnly fg.deobf("teamtwilight:twilightforest:4.0.474:universal")
 }
 
 jar {

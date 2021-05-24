@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:dark_fence"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"twilightforest:dark_planks"},"result":"twilightforest:dark_fence","count":1}

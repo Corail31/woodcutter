@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:twilight_oak_button"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"twilightforest:twilight_oak_logs"},"result":"twilightforest:twilight_oak_button","count":4}

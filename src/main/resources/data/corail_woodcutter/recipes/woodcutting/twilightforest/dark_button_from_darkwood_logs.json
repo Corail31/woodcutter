@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:dark_button"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"twilightforest:darkwood_logs"},"result":"twilightforest:dark_button","count":4}

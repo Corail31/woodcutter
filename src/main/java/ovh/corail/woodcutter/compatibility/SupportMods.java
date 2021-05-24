@@ -7,7 +7,8 @@ import java.util.Optional;
 
 public enum SupportMods implements IStringSerializable {
     BIOMESOPLENTY("biomesoplenty"),
-    QUARK("quark");
+    QUARK("quark"),
+    TWILIGHT_FOREST("twilightforest");
 
     private final String modid;
     private final boolean loaded;
