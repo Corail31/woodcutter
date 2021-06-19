@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IStringSerializable;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -73,11 +75,17 @@ public class ModBlocks {
     }
 
     public enum VanillaWoodVariant implements IStringSerializable {
-        OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARK_OAK, CRIMSON, WARPED;
+        OAK(ItemTags.OAK_LOGS), BIRCH(ItemTags.BIRCH_LOGS), SPRUCE(ItemTags.SPRUCE_LOGS), JUNGLE(ItemTags.JUNGLE_LOGS), ACACIA(ItemTags.ACACIA_LOGS), DARK_OAK(ItemTags.DARK_OAK_LOGS), CRIMSON(ItemTags.CRIMSON_STEMS), WARPED(ItemTags.WARPED_STEMS);
         private final String name;
+        private final ITag.INamedTag<Item> logTag;
 
-        VanillaWoodVariant() {
+        VanillaWoodVariant(ITag.INamedTag<Item> logTag) {
             this.name = name().toLowerCase(Locale.US);
+            this.logTag = logTag;
+        }
+
+        public ITag.INamedTag<Item> getLogTag() {
+            return this.logTag;
         }
 
         @Override

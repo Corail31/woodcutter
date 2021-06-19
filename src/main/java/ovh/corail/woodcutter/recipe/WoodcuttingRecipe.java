@@ -30,4 +30,8 @@ public class WoodcuttingRecipe extends SingleItemRecipe {
     public boolean isDynamic() {
         return true;
     }
+
+    public Ingredient getIngredient() {
+        return this.ingredient;
+    }
 }
