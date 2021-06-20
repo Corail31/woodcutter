@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-version = '1.2.3'
+version = '1.2.4'
 group = 'ovh.corail'
 archivesBaseName = 'corail_woodcutter'
 
@@ -23,6 +23,8 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', '' //SCAN,REGISTRIES,REGISTRYDUMP
             property 'forge.logging.console.level', 'info'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
                 corail_woodcutter {
                     source sourceSets.main
@@ -33,6 +35,8 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', '' //SCAN,REGISTRIES,REGISTRYDUMP
             property 'forge.logging.console.level', 'info'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
                 corail_woodcutter {
                     source sourceSets.main
@@ -50,10 +54,13 @@ repositories {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.1.0'
-    runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.98")
-    compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.98:api")
-    runtimeOnly fg.deobf("curse.maven:biomesoplenty-220318:3300293")
-    runtimeOnly fg.deobf("teamtwilight:twilightforest:4.0.474:universal")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.106")
+    compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.106:api")
+    runtimeOnly fg.deobf("curse.maven:biomesoplenty-220318:3354989")
+    runtimeOnly fg.deobf("curse.maven:autoreglib-250363:3326041")
+    runtimeOnly fg.deobf("curse.maven:quark-243121:3326040")
+    runtimeOnly fg.deobf("curse.maven:oh-the-biomes-youll-go-247560:3337158")
+    runtimeOnly fg.deobf("teamtwilight:twilightforest:4.0.500:universal")
 }
 
 jar {
