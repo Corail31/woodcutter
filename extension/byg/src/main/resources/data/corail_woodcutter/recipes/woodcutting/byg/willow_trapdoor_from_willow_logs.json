@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:willow_trapdoor"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"byg:willow_logs"},"result":"byg:willow_trapdoor","count":4}

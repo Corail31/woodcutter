@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:lament_fence_gate"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"byg:lament_logs"},"result":"byg:lament_fence_gate","count":1}

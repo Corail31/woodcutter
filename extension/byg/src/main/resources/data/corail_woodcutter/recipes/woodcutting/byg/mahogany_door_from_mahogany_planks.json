@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:mahogany_door"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:mahogany_planks"},"result":"byg:mahogany_door","count":1}

@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:fir_boat"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"byg:fir_logs"},"result":"byg:fir_boat","count":1}

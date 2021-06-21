@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:ether_boat"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"byg:ether_logs"},"result":"byg:ether_boat","count":1}

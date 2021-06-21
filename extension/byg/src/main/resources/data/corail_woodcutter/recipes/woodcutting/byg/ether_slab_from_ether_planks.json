@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:ether_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:ether_planks"},"result":"byg:ether_slab","count":2}

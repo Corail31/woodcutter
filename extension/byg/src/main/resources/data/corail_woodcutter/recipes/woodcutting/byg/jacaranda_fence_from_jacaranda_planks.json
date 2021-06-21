@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:jacaranda_fence"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:jacaranda_planks"},"result":"byg:jacaranda_fence","count":1}

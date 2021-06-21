@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:nightshade_stairs"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"byg:nightshade_logs"},"result":"byg:nightshade_stairs","count":4}

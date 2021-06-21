@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:cika_trapdoor"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:cika_planks"},"result":"byg:cika_trapdoor","count":1}

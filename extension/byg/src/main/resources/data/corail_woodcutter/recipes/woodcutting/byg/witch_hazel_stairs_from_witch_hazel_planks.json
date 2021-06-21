@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:witch_hazel_stairs"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:witch_hazel_planks"},"result":"byg:witch_hazel_stairs","count":1}

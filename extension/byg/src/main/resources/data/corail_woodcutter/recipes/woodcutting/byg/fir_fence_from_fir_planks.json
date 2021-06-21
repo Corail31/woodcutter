@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:fir_fence"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:fir_planks"},"result":"byg:fir_fence","count":1}

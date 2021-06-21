@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:cika_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"byg:cika_logs"},"result":"byg:cika_slab","count":8}

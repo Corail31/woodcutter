@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:green_enchanted_fence"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:green_enchanted_planks"},"result":"byg:green_enchanted_fence","count":1}

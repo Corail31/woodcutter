@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:skyris_door"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"byg:skyris_logs"},"result":"byg:skyris_door","count":4}

@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:cherry_boat"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"byg:cherry_logs"},"result":"byg:cherry_boat","count":1}

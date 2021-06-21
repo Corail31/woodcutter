@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:sythian_button"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:sythian_planks"},"result":"byg:sythian_button","count":1}

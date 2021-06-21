@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:palm_trapdoor"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:palm_planks"},"result":"byg:palm_trapdoor","count":1}

@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:rainbow_eucalyptus_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:rainbow_eucalyptus_planks"},"result":"byg:rainbow_eucalyptus_slab","count":2}

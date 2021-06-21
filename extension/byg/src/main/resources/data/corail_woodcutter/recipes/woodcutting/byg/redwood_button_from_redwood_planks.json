@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:redwood_button"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:redwood_planks"},"result":"byg:redwood_button","count":1}

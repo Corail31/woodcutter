@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:jacaranda_planks"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"byg:jacaranda_logs"},"result":"byg:jacaranda_planks","count":4}

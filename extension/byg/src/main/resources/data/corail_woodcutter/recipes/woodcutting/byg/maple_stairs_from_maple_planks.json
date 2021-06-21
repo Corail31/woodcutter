@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:maple_stairs"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:maple_planks"},"result":"byg:maple_stairs","count":1}

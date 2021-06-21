@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:blue_enchanted_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"byg:blue_enchanted_logs"},"result":"byg:blue_enchanted_slab","count":8}

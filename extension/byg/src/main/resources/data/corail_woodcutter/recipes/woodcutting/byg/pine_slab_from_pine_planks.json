@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:pine_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:pine_planks"},"result":"byg:pine_slab","count":2}

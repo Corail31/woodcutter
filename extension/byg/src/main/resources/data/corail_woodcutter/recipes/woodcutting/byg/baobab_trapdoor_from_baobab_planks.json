@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:baobab_trapdoor"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:baobab_planks"},"result":"byg:baobab_trapdoor","count":1}

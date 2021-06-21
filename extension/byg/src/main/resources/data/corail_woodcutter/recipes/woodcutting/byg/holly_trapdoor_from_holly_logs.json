@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:holly_trapdoor"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"byg:holly_logs"},"result":"byg:holly_trapdoor","count":4}

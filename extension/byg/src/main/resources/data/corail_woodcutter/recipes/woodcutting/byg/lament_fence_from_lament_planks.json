@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:lament_fence"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:lament_planks"},"result":"byg:lament_fence","count":1}

@@ -1,0 +1,39 @@
+modLoader="javafml"
+loaderVersion="[36,37)"
+issueTrackerURL="https://www.curseforge.com/minecraft/mc-mods/corail-woodcutter/issues"
+license="GNU GPL v3"
+[[mods]]
+modId="corail_woodcutter_extension_byg"
+version="${file.jarVersion}"
+displayName="Corail Woodcutter: Extension BYG"
+updateJSONURL="https://raw.githubusercontent.com/Corail31/trash/master/update_woodcutter_extension_byg.json"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/corail-woodcutter-extension"
+credits="Special thanks to the Forge and FML guys."
+authors="Corail31, Gegy1000"
+description='''
+Corail Woodcutter: Extension for "Oh the Biomes You'll Go"
+'''
+[[dependencies.corail_woodcutter_extension_byg]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36.0,37)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.corail_woodcutter_extension_byg]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5,1.17)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.corail_woodcutter_extension_byg]]
+    modId="corail_woodcutter"
+    mandatory=true
+    versionRange=">= 1.3.0"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.corail_woodcutter_extension_byg]]
+    modId="byg"
+    mandatory=false
+    versionRange="*"
+    ordering="NONE"
+    side="BOTH"

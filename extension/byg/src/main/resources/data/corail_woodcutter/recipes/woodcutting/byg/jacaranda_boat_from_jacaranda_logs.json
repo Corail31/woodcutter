@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:jacaranda_boat"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"byg:jacaranda_logs"},"result":"byg:jacaranda_boat","count":1}

@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:cika_stairs"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:cika_planks"},"result":"byg:cika_stairs","count":1}

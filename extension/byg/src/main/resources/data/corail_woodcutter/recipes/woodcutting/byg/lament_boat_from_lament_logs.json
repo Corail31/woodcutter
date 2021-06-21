@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:lament_boat"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"byg:lament_logs"},"result":"byg:lament_boat","count":1}

@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:ebony_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"byg:ebony_logs"},"result":"byg:ebony_slab","count":8}

@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:willow_door"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:willow_planks"},"result":"byg:willow_door","count":1}

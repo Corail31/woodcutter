@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:baobab_button"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:baobab_planks"},"result":"byg:baobab_button","count":1}

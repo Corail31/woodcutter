@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:ebony_button"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"byg:ebony_logs"},"result":"byg:ebony_button","count":4}

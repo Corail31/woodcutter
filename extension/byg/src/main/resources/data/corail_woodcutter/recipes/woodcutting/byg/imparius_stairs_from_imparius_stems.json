@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:imparius_stairs"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"byg:imparius_stems"},"result":"byg:imparius_stairs","count":4}

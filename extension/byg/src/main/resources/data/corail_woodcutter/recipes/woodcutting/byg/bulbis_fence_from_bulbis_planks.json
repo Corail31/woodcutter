@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:bulbis_fence"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:bulbis_planks"},"result":"byg:bulbis_fence","count":1}
