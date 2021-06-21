@@ -15,11 +15,13 @@ import ovh.corail.woodcutter.block.WoodcutterBlock;
 import ovh.corail.woodcutter.compatibility.SupportMods;
 import ovh.corail.woodcutter.item.WoodcutterItem;
 
+import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
 
+import static ovh.corail.woodcutter.WoodCutterMod.LOGGER;
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -50,6 +52,15 @@ public class ModBlocks {
                 ModBlocks.registerWoodcutter(event.getRegistry(), variant.getString());
             }
         }
+        if (SupportMods.BYG.isLoaded()) {
+            if (SupportMods.EXTENSION_BYG.isLoaded()) {
+                for (BYGWoodVariant variant : BYGWoodVariant.values()) {
+                    ModBlocks.registerWoodcutter(event.getRegistry(), SupportMods.BYG.getString() + "_" + variant.getString());
+                }
+            } else {
+                LOGGER.info("missing extension for \"Oh Biome You'll Go\" recipes");
+            }
+        }
     }
 
     @SubscribeEvent
@@ -61,7 +72,7 @@ public class ModBlocks {
         });
     }
 
-    public static void registerWoodcutter(IForgeRegistry<Block> registry, String name) {
+    private static void registerWoodcutter(IForgeRegistry<Block> registry, String name) {
         Block woodcutter = new WoodcutterBlock().setRegistryName(MOD_ID, name + "_woodcutter");
         registry.register(woodcutter);
         WOODCUTTERS.add(woodcutter);
@@ -153,6 +164,30 @@ public class ModBlocks {
 
         public String getSignName() {
             return (this == DARK ? "darkwood" : this.name) + "_sign";
+        }
+    }
+
+    public enum BYGWoodVariant implements IStringSerializable {
+        ASPEN, BAOBAB, BLUE_ENCHANTED, CHERRY, CIKA, CYPRESS, EBONY, FIR, GREEN_ENCHANTED, HOLLY, JACARANDA, MAHOGANY, MANGROVE, MAPLE, PINE, RAINBOW_EUCALYPTUS, REDWOOD, SKYRIS, WILLOW, WITCH_HAZEL, ZELKOVA, SYTHIAN("_stems"), EMBUR("_pedus"), PALM, LAMENT, BULBIS("_stems"), NIGHTSHADE, ETHER, IMPARIUS("_stems");
+        private final String name, logTag;
+
+        BYGWoodVariant() {
+            this("");
+        }
+
+        BYGWoodVariant(String suffix) {
+            this.name = name().toLowerCase(Locale.US);
+            this.logTag = this.name + (suffix.isEmpty() ? "_logs" : suffix);
+        }
+
+        @Override
+        @Nonnull
+        public String getString() {
+            return this.name;
+        }
+
+        public String getLogTag() {
+            return this.logTag;
         }
     }
 }

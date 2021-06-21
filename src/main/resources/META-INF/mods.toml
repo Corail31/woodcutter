@@ -1,6 +1,6 @@
 modLoader="javafml"
 loaderVersion="[36,37)"
-issueTrackerURL="https://github.com/Corail31/woodcutter/issues"
+issueTrackerURL="https://www.curseforge.com/minecraft/mc-mods/corail-woodcutter/issues"
 license="GNU GPL v3"
 [[mods]]
 modId="corail_woodcutter"
