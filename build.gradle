@@ -47,7 +47,6 @@ minecraft {
 }
 
 repositories {
-    //flatDir { dirs 'modlib' }
     maven { url = "http://dvs1.progwml6.com/files/maven" } // JEI
     maven { url = "https://modmaven.dev/"} // TF
     maven { url = "https://www.cursemaven.com" } // BOP
@@ -62,7 +61,7 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:quark-243121:3326040")
     runtimeOnly fg.deobf("curse.maven:oh-the-biomes-youll-go-247560:3337158")
     runtimeOnly fg.deobf("teamtwilight:twilightforest:4.0.500:universal")
-    //runtimeOnly fg.deobf("modlib:corail_woodcutter_extension_byg:1.0.0")
+    runtimeOnly fg.deobf("curse.maven:corail_woodcutter_extension_byg-496541:3360612")
 }
 
 jar {
