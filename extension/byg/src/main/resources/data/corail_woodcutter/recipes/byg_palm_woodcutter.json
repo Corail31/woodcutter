@@ -1,4 +1,8 @@
 {
+  "conditions": [{
+    "type": "forge:mod_loaded",
+    "modid": "byg"
+  }],
   "type": "minecraft:crafting_shaped",
   "group": "woodcutter",
   "pattern": [

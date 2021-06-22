@@ -172,12 +172,12 @@ public class ModBlocks {
         private final String name, logTag;
 
         BYGWoodVariant() {
-            this("");
+            this("_logs");
         }
 
         BYGWoodVariant(String suffix) {
             this.name = name().toLowerCase(Locale.US);
-            this.logTag = this.name + (suffix.isEmpty() ? "_logs" : suffix);
+            this.logTag = this.name + suffix;
         }
 
         @Override

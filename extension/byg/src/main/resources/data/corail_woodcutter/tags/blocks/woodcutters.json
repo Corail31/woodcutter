@@ -1,8 +1,6 @@
 {
   "replace": false,
-  "values": [
-    "#corail_woodcutter:vanilla_woodcutters"
-  ],
+  "values": [],
   "optional": [
 	"corail_woodcutter:byg_aspen_woodcutter",
 	"corail_woodcutter:byg_baobab_woodcutter",
