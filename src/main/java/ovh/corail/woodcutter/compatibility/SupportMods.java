@@ -10,7 +10,8 @@ public enum SupportMods implements IStringSerializable {
     QUARK("quark"),
     TWILIGHT_FOREST("twilightforest"),
     EXTENSION_BYG("corail_woodcutter_extension_byg"),
-    BYG("byg");
+    BYG("byg"),
+    TROPICRAFT("tropicraft");
 
     private final String modid;
     private final boolean loaded;

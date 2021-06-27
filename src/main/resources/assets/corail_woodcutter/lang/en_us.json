@@ -49,6 +49,8 @@
   "block.corail_woodcutter.trans_woodcutter": "Transwood Sawmill",
   "block.corail_woodcutter.mine_woodcutter": "Minewood Sawmill",
   "block.corail_woodcutter.sort_woodcutter": "Sortwood Sawmill",
+  "block.corail_woodcutter.tropicraft_palm_woodcutter": "Palm Sawmill",
+  "block.corail_woodcutter.tropicraft_mahogany_woodcutter": "Mahogany Sawmill",
   "container.corail_woodcutter.woodcutter": "Sawmill",
   "item.corail_woodcutter.woodcutter.desc": "A block for wood craftsmanship being similar to the stonecutter",
   "item.corail_woodcutter.woodcutter.inventory": "Right-click by sneaking to open it in inventory",

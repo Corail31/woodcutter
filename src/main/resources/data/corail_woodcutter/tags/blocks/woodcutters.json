@@ -38,6 +38,8 @@
 	"corail_woodcutter:time_woodcutter",
 	"corail_woodcutter:trans_woodcutter",
 	"corail_woodcutter:mine_woodcutter",
-	"corail_woodcutter:sort_woodcutter"
+	"corail_woodcutter:sort_woodcutter",
+	"corail_woodcutter:tropicraft_palm_woodcutter",
+	"corail_woodcutter:tropicraft_mahogany_woodcutter"
   ]
 }

@@ -49,6 +49,8 @@
   "block.corail_woodcutter.trans_woodcutter": "Scierie en bois de Transformation",
   "block.corail_woodcutter.mine_woodcutter": "Scierie en bois de Minage",
   "block.corail_woodcutter.sort_woodcutter": "Scierie en bois de Triage",
+  "block.corail_woodcutter.tropicraft_palm_woodcutter": "Scierie en Palmier",
+  "block.corail_woodcutter.tropicraft_mahogany_woodcutter": "Scierie en Acajou",
   "container.corail_woodcutter.woodcutter": "Scierie",
   "item.corail_woodcutter.woodcutter.desc": "Un bloc pour l'artisanat du bois étant similaire au tailleur de pierre",
   "item.corail_woodcutter.woodcutter.inventory": "Clic droit en t'accroupissant pour l'ouvrir depuis l'inventaire",

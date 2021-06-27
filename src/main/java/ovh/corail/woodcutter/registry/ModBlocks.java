@@ -39,23 +39,30 @@ public class ModBlocks {
         }
         if (SupportMods.BIOMESOPLENTY.isLoaded()) {
             for (BOPWoodVariant variant : BOPWoodVariant.values()) {
-                ModBlocks.registerWoodcutter(event.getRegistry(), variant.getString());
+                registerWoodcutter(event.getRegistry(), variant.getString());
             }
         }
         if (SupportMods.QUARK.isLoaded()) {
             for (QuarkWoodVariant variant : QuarkWoodVariant.values()) {
-                ModBlocks.registerWoodcutter(event.getRegistry(), variant.getString() + "_stained");
+                registerWoodcutter(event.getRegistry(), variant.getString() + "_stained");
             }
         }
         if (SupportMods.TWILIGHT_FOREST.isLoaded()) {
             for (TFWoodVariant variant : TFWoodVariant.values()) {
-                ModBlocks.registerWoodcutter(event.getRegistry(), variant.getString());
+                registerWoodcutter(event.getRegistry(), variant.getString());
+            }
+        }
+        if (SupportMods.TROPICRAFT.isLoaded()) {
+            for (TropicraftVariant variant : TropicraftVariant.values()) {
+                if (variant.canBeLog()) {
+                    registerWoodcutter(event.getRegistry(), SupportMods.TROPICRAFT.getString() + "_" + variant.getString());
+                }
             }
         }
         if (SupportMods.BYG.isLoaded()) {
             if (SupportMods.EXTENSION_BYG.isLoaded()) {
                 for (BYGWoodVariant variant : BYGWoodVariant.values()) {
-                    ModBlocks.registerWoodcutter(event.getRegistry(), SupportMods.BYG.getString() + "_" + variant.getString());
+                    registerWoodcutter(event.getRegistry(), SupportMods.BYG.getString() + "_" + variant.getString());
                 }
             } else {
                 LOGGER.info("missing extension for \"Oh Biome You'll Go\" recipes");
@@ -80,7 +87,7 @@ public class ModBlocks {
 
     public static ItemStack createRandomStack() {
         if (RANDOM_STACK.isEmpty()) {
-            RANDOM_STACK = new ItemStack(ModBlocks.WOODCUTTERS.stream().skip(RANDOM.nextInt(ModBlocks.WOODCUTTERS.size())).findFirst().orElse(Blocks.STONECUTTER));
+            RANDOM_STACK = new ItemStack(WOODCUTTERS.stream().skip(RANDOM.nextInt(WOODCUTTERS.size())).findFirst().orElse(Blocks.STONECUTTER));
         }
         return RANDOM_STACK;
     }
@@ -164,6 +171,36 @@ public class ModBlocks {
 
         public String getSignName() {
             return (this == DARK ? "darkwood" : this.name) + "_sign";
+        }
+    }
+
+    public enum TropicraftVariant implements IStringSerializable {
+        PALM, MAHOGANY, BAMBOO(true), THATCH(true);
+
+        private final String name, plankName;
+        private final boolean canBeLog;
+
+        TropicraftVariant() {
+            this(false);
+        }
+
+        TropicraftVariant(boolean isBundle) {
+            this.name = name().toLowerCase(Locale.US);
+            this.plankName = this.name + (isBundle ? "_bundle" : "_planks");
+            this.canBeLog = !isBundle;
+        }
+
+        @Override
+        public String getString() {
+            return this.name;
+        }
+
+        public boolean canBeLog() {
+            return this.canBeLog;
+        }
+
+        public String getPlankName() {
+            return this.plankName;
         }
     }
 
