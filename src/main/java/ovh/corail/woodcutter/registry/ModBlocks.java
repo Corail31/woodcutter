@@ -4,8 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tags.ITag;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IStringSerializable;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,7 +13,6 @@ import ovh.corail.woodcutter.block.WoodcutterBlock;
 import ovh.corail.woodcutter.compatibility.SupportMods;
 import ovh.corail.woodcutter.item.WoodcutterItem;
 
-import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Random;
@@ -53,11 +50,8 @@ public class ModBlocks {
             }
         }
         if (SupportMods.TROPICRAFT.isLoaded()) {
-            for (TropicraftVariant variant : TropicraftVariant.values()) {
-                if (variant.canBeLog()) {
-                    registerWoodcutter(event.getRegistry(), SupportMods.TROPICRAFT.getString() + "_" + variant.getString());
-                }
-            }
+            registerWoodcutter(event.getRegistry(), SupportMods.TROPICRAFT.getString() + "_" + TropicraftVariant.PALM.getString());
+            registerWoodcutter(event.getRegistry(), SupportMods.TROPICRAFT.getString() + "_" + TropicraftVariant.MAHOGANY.getString());
         }
         if (SupportMods.BYG.isLoaded()) {
             if (SupportMods.EXTENSION_BYG.isLoaded()) {
@@ -93,17 +87,11 @@ public class ModBlocks {
     }
 
     public enum VanillaWoodVariant implements IStringSerializable {
-        OAK(ItemTags.OAK_LOGS), BIRCH(ItemTags.BIRCH_LOGS), SPRUCE(ItemTags.SPRUCE_LOGS), JUNGLE(ItemTags.JUNGLE_LOGS), ACACIA(ItemTags.ACACIA_LOGS), DARK_OAK(ItemTags.DARK_OAK_LOGS), CRIMSON(ItemTags.CRIMSON_STEMS), WARPED(ItemTags.WARPED_STEMS);
+        OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARK_OAK, CRIMSON, WARPED;
         private final String name;
-        private final ITag.INamedTag<Item> logTag;
 
-        VanillaWoodVariant(ITag.INamedTag<Item> logTag) {
+        VanillaWoodVariant() {
             this.name = name().toLowerCase(Locale.US);
-            this.logTag = logTag;
-        }
-
-        public ITag.INamedTag<Item> getLogTag() {
-            return this.logTag;
         }
 
         @Override
@@ -128,103 +116,57 @@ public class ModBlocks {
 
     public enum QuarkWoodVariant implements IStringSerializable {
         BLACK, BLUE, BROWN, CYAN, GRAY, GREEN, LIGHT_BLUE, LIGHT_GRAY, LIME, MAGENTA, ORANGE, PINK, PURPLE, RED, WHITE, YELLOW;
-        private final String name, plankName;
+        private final String name;
 
         QuarkWoodVariant() {
             this.name = name().toLowerCase(Locale.US);
-            this.plankName = this.name + "_stained_planks";
         }
 
         @Override
         public String getString() {
             return this.name;
-        }
-
-        public String getPlankName() {
-            return this.plankName;
         }
     }
 
     public enum TFWoodVariant implements IStringSerializable {
-        TWILIGHT_OAK, CANOPY, MANGROVE, DARK("darkwood"), TIME("timewood"), TRANS("transwood"), MINE("mining"), SORT("sortwood");
-
-        private final String name, logTag;
-
-        TFWoodVariant(String logTag) {
-            this.name = name().toLowerCase(Locale.US);
-            this.logTag = logTag + "_logs";
-        }
+        TWILIGHT_OAK, CANOPY, MANGROVE, DARK, TIME, TRANS, MINE, SORT;
+        private final String name;
 
         TFWoodVariant() {
             this.name = name().toLowerCase(Locale.US);
-            this.logTag = this.name + "_logs";
         }
 
         @Override
         public String getString() {
             return this.name;
-        }
-
-        public String getLogTag() {
-            return this.logTag;
-        }
-
-        public String getSignName() {
-            return (this == DARK ? "darkwood" : this.name) + "_sign";
         }
     }
 
     public enum TropicraftVariant implements IStringSerializable {
-        PALM, MAHOGANY, BAMBOO(true), THATCH(true);
-
-        private final String name, plankName;
-        private final boolean canBeLog;
+        PALM, MAHOGANY, BAMBOO, THATCH;
+        private final String name;
 
         TropicraftVariant() {
-            this(false);
-        }
-
-        TropicraftVariant(boolean isBundle) {
             this.name = name().toLowerCase(Locale.US);
-            this.plankName = this.name + (isBundle ? "_bundle" : "_planks");
-            this.canBeLog = !isBundle;
         }
 
         @Override
         public String getString() {
             return this.name;
-        }
-
-        public boolean canBeLog() {
-            return this.canBeLog;
-        }
-
-        public String getPlankName() {
-            return this.plankName;
         }
     }
 
     public enum BYGWoodVariant implements IStringSerializable {
-        ASPEN, BAOBAB, BLUE_ENCHANTED, CHERRY, CIKA, CYPRESS, EBONY, FIR, GREEN_ENCHANTED, HOLLY, JACARANDA, MAHOGANY, MANGROVE, MAPLE, PINE, RAINBOW_EUCALYPTUS, REDWOOD, SKYRIS, WILLOW, WITCH_HAZEL, ZELKOVA, SYTHIAN("_stems"), EMBUR("_pedus"), PALM, LAMENT, BULBIS("_stems"), NIGHTSHADE, ETHER, IMPARIUS("_stems");
-        private final String name, logTag;
+        ASPEN, BAOBAB, BLUE_ENCHANTED, CHERRY, CIKA, CYPRESS, EBONY, FIR, GREEN_ENCHANTED, HOLLY, JACARANDA, MAHOGANY, MANGROVE, MAPLE, PINE, RAINBOW_EUCALYPTUS, REDWOOD, SKYRIS, WILLOW, WITCH_HAZEL, ZELKOVA, SYTHIAN, EMBUR, PALM, LAMENT, BULBIS, NIGHTSHADE, ETHER, IMPARIUS;
+        private final String name;
 
         BYGWoodVariant() {
-            this("_logs");
-        }
-
-        BYGWoodVariant(String suffix) {
             this.name = name().toLowerCase(Locale.US);
-            this.logTag = this.name + suffix;
         }
 
         @Override
-        @Nonnull
         public String getString() {
             return this.name;
-        }
-
-        public String getLogTag() {
-            return this.logTag;
         }
     }
 }

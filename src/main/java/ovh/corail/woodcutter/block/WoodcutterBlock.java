@@ -32,9 +32,9 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import ovh.corail.woodcutter.inventory.WoodcutterContainer;
+import ovh.corail.woodcutter.registry.ModStats;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 
 import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
@@ -52,15 +52,16 @@ public class WoodcutterBlock extends HorizontalBlock implements IBucketPickupHan
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         BlockState state = context.getWorld().getBlockState(context.getPos());
-        return this.getDefaultState().with(HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite()).with(WATERLOGGED, state.getBlock() != this && state.getFluidState().getFluid() == Fluids.WATER);
+        return getDefaultState().with(HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite()).with(WATERLOGGED, state.getBlock() != this && state.getFluidState().getFluid() == Fluids.WATER);
     }
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote) {
             player.openContainer(state.getContainer(worldIn, pos));
+            player.addStat(ModStats.INTERACT_WITH_SAWMILL);
         }
-        return ActionResultType.SUCCESS;
+        return ActionResultType.CONSUME; // required both sides to avoid swing arm
     }
 
     @Override
@@ -96,7 +97,7 @@ public class WoodcutterBlock extends HorizontalBlock implements IBucketPickupHan
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-        List<ItemStack> drops = new ArrayList<>();
+        List<ItemStack> drops = super.getDrops(state, builder);
         drops.add(new ItemStack(this));
         return drops;
     }
