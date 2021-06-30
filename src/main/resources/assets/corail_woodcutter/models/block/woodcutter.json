@@ -1,23 +1,23 @@
 {
   "parent": "block/block",
   "textures": {
-    "corner_up_down": "minecraft:block/dark_oak_log_top",
-    "corner_side": "minecraft:block/dark_oak_log",
+    "corner_up_down": "block/dark_oak_log_top",
+    "corner_side": "block/dark_oak_log",
     "saw": "block/stonecutter_saw",
     "particle": "#base"
   },
   "elements": [
     {
-      "name": "main_cube",
+      "name": "planks",
       "from": [0, 0, 0],
       "to": [16, 9, 16],
       "faces": {
-        "down": {"uv": [0, 0, 16, 16], "texture": "#base", "rotation": 180, "cullface": "down"},
+        "down": {"uv": [0, 0, 16, 16], "texture": "#base", "cullface": "down"},
         "up": {"uv": [0, 0, 16, 16], "texture": "#base"},
         "north": {"uv": [0, 7, 16, 16], "texture": "#base", "cullface": "north"},
         "south": {"uv": [0, 7, 16, 16], "texture": "#base", "cullface": "south"},
-        "west": {"uv": [0, 0, 9, 16], "texture": "#base", "rotation": 270, "cullface": "west"},
-        "east": {"uv": [0, 0, 9, 16], "texture": "#base", "rotation": 90, "cullface": "east"}
+        "west": {"uv": [0, 7, 16, 16], "texture": "#base", "cullface": "west"},
+        "east": {"uv": [0, 7, 16, 16], "texture": "#base", "cullface": "east"}
       }
     }, {
       "name": "saw",
@@ -25,7 +25,7 @@
       "to": [15, 16, 8],
       "faces": {
         "north": {"uv": [1, 9, 15, 16], "texture": "#saw", "tintindex": 0},
-        "south": {"uv": [1, 9, 15, 16], "texture": "#saw", "tintindex": 0}
+        "south": {"uv": [15, 9, 1, 16], "texture": "#saw", "tintindex": 0}
       }
     }, {
       "name": "corner-1",
@@ -73,8 +73,8 @@
     },
     {
       "name": "slice",
-      "from": [-0.01, 5, -0.01],
-      "to": [16.01, 7, 16.01],
+      "from": [-0.01, 4, -0.01],
+      "to": [16.01, 6, 16.01],
       "faces": {
         "north": {"uv": [0, 0, 8, 16], "texture": "#corner_side", "rotation": 90, "cullface": "north"},
         "east": {"uv": [0, 0, 8, 16], "texture": "#corner_side", "rotation": 90, "cullface": "east"},
