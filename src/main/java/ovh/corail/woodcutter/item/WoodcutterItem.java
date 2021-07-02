@@ -13,7 +13,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -38,8 +37,8 @@ import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class WoodcutterItem extends BlockItem {
-    private static final Style desc1 = Style.EMPTY.applyFormatting(TextFormatting.GRAY);
-    private static final Style desc2 = Style.EMPTY.applyFormatting(TextFormatting.DARK_GRAY).setItalic(true);
+    private static final ITextComponent DEFAULT_DESCRIPTION = new TranslationTextComponent("item.corail_woodcutter.woodcutter.desc").mergeStyle(TextFormatting.GRAY);
+    private static final ITextComponent ACCESS_FROM_INVENTORY = new TranslationTextComponent("item.corail_woodcutter.woodcutter.inventory").mergeStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC);
 
     public WoodcutterItem(Block woodcutterBlock) {
         super(woodcutterBlock, new Item.Properties().group(ModTabs.mainTab).maxStackSize(1));
@@ -48,9 +47,9 @@ public class WoodcutterItem extends BlockItem {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flagIn) {
-        list.add(new TranslationTextComponent("item.corail_woodcutter.woodcutter.desc").mergeStyle(desc1));
+        list.add(DEFAULT_DESCRIPTION);
         if (ConfigWoodcutter.general.openWoodcutterInInventory.get()) {
-            list.add(new TranslationTextComponent("item.corail_woodcutter.woodcutter.inventory").mergeStyle(desc2));
+            list.add(ACCESS_FROM_INVENTORY);
         }
     }
 

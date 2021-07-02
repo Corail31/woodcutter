@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:item_exists","item":"quark:crimson_vertical_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:crimson_stems"},"result":"quark:crimson_vertical_slab","count":8}

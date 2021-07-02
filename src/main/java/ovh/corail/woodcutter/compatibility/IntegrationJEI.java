@@ -8,6 +8,7 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import ovh.corail.woodcutter.block.WoodcutterBlock;
 import ovh.corail.woodcutter.helper.Helper;
 import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
 import ovh.corail.woodcutter.registry.ModBlocks;
@@ -30,7 +31,7 @@ public class IntegrationJEI implements IModPlugin {
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
-        registry.addRecipeCategories(new CustomRecipeCategory<>("container.corail_woodcutter.woodcutter", WOOD_RL, ModTabs.mainTab.getIcon(), WoodcuttingRecipe.class, registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new CustomRecipeCategory<>(WoodcutterBlock.TRANSLATION, WOOD_RL, ModTabs.mainTab.getIcon(), WoodcuttingRecipe.class, registry.getJeiHelpers().getGuiHelper()));
     }
 
     @Override

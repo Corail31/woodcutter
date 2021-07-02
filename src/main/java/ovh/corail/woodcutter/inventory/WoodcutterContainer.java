@@ -32,12 +32,12 @@ public class WoodcutterContainer extends Container {
     private final IntReferenceHolder selectedRecipe = IntReferenceHolder.single();
     private final World world;
     private List<WoodcuttingRecipe> recipes = new ArrayList<>();
-    private ItemStack result = ItemStack.EMPTY;
+    private ItemStack itemStackInput = ItemStack.EMPTY;
     private long lastTakeTime;
     private final Slot inputSlot;
     private final Slot outputSlot;
     private Runnable inventoryUpdateListener = () -> {};
-    private final IInventory inventory = new Inventory(1) {
+    private final IInventory inputInventory = new Inventory(1) {
         @Override
         public void markDirty() {
             super.markDirty();
@@ -45,6 +45,7 @@ public class WoodcutterContainer extends Container {
             inventoryUpdateListener.run();
         }
     };
+    private final CraftResultInventory resultInventory = new CraftResultInventory();
 
     public WoodcutterContainer(int id, PlayerInventory playerInventory) {
         this(id, playerInventory, IWorldPosCallable.DUMMY);
@@ -54,8 +55,8 @@ public class WoodcutterContainer extends Container {
         super(ModContainers.WOODCUTTER, id);
         this.iWorldPosCallable = iWorldPosCallable;
         this.world = playerInventory.player.world;
-        this.inputSlot = addSlot(new Slot(this.inventory, 0, 20, 33));
-        this.outputSlot = addSlot(new Slot(new CraftResultInventory(), 1, 143, 33) {
+        this.inputSlot = addSlot(new Slot(this.inputInventory, 0, 20, 33));
+        this.outputSlot = addSlot(new Slot(this.resultInventory, 1, 143, 33) {
             @Override
             public boolean isItemValid(ItemStack stack) {
                 return false;
@@ -63,11 +64,12 @@ public class WoodcutterContainer extends Container {
 
             @Override
             public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) {
+                stack.onCrafting(thePlayer.world, thePlayer, stack.getCount()); // stat 'item crafted' & item.onCreated()
+                resultInventory.onCrafting(thePlayer);
                 ItemStack itemstack = inputSlot.decrStackSize(1);
                 if (!itemstack.isEmpty()) {
                     updateRecipeResultSlot();
                 }
-                stack.getItem().onCreated(stack, thePlayer.world, thePlayer);
                 iWorldPosCallable.consume((world, pos) -> {
                     long l = world.getGameTime();
                     if (lastTakeTime != l) {
@@ -116,18 +118,22 @@ public class WoodcutterContainer extends Container {
 
     @Override
     public boolean enchantItem(PlayerEntity playerIn, int id) {
-        if (id >= 0 && id < this.recipes.size()) {
+        if (isValidRecipeId(id)) {
             this.selectedRecipe.set(id);
             updateRecipeResultSlot();
         }
         return true;
     }
 
+    private boolean isValidRecipeId(int id) {
+        return id >= 0 && id < this.recipes.size();
+    }
+
     @Override
     public void onCraftMatrixChanged(IInventory inventoryIn) {
         ItemStack stack = this.inputSlot.getStack();
-        if (stack.getItem() != this.result.getItem()) {
-            this.result = stack.copy();
+        if (stack.getItem() != this.itemStackInput.getItem()) {
+            this.itemStackInput = stack.copy();
             updateAvailableRecipes(inventoryIn, stack);
         }
     }
@@ -142,9 +148,10 @@ public class WoodcutterContainer extends Container {
     }
 
     private void updateRecipeResultSlot() {
-        if (!this.recipes.isEmpty()) {
+        if (!this.recipes.isEmpty() && isValidRecipeId(this.selectedRecipe.get())) {
             WoodcuttingRecipe recipe = this.recipes.get(this.selectedRecipe.get());
-            this.outputSlot.putStack(recipe.getCraftingResult(this.inventory));
+            this.resultInventory.setRecipeUsed(recipe);
+            this.outputSlot.putStack(recipe.getCraftingResult(this.inputInventory));
         } else {
             this.outputSlot.putStack(ItemStack.EMPTY);
         }
@@ -163,7 +170,7 @@ public class WoodcutterContainer extends Container {
 
     @Override
     public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
-        return slotIn.inventory != this.inventory && super.canMergeSlot(stack, slotIn);
+        return slotIn.inventory != this.resultInventory && super.canMergeSlot(stack, slotIn);
     }
 
     @Override
@@ -211,18 +218,19 @@ public class WoodcutterContainer extends Container {
 
     @Override
     public void onContainerClosed(PlayerEntity playerIn) {
-        if (this.iWorldPosCallable == IWorldPosCallable.DUMMY) {
-            ItemStack leftStack = this.inventory.removeStackFromSlot(0);
-            if (!leftStack.isEmpty()) {
-                ItemHandlerHelper.giveItemToPlayer(playerIn, leftStack);
-            }
-        } else {
-            this.iWorldPosCallable.consume((world, pos) -> clearContainer(playerIn, world, this.inventory));
-        }
         PlayerInventory playerinventory = playerIn.inventory;
         if (!playerinventory.getItemStack().isEmpty()) {
             ItemHandlerHelper.giveItemToPlayer(playerIn, playerinventory.getItemStack());
             playerinventory.setItemStack(ItemStack.EMPTY);
+        }
+        this.resultInventory.removeStackFromSlot(1);
+        if (this.iWorldPosCallable == IWorldPosCallable.DUMMY) {
+            ItemStack leftStack = this.inputInventory.removeStackFromSlot(0);
+            if (!leftStack.isEmpty()) {
+                ItemHandlerHelper.giveItemToPlayer(playerIn, leftStack);
+            }
+        } else {
+            this.iWorldPosCallable.consume((world, pos) -> clearContainer(playerIn, world, this.inputInventory));
         }
         playerIn.container.detectAndSendChanges();
     }
