@@ -54,5 +54,6 @@
   "container.corail_woodcutter.woodcutter": "Sawmill",
   "item.corail_woodcutter.woodcutter.desc": "A block for wood craftsmanship being similar to the stonecutter",
   "item.corail_woodcutter.woodcutter.inventory": "Right-click by sneaking to open it in inventory",
-  "woodcutter.config.general.open_woodcutter_in_inventory": "Allows to open the woodcutter in inventory with right-click while sneaking"
+  "corail_woodcutter.config.general.open_woodcutter_in_inventory": "Allows to open the woodcutter in inventory with right-click while sneaking",
+  "stat.corail_woodcutter.interact_with_sawmill": "Interactions with Sawmill"
 }

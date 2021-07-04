@@ -54,5 +54,6 @@
   "container.corail_woodcutter.woodcutter": "Scierie",
   "item.corail_woodcutter.woodcutter.desc": "Un bloc pour l'artisanat du bois étant similaire au tailleur de pierre",
   "item.corail_woodcutter.woodcutter.inventory": "Clic droit en t'accroupissant pour l'ouvrir depuis l'inventaire",
-  "woodcutter.config.general.open_woodcutter_in_inventory": "Autorise à utiliser la scierie à partir de l'inventaire avec le clic droit tout en s'accroupissant"
+  "corail_woodcutter.config.general.open_woodcutter_in_inventory": "Autorise à utiliser la scierie à partir de l'inventaire avec le clic droit tout en s'accroupissant",
+  "stat.corail_woodcutter.interact_with_sawmill": "Interactions avec la Scierie"
 }

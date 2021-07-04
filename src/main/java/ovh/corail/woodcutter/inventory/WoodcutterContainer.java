@@ -1,5 +1,6 @@
 package ovh.corail.woodcutter.inventory;
 
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftResultInventory;
@@ -10,10 +11,12 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -218,12 +221,7 @@ public class WoodcutterContainer extends Container {
 
     @Override
     public void onContainerClosed(PlayerEntity playerIn) {
-        PlayerInventory playerinventory = playerIn.inventory;
-        if (!playerinventory.getItemStack().isEmpty()) {
-            ItemHandlerHelper.giveItemToPlayer(playerIn, playerinventory.getItemStack());
-            playerinventory.setItemStack(ItemStack.EMPTY);
-        }
-        this.resultInventory.removeStackFromSlot(1);
+        dropCarriedItemStack(playerIn);
         if (this.iWorldPosCallable == IWorldPosCallable.DUMMY) {
             ItemStack leftStack = this.inputInventory.removeStackFromSlot(0);
             if (!leftStack.isEmpty()) {
@@ -232,6 +230,24 @@ public class WoodcutterContainer extends Container {
         } else {
             this.iWorldPosCallable.consume((world, pos) -> clearContainer(playerIn, world, this.inputInventory));
         }
+        this.resultInventory.removeStackFromSlot(0);
         playerIn.container.detectAndSendChanges();
+    }
+
+    private void dropCarriedItemStack(PlayerEntity player) {
+        ItemStack carried = player.inventory.getItemStack();
+        if (!carried.isEmpty()) {
+            if (this.world.isRemote) {
+                player.swingArm(Hand.MAIN_HAND);
+            } else {
+                ItemEntity itemEntity = new ItemEntity(this.world, player.getPosX(), player.getPosY() + 0.5d, player.getPosZ(), carried.copy());
+                itemEntity.setOwnerId(player.getUniqueID());
+                itemEntity.setNoGravity(true);
+                itemEntity.setMotion(Vector3d.ZERO);
+                itemEntity.setNoPickupDelay();
+                this.world.addEntity(itemEntity);
+            }
+            player.inventory.setItemStack(ItemStack.EMPTY);
+        }
     }
 }
