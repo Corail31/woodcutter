@@ -3,6 +3,8 @@ package ovh.corail.woodcutter.config;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.Objects;
+
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
 public class ConfigWoodcutter {
@@ -31,6 +33,6 @@ public class ConfigWoodcutter {
     static {
         final Pair<General, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(General::new);
         GENERAL_SPEC = specPair.getRight();
-        general = specPair.getLeft();
+        general = Objects.requireNonNull(specPair.getLeft());
     }
 }

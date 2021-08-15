@@ -1,11 +1,11 @@
 package ovh.corail.woodcutter.recipe;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.SingleItemRecipe;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.SingleItemRecipe;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import ovh.corail.woodcutter.registry.ModBlocks;
 import ovh.corail.woodcutter.registry.ModRecipeSerializers;
 import ovh.corail.woodcutter.registry.ModRecipeTypes;
@@ -17,17 +17,17 @@ public class WoodcuttingRecipe extends SingleItemRecipe {
     }
 
     @Override
-    public boolean matches(IInventory inv, World worldIn) {
-        return this.ingredient.test(inv.getStackInSlot(0));
+    public boolean matches(Container inv, Level worldIn) {
+        return this.ingredient.test(inv.getItem(0));
     }
 
     @Override
-    public ItemStack getIcon() {
+    public ItemStack getToastSymbol() {
         return ModBlocks.createRandomStack();
     }
 
     @Override
-    public boolean isDynamic() {
+    public boolean isSpecial() {
         return true;
     }
 

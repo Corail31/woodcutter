@@ -1,10 +1,10 @@
 package ovh.corail.woodcutter.registry;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -32,31 +32,31 @@ public class ModBlocks {
     @SubscribeEvent
     public static void onRegisterBlocks(final RegistryEvent.Register<Block> event) {
         for (VanillaWoodVariant variant : VanillaWoodVariant.values()) {
-            registerWoodcutter(event.getRegistry(), variant.getString());
+            registerWoodcutter(event.getRegistry(), variant.getSerializedName());
         }
         if (SupportMods.BIOMESOPLENTY.isLoaded()) {
             for (BOPWoodVariant variant : BOPWoodVariant.values()) {
-                registerWoodcutter(event.getRegistry(), variant.getString());
+                registerWoodcutter(event.getRegistry(), variant.getSerializedName());
             }
         }
         if (SupportMods.QUARK.isLoaded()) {
             for (QuarkWoodVariant variant : QuarkWoodVariant.values()) {
-                registerWoodcutter(event.getRegistry(), variant.getString() + "_stained");
+                registerWoodcutter(event.getRegistry(), variant.getSerializedName() + "_stained");
             }
         }
         if (SupportMods.TWILIGHT_FOREST.isLoaded()) {
             for (TFWoodVariant variant : TFWoodVariant.values()) {
-                registerWoodcutter(event.getRegistry(), variant.getString());
+                registerWoodcutter(event.getRegistry(), variant.getSerializedName());
             }
         }
         if (SupportMods.TROPICRAFT.isLoaded()) {
-            registerWoodcutter(event.getRegistry(), SupportMods.TROPICRAFT.getString() + "_" + TropicraftVariant.PALM.getString());
-            registerWoodcutter(event.getRegistry(), SupportMods.TROPICRAFT.getString() + "_" + TropicraftVariant.MAHOGANY.getString());
+            registerWoodcutter(event.getRegistry(), SupportMods.TROPICRAFT.getSerializedName() + "_" + TropicraftVariant.PALM.getSerializedName());
+            registerWoodcutter(event.getRegistry(), SupportMods.TROPICRAFT.getSerializedName() + "_" + TropicraftVariant.MAHOGANY.getSerializedName());
         }
         if (SupportMods.BYG.isLoaded()) {
             if (SupportMods.EXTENSION_BYG.isLoaded()) {
                 for (BYGWoodVariant variant : BYGWoodVariant.values()) {
-                    registerWoodcutter(event.getRegistry(), SupportMods.BYG.getString() + "_" + variant.getString());
+                    registerWoodcutter(event.getRegistry(), SupportMods.BYG.getSerializedName() + "_" + variant.getSerializedName());
                 }
             } else {
                 LOGGER.info("missing extension for \"Oh Biome You'll Go\" recipes");
@@ -68,8 +68,8 @@ public class ModBlocks {
     public static void onRegisterBlockItems(final RegistryEvent.Register<Item> event) {
         WOODCUTTERS.forEach(woodcutterBlock -> {
             Item woodcutter = new WoodcutterItem(woodcutterBlock).setRegistryName(woodcutterBlock.getRegistryName());
-            WOODCUTTER_ITEMS.add(woodcutter);
             event.getRegistry().register(woodcutter);
+            WOODCUTTER_ITEMS.add(woodcutter);
         });
     }
 
@@ -86,7 +86,7 @@ public class ModBlocks {
         return RANDOM_STACK;
     }
 
-    public enum VanillaWoodVariant implements IStringSerializable {
+    public enum VanillaWoodVariant implements StringRepresentable {
         OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARK_OAK, CRIMSON, WARPED;
         private final String name;
 
@@ -95,12 +95,12 @@ public class ModBlocks {
         }
 
         @Override
-        public String getString() {
+        public String getSerializedName() {
             return this.name;
         }
     }
 
-    public enum BOPWoodVariant implements IStringSerializable {
+    public enum BOPWoodVariant implements StringRepresentable {
         CHERRY, DEAD, FIR, HELLBARK, JACARANDA, MAGIC, MAHOGANY, PALM, REDWOOD, UMBRAN, WILLOW;
         private final String name;
 
@@ -109,12 +109,12 @@ public class ModBlocks {
         }
 
         @Override
-        public String getString() {
+        public String getSerializedName() {
             return this.name;
         }
     }
 
-    public enum QuarkWoodVariant implements IStringSerializable {
+    public enum QuarkWoodVariant implements StringRepresentable {
         BLACK, BLUE, BROWN, CYAN, GRAY, GREEN, LIGHT_BLUE, LIGHT_GRAY, LIME, MAGENTA, ORANGE, PINK, PURPLE, RED, WHITE, YELLOW;
         private final String name;
 
@@ -123,12 +123,12 @@ public class ModBlocks {
         }
 
         @Override
-        public String getString() {
+        public String getSerializedName() {
             return this.name;
         }
     }
 
-    public enum TFWoodVariant implements IStringSerializable {
+    public enum TFWoodVariant implements StringRepresentable {
         TWILIGHT_OAK, CANOPY, MANGROVE, DARK, TIME, TRANS, MINE, SORT;
         private final String name;
 
@@ -137,12 +137,12 @@ public class ModBlocks {
         }
 
         @Override
-        public String getString() {
+        public String getSerializedName() {
             return this.name;
         }
     }
 
-    public enum TropicraftVariant implements IStringSerializable {
+    public enum TropicraftVariant implements StringRepresentable {
         PALM, MAHOGANY, BAMBOO, THATCH;
         private final String name;
 
@@ -151,12 +151,12 @@ public class ModBlocks {
         }
 
         @Override
-        public String getString() {
+        public String getSerializedName() {
             return this.name;
         }
     }
 
-    public enum BYGWoodVariant implements IStringSerializable {
+    public enum BYGWoodVariant implements StringRepresentable {
         ASPEN, BAOBAB, BLUE_ENCHANTED, CHERRY, CIKA, CYPRESS, EBONY, FIR, GREEN_ENCHANTED, HOLLY, JACARANDA, MAHOGANY, MANGROVE, MAPLE, PINE, RAINBOW_EUCALYPTUS, REDWOOD, SKYRIS, WILLOW, WITCH_HAZEL, ZELKOVA, SYTHIAN, EMBUR, PALM, LAMENT, BULBIS, NIGHTSHADE, ETHER, IMPARIUS;
         private final String name;
 
@@ -165,7 +165,7 @@ public class ModBlocks {
         }
 
         @Override
-        public String getString() {
+        public String getSerializedName() {
             return this.name;
         }
     }

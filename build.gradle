@@ -1,82 +1,73 @@
 buildscript {
-    repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
-    }
+  repositories {
+    maven { url = 'https://maven.minecraftforge.net' }
+    mavenCentral()
+  }
+  dependencies {
+    classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+  }
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-version = '1.3.2'
+version = '1.5.0'
 group = 'ovh.corail'
 archivesBaseName = 'corail_woodcutter'
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+
 minecraft {
-    mappings channel: 'snapshot', version: '20201028-1.16.3'
-	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-    runs {
-        client {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', '' //SCAN,REGISTRIES,REGISTRYDUMP
-            property 'forge.logging.console.level', 'info'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            mods {
-                corail_woodcutter {
-                    source sourceSets.main
-                }
-            }
+  mappings channel: 'official', version: '1.17.1'
+  accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+  runs {
+    client {
+      workingDirectory project.file('run')
+      property 'forge.logging.markers', '' // REGISTRIES
+      property 'forge.logging.console.level', 'debug'
+
+      mods {
+        corail_woodcutter {
+          source sourceSets.main
         }
-        server {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', '' //SCAN,REGISTRIES,REGISTRYDUMP
-            property 'forge.logging.console.level', 'info'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            mods {
-                corail_woodcutter {
-                    source sourceSets.main
-                }
-            }
-        }
+      }
     }
+    server {
+      workingDirectory project.file('run')
+      property 'forge.logging.markers', '' // REGISTRIES
+      property 'forge.logging.console.level', 'debug'
+      mods {
+        corail_woodcutter {
+          source sourceSets.main
+        }
+      }
+    }
+  }
 }
 
 repositories {
-    maven { url = "http://dvs1.progwml6.com/files/maven" } // JEI
-    maven { url = "https://minecraft.curseforge.com/api/maven/" } // official curseForge api
-    maven { url = "https://www.cursemaven.com" } // unofficial repost mods
+  flatDir { dirs 'modlib' }
+  // maven { url = "https://dvs1.progwml6.com/files/maven" } // JEI
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.1.32'
-    runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.106")
-    compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.106:api")
-    runtimeOnly fg.deobf("biomes-o-plenty:BiomesOPlenty-1.16.5:13.1.0.477:universal")
-    /*runtimeOnly fg.deobf("curse.maven:autoreglib-250363:3326041")
-    runtimeOnly fg.deobf("curse.maven:quark-243121:3326040")
-    runtimeOnly fg.deobf("curse.maven:oh-the-biomes-youll-go-247560:3337158")
-    runtimeOnly fg.deobf("curse.maven:twilightforest-227639:3334287")*/
-    runtimeOnly "corail-woodcutter-extension:corail_woodcutter_extension_byg:1.0.0"
-    runtimeOnly fg.deobf("tropicraft:Tropicraft:9.0.0:beta+54")
+  minecraft 'net.minecraftforge:forge:1.17.1-37.0.33'
+  // runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.106")
+  // compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.0.106:api")
+  //runtimeOnly fg.deobf("modlib:BiomesOPlenty:1.17.1-14.0.0.32:universal")
 }
 
 jar {
-    manifest {
-        attributes([
-            "Specification-Title": "Corail Woodcutter",
-            "Specification-Vendor": "Corail31",
-            "Specification-Version": "1",
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"Corail31",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
-    }
+  manifest {
+    attributes([
+        "Specification-Title"     : "corail_woodcutter",
+        "Specification-Vendor"    : "Corail31",
+        "Specification-Version"   : "1",
+        "Implementation-Title"    : "corail_woodcutter",
+        "Implementation-Version"  : "${version}",
+        "Implementation-Vendor"   : "Corail31",
+        "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+    ])
+  }
 }
 
-jar.finalizedBy('reobfJar') 
+jar.finalizedBy('reobfJar')

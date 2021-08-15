@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[34,37)"
+loaderVersion="[37,)"
 issueTrackerURL="https://www.curseforge.com/minecraft/mc-mods/corail-woodcutter/issues"
 license="GNU GPL v3"
 [[mods]]
@@ -16,12 +16,12 @@ The wooden version of the StoneCutter
 [[dependencies.corail_woodcutter]]
     modId="forge"
     mandatory=true
-    versionRange="[34.0,37)"
+    versionRange="[37.0.33,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.corail_woodcutter]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.3,1.17)"
+    versionRange="[1.17.1,1.18)"
     ordering="NONE"
     side="BOTH"

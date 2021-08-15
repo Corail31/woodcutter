@@ -1,18 +1,19 @@
 package ovh.corail.woodcutter.client.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SimpleSound;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import ovh.corail.woodcutter.inventory.WoodcutterContainer;
@@ -21,127 +22,113 @@ import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
-public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
-    private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation("textures/gui/container/stonecutter.png");
-    private float sliderProgress;
-    private boolean isSliderClicked;
-    private int recipeIndexOffset;
-    private boolean hasInput;
+public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContainer> {
+    private static final ResourceLocation BG_LOCATION = new ResourceLocation("textures/gui/container/stonecutter.png");
+    private float scrollOffs;
+    private boolean scrolling;
+    private int startIndex;
+    private boolean displayRecipes;
 
-    public WoodcutterScreen(WoodcutterContainer containerIn, PlayerInventory playerInv, ITextComponent title) {
+    public WoodcutterScreen(WoodcutterContainer containerIn, Inventory playerInv, Component title) {
         super(containerIn, playerInv, title);
-        containerIn.setInventoryUpdateListener(this::onInventoryUpdate);
+        containerIn.registerUpdateListener(this::onInventoryUpdate);
+        --this.titleLabelY;
     }
 
     @Override
-    protected void handleMouseClick(Slot slotIn, int slotId, int mouseButton, ClickType type) {
-        if (type == ClickType.PICKUP && slotId == 0 && mouseButton == 0 && slotIn != null && slotIn.slotNumber == 0) {
-            if (!this.playerInventory.getItemStack().isEmpty() && !slotIn.getStack().isEmpty() && !Container.areItemsAndTagsEqual(this.playerInventory.getItemStack(), slotIn.getStack())) {
-                this.sliderProgress = 0f;
-                this.recipeIndexOffset = 0;
-            }
-        }
-        super.handleMouseClick(slotIn, slotId, mouseButton, type);
-    }
-
-    @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTick) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTick) {
         super.render(matrixStack, mouseX, mouseY, partialTick);
-        renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        renderTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
-        this.font.func_243248_b(matrixStack, this.title, 8f, 4f, 4210752);
-        this.font.func_243248_b(matrixStack, this.playerInventory.getDisplayName(), 8f, (float) (this.ySize - 94), 4210752);
+    protected void renderBg(PoseStack poseStack, float partialTicks, int mouseX, int mouseY) {
+        renderBackground(poseStack);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
+        RenderSystem.setShaderTexture(0, BG_LOCATION);
+        int i = this.leftPos;
+        int j = this.topPos;
+        this.blit(poseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
+        int k = (int) (41f * this.scrollOffs);
+        this.blit(poseStack, i + 119, j + 15 + k, 176 + (this.isScrollBarActive() ? 0 : 12), 0, 12, 15);
+        int l = this.leftPos + 52;
+        int i1 = this.topPos + 14;
+        int j1 = this.startIndex + 12;
+        renderButtons(poseStack, mouseX, mouseY, l, i1, j1);
+        renderRecipes(l, i1, j1);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        renderBackground(matrixStack);
-        RenderSystem.color4f(1f, 1f, 1f, 1f);
-        getMinecraft().getTextureManager().bindTexture(BACKGROUND_TEXTURE);
-        int i = this.guiLeft;
-        int j = this.guiTop;
-        this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
-        int k = (int) (41f * this.sliderProgress);
-        this.blit(matrixStack, i + 119, j + 15 + k, 176 + (this.canScroll() ? 0 : 12), 0, 12, 15);
-        int l = this.guiLeft + 52;
-        int i1 = this.guiTop + 14;
-        int j1 = this.recipeIndexOffset + 12;
-        renderRecipeBackground(matrixStack, mouseX, mouseY, l, i1, j1);
-        renderRecipeIcons(matrixStack, l, i1, j1);
-    }
-
-    @Override
-    protected void renderHoveredTooltip(MatrixStack matrixStack, int x, int y) {
-        super.renderHoveredTooltip(matrixStack, x, y);
-        if (this.hasInput) {
-            int i = this.guiLeft + 52;
-            int j = this.guiTop + 14;
-            int k = this.recipeIndexOffset + 12;
-            List<WoodcuttingRecipe> list = this.container.getRecipeList();
-            for (int l = this.recipeIndexOffset; l < k && l < this.container.getRecipeListSize(); ++l) {
-                int i1 = l - this.recipeIndexOffset;
+    protected void renderTooltip(PoseStack poseStack, int x, int y) {
+        super.renderTooltip(poseStack, x, y);
+        if (this.displayRecipes) {
+            int i = this.leftPos + 52;
+            int j = this.topPos + 14;
+            int k = this.startIndex + 12;
+            List<WoodcuttingRecipe> list = this.menu.getRecipes();
+            for (int l = this.startIndex; l < k && l < this.menu.getNumRecipes(); ++l) {
+                int i1 = l - this.startIndex;
                 int j1 = i + i1 % 4 * 16;
                 int k1 = j + i1 / 4 * 18 + 2;
                 if (x >= j1 && x < j1 + 16 && y >= k1 && y < k1 + 18) {
-                    this.renderTooltip(matrixStack, list.get(l).getRecipeOutput(), x, y);
+                    this.renderTooltip(poseStack, list.get(l).getResultItem(), x, y);
                 }
             }
         }
     }
 
-    private void renderRecipeBackground(MatrixStack matrixStack, int mouseX, int mouseY, int x, int y, int scrollOffset) {
-        for (int i = this.recipeIndexOffset; i < scrollOffset && i < this.container.getRecipeListSize(); ++i) {
-            int j = i - this.recipeIndexOffset;
+    private void renderButtons(PoseStack poseStack, int mouseX, int mouseY, int x, int y, int scrollOffset) {
+        for (int i = this.startIndex; i < scrollOffset && i < this.menu.getNumRecipes(); ++i) {
+            int j = i - this.startIndex;
             int k = x + j % 4 * 16;
             int l = j / 4;
             int i1 = y + l * 18 + 2;
-            int j1 = this.ySize;
-            if (i == this.container.getSelectedRecipe()) {
+            int j1 = this.imageHeight;
+            if (i == this.menu.getSelectedRecipeIndex()) {
                 j1 += 18;
             } else if (mouseX >= k && mouseY >= i1 && mouseX < k + 16 && mouseY < i1 + 18) {
                 j1 += 36;
             }
-            this.blit(matrixStack, k, i1 - 1, 0, j1, 16, 18);
+            this.blit(poseStack, k, i1 - 1, 0, j1, 16, 18);
         }
     }
 
-    private void renderRecipeIcons(MatrixStack matrixStack, int x, int y, int scrollOffset) {
-        List<WoodcuttingRecipe> list = this.container.getRecipeList();
-        for (int i = this.recipeIndexOffset; i < scrollOffset && i < this.container.getRecipeListSize(); ++i) {
-            int j = i - this.recipeIndexOffset;
+    private void renderRecipes(int x, int y, int scrollOffset) {
+        List<WoodcuttingRecipe> list = this.menu.getRecipes();
+        for (int i = this.startIndex; i < scrollOffset && i < this.menu.getNumRecipes(); ++i) {
+            int j = i - this.startIndex;
             int k = x + j % 4 * 16;
             int l = j / 4;
             int i1 = y + l * 18 + 2;
-            getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(list.get(i).getRecipeOutput(), k, i1);
+            getMinecraft().getItemRenderer().renderAndDecorateItem(list.get(i).getResultItem(), k, i1);
         }
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int buttonId) {
-        this.isSliderClicked = false;
-        if (this.hasInput) {
-            int i = this.guiLeft + 52;
-            int j = this.guiTop + 14;
-            int k = this.recipeIndexOffset + 12;
-            for (int l = this.recipeIndexOffset; l < k; ++l) {
-                int i1 = l - this.recipeIndexOffset;
+        this.scrolling = false;
+        if (this.displayRecipes) {
+            int i = this.leftPos + 52;
+            int j = this.topPos + 14;
+            int k = this.startIndex + 12;
+            for (int l = this.startIndex; l < k; ++l) {
+                int i1 = l - this.startIndex;
                 double d0 = mouseX - (double) (i + i1 % 4 * 16);
                 double d1 = mouseY - (double) (j + i1 / 4 * 18);
-                if (d0 >= 0d && d1 >= 0d && d0 < 16d && d1 < 18d && this.container.enchantItem(getMinecraft().player, l)) {
-                    Minecraft.getInstance().getSoundHandler().play(SimpleSound.master(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1f));
-                    getMinecraft().playerController.sendEnchantPacket((this.container).windowId, l);
+                if (d0 >= 0d && d1 >= 0d && d0 < 16d && d1 < 18d && this.menu.clickMenuButton(this.minecraft.player, l)) {
+                    Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1f));
+                    getMinecraft().gameMode.handleInventoryButtonClick((this.menu).containerId, l);
                     return true;
                 }
             }
-            i = this.guiLeft + 119;
-            j = this.guiTop + 14;
+            i = this.leftPos + 119;
+            j = this.topPos + 14;
             if (mouseX >= (double) i && mouseX < (double) (i + 12) && mouseY >= (double) j && mouseY < (double) (j + 54)) {
-                this.isSliderClicked = true;
-                this.sliderProgress = MathHelper.clamp((float) (mouseY - j - 7.5f) / 40f, 0f, 1f);
-                this.recipeIndexOffset = (int) ((double) (this.sliderProgress * (float) getHiddenRows()) + 0.5d) * 4;
+                this.scrolling = true;
+                // click on the slider move the position (before drag)
+                this.scrollOffs = Mth.clamp((float) (mouseY - j - 7.5f) / 40f, 0f, 1f);
+                this.startIndex = (int) ((double) (this.scrollOffs * (float) getOffscreenRows()) + 0.5d) * 4;
             }
         }
         return super.mouseClicked(mouseX, mouseY, buttonId);
@@ -149,12 +136,12 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
 
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int buttonId, double dragX, double dragY) {
-        if (this.isSliderClicked && canScroll()) {
-            int i = this.guiTop + 14;
+        if (this.scrolling && isScrollBarActive()) {
+            int i = this.topPos + 14;
             int j = i + 54;
-            this.sliderProgress = ((float) mouseY - (float) i - 7.5f) / ((float) (j - i) - 15f);
-            this.sliderProgress = MathHelper.clamp(this.sliderProgress, 0f, 1f);
-            this.recipeIndexOffset = (int) ((double) (this.sliderProgress * (float) this.getHiddenRows()) + 0.5d) * 4;
+            this.scrollOffs = ((float) mouseY - (float) i - 7.5f) / ((float) (j - i) - 15f);
+            this.scrollOffs = Mth.clamp(this.scrollOffs, 0f, 1f);
+            this.startIndex = (int) ((double) (this.scrollOffs * (float) this.getOffscreenRows()) + 0.5d) * 4;
             return true;
         } else {
             return super.mouseDragged(mouseX, mouseY, buttonId, dragX, dragY);
@@ -163,28 +150,41 @@ public class WoodcutterScreen extends ContainerScreen<WoodcutterContainer> {
 
     @Override
     public boolean mouseScrolled(double p_mouseScrolled_1_, double p_mouseScrolled_3_, double p_mouseScrolled_5_) {
-        if (canScroll()) {
-            int i = getHiddenRows();
-            this.sliderProgress = (float) ((double) this.sliderProgress - p_mouseScrolled_5_ / (double) i);
-            this.sliderProgress = MathHelper.clamp(this.sliderProgress, 0.0F, 1.0F);
-            this.recipeIndexOffset = (int) ((double) (this.sliderProgress * (float) i) + 0.5D) * 4;
+        if (isScrollBarActive()) {
+            int i = getOffscreenRows();
+            this.scrollOffs = (float) ((double) this.scrollOffs - p_mouseScrolled_5_ / (double) i);
+            this.scrollOffs = Mth.clamp(this.scrollOffs, 0f, 1f);
+            this.startIndex = (int) ((double) (this.scrollOffs * (float) i) + 0.5d) * 4;
         }
         return true;
     }
 
-    private boolean canScroll() {
-        return this.hasInput && this.container.getRecipeListSize() > 12;
+    private boolean isScrollBarActive() {
+        return this.displayRecipes && this.menu.getNumRecipes() > 12;
     }
 
-    private int getHiddenRows() {
-        return (this.container.getRecipeListSize() + 4 - 1) / 4 - 3;
+    private int getOffscreenRows() {
+        return (this.menu.getNumRecipes() + 4 - 1) / 4 - 3;
     }
 
     private void onInventoryUpdate() {
-        this.hasInput = this.container.hasItemsinInputSlot();
-        if (!this.hasInput) {
-            this.sliderProgress = 0f;
-            this.recipeIndexOffset = 0;
+        this.displayRecipes = this.menu.hasInputItem();
+        if (!this.displayRecipes) {
+            this.scrollOffs = 0f;
+            this.startIndex = 0;
         }
+    }
+
+
+    @Override
+    protected void slotClicked(Slot slotIn, int slotId, int mouseButton, ClickType type) {
+        // reset the slider if 2 items are switched from the input slot
+        if (type == ClickType.PICKUP && slotId == 0 && mouseButton == 0 && slotIn != null && slotIn.index == 0) {
+            if (!this.menu.getCarried().isEmpty() && !slotIn.getItem().isEmpty() && (this.menu.getCarried().getItem() != slotIn.getItem().getItem() || !ItemStack.tagMatches(this.menu.getCarried(), slotIn.getItem()))) {
+                this.scrollOffs = 0f;
+                this.startIndex = 0;
+            }
+        }
+        super.slotClicked(slotIn, slotId, mouseButton, type);
     }
 }

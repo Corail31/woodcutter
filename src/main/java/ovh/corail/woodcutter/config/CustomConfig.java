@@ -10,8 +10,8 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import java.nio.file.Path;
 import java.util.function.Function;
 
-public class CustomModConfig extends ModConfig {
-    public CustomModConfig(ForgeConfigSpec spec, ModContainer container) {
+public class CustomConfig extends ModConfig {
+    public CustomConfig(ForgeConfigSpec spec, ModContainer container) {
         super(Type.SERVER, spec, container, String.format("%s-%s.toml", container.getModId(), Type.SERVER.extension()));
     }
 

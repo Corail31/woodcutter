@@ -1,3 +1,4 @@
-@mcp.MethodsReturnNonnullByDefault
+@net.minecraft.MethodsReturnNonnullByDefault
+
 @javax.annotation.ParametersAreNonnullByDefault
 package ovh.corail.woodcutter.client.gui;

@@ -1,26 +1,26 @@
 package ovh.corail.woodcutter.compatibility;
 
-import mezz.jei.api.constants.VanillaTypes;
+/*import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.SingleItemRecipe;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.SingleItemRecipe;*/
 
-public class CustomRecipeCategory<T extends SingleItemRecipe> implements IRecipeCategory<T> {
+public class CustomRecipeCategory {/*<T extends SingleItemRecipe> implements IRecipeCategory<T> {
     private static final ResourceLocation RECIPE_GUI_VANILLA = new ResourceLocation("jei", "textures/gui/gui_vanilla.png");
     private final ResourceLocation uid;
     private static final int WIDTH = 116, HEIGHT = 18;
     private final IDrawable background, icon;
-    private final ITextComponent translation;
+    private final Component translation;
     private final Class<T> tClass;
 
-    CustomRecipeCategory(ITextComponent translation, ResourceLocation uid, ItemStack icon, Class<T> tClass, IGuiHelper guiHelper) {
+    CustomRecipeCategory(Component translation, ResourceLocation uid, ItemStack icon, Class<T> tClass, IGuiHelper guiHelper) {
         this.uid = uid;
         this.background = guiHelper.drawableBuilder(RECIPE_GUI_VANILLA, 49, 168, WIDTH, HEIGHT).addPadding(0, 0, 40, 0).build();
         this.icon = guiHelper.createDrawableIngredient(icon);
@@ -44,7 +44,7 @@ public class CustomRecipeCategory<T extends SingleItemRecipe> implements IRecipe
     }
 
     @Override
-    public ITextComponent getTitleAsTextComponent() { // default is not using translation
+    public Component getTitleAsTextComponent() { // default is not using translation
         return this.translation;
     }
 
@@ -61,7 +61,7 @@ public class CustomRecipeCategory<T extends SingleItemRecipe> implements IRecipe
     @Override
     public void setIngredients(T recipe, IIngredients ingredients) {
         ingredients.setInputIngredients(recipe.getIngredients());
-        ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+        ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
     }
 
     @Override
@@ -71,5 +71,5 @@ public class CustomRecipeCategory<T extends SingleItemRecipe> implements IRecipe
         guiItemStacks.init(1, false, 98, 0);
         guiItemStacks.set(0, ingredients.getInputs(VanillaTypes.ITEM).get(0));
         guiItemStacks.set(1, ingredients.getOutputs(VanillaTypes.ITEM).get(0));
-    }
+    }*/
 }

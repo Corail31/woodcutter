@@ -1,11 +1,11 @@
 package ovh.corail.woodcutter.compatibility;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 import net.minecraftforge.fml.ModList;
 
 import java.util.Optional;
 
-public enum SupportMods implements IStringSerializable {
+public enum SupportMods implements StringRepresentable {
     BIOMESOPLENTY("biomesoplenty"),
     QUARK("quark"),
     TWILIGHT_FOREST("twilightforest"),
@@ -26,7 +26,7 @@ public enum SupportMods implements IStringSerializable {
     }
 
     @Override
-    public String getString() {
+    public String getSerializedName() {
         return this.modid;
     }
 }

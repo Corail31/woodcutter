@@ -1,98 +1,109 @@
 package ovh.corail.woodcutter.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.IBucketPickupHandler;
-import net.minecraft.block.ILiquidContainer;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.pathfinding.PathType;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.ToolAction;
 import ovh.corail.woodcutter.inventory.WoodcutterContainer;
 import ovh.corail.woodcutter.registry.ModStats;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Optional;
 
-import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
 
 @SuppressWarnings("deprecation")
-public class WoodcutterBlock extends HorizontalBlock implements IBucketPickupHandler, ILiquidContainer {
-    public static final TranslationTextComponent TRANSLATION = new TranslationTextComponent("container.corail_woodcutter.woodcutter");
-    protected static final VoxelShape SHAPE = Block.makeCuboidShape(0d, 0d, 0d, 16d, 9d, 16d);
+public class WoodcutterBlock extends HorizontalDirectionalBlock implements BucketPickup, LiquidBlockContainer {
+    public static final TranslatableComponent TRANSLATION = new TranslatableComponent("container.corail_woodcutter.woodcutter");
+    protected static final VoxelShape SHAPE = Block.box(0d, 0d, 0d, 16d, 9d, 16d);
 
     public WoodcutterBlock() {
-        super(Properties.create(Material.WOOD).hardnessAndResistance(3.5f).harvestTool(ToolType.AXE).harvestLevel(0));
-        setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(WATERLOGGED, false));
+        super(BlockBehaviour.Properties.of(Material.WOOD).requiresCorrectToolForDrops().strength(3.5f));
+        registerDefaultState(this.stateDefinition.any().setValue(HORIZONTAL_FACING, Direction.NORTH).setValue(WATERLOGGED, false));
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        BlockState state = context.getWorld().getBlockState(context.getPos());
-        return getDefaultState().with(HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite()).with(WATERLOGGED, state.getBlock() != this && state.getFluidState().getFluid() == Fluids.WATER);
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState state = context.getLevel().getBlockState(context.getClickedPos());
+        return defaultBlockState().setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite()).setValue(WATERLOGGED, state.getBlock() != this && state.getFluidState().getType() == Fluids.WATER);
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (!worldIn.isRemote) {
-            player.openContainer(state.getContainer(worldIn, pos));
-            player.addStat(ModStats.INTERACT_WITH_SAWMILL);
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (!worldIn.isClientSide()) {
+            player.openMenu(state.getMenuProvider(worldIn, pos));
+            player.awardStat(ModStats.INTERACT_WITH_SAWMILL);
         }
-        return ActionResultType.CONSUME; // required both sides to avoid swing arm
+        return InteractionResult.CONSUME; // required both sides to avoid swing arm
     }
 
     @Override
     @Nullable
-    public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
-        return new SimpleNamedContainerProvider((id, playerInventory, player) -> new WoodcutterContainer(id, playerInventory, IWorldPosCallable.of(worldIn, pos)), TRANSLATION);
+    public MenuProvider getMenuProvider(BlockState state, Level worldIn, BlockPos pos) {
+        return new SimpleMenuProvider((id, playerInventory, player) -> new WoodcutterContainer(id, playerInventory, ContainerLevelAccess.create(worldIn, pos)), TRANSLATION);
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
     @Override
-    public boolean isTransparent(BlockState state) {
+    public boolean useShapeForLightOcclusion(BlockState state) {
         return true;
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(HORIZONTAL_FACING, WATERLOGGED);
     }
 
     @Override
-    public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
+    public boolean isPathfindable(BlockState state, BlockGetter worldIn, BlockPos pos, PathComputationType type) {
         return false;
+    }
+
+    @Override
+    @Nullable
+    public BlockState getToolModifiedState(BlockState state, Level world, BlockPos pos, Player player, ItemStack stack, ToolAction toolAction) {
+        return null;
     }
 
     @Override
@@ -103,38 +114,43 @@ public class WoodcutterBlock extends HorizontalBlock implements IBucketPickupHan
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState olState, Direction facing, BlockState newState, IWorld world, BlockPos oldPos, BlockPos newPos) {
-        if (olState.get(WATERLOGGED)) {
-            world.getPendingFluidTicks().scheduleTick(oldPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+    public BlockState updateShape(BlockState olState, Direction facing, BlockState newState, LevelAccessor levelAccessor, BlockPos oldPos, BlockPos newPos) {
+        if (olState.getValue(WATERLOGGED)) {
+            levelAccessor.getLiquidTicks().scheduleTick(oldPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelAccessor));
         }
-        return super.updatePostPlacement(olState, facing, newState, world, oldPos, newPos);
-    }
-
-    @Override
-    public Fluid pickupFluid(IWorld world, BlockPos pos, BlockState state) {
-        if (state.get(WATERLOGGED)) {
-            world.setBlockState(pos, state.with(WATERLOGGED, false), 3);
-            return Fluids.WATER;
-        }
-        return Fluids.EMPTY;
+        return super.updateShape(olState, facing, newState, levelAccessor, oldPos, newPos);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : Fluids.EMPTY.getDefaultState();
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState();
     }
 
     @Override
-    public boolean canContainFluid(IBlockReader world, BlockPos pos, BlockState state, Fluid fluid) {
-        return !state.get(WATERLOGGED) && fluid == Fluids.WATER;
+    public ItemStack pickupBlock(LevelAccessor levelAccessor, BlockPos pos, BlockState state) {
+        if (state.getValue(WATERLOGGED)) {
+            levelAccessor.setBlock(pos, state.setValue(WATERLOGGED, false), 3);
+            return new ItemStack(Items.WATER_BUCKET);
+        }
+        return ItemStack.EMPTY;
     }
 
     @Override
-    public boolean receiveFluid(IWorld world, BlockPos pos, BlockState state, FluidState fluidState) {
-        if (!state.get(WATERLOGGED) && fluidState.getFluid() == Fluids.WATER) {
-            if (!world.isRemote()) {
-                world.setBlockState(pos, state.with(WATERLOGGED, true), 3);
-                world.getPendingFluidTicks().scheduleTick(pos, fluidState.getFluid(), fluidState.getFluid().getTickRate(world));
+    public Optional<SoundEvent> getPickupSound() {
+        return Fluids.WATER.getPickupSound();
+    }
+
+    @Override
+    public boolean canPlaceLiquid(BlockGetter blockGetter, BlockPos pos, BlockState state, Fluid fluid) {
+        return !state.getValue(WATERLOGGED) && fluid == Fluids.WATER;
+    }
+
+    @Override
+    public boolean placeLiquid(LevelAccessor levelAccessor, BlockPos pos, BlockState state, FluidState fluidState) {
+        if (!state.getValue(WATERLOGGED) && fluidState.getType() == Fluids.WATER) {
+            if (!levelAccessor.isClientSide()) {
+                levelAccessor.setBlock(pos, state.setValue(WATERLOGGED, true), 3);
+                levelAccessor.getLiquidTicks().scheduleTick(pos, fluidState.getType(), fluidState.getType().getTickDelay(levelAccessor));
             }
             return true;
         }
