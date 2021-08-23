@@ -12,8 +12,9 @@ import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModRecipeSerializers {
-    public static final RecipeSerializer<WoodcuttingRecipe> WOODCUTTING = new SingleItemRecipe.Serializer<WoodcuttingRecipe>(WoodcuttingRecipe::new) {};
+    public static final RecipeSerializer<WoodcuttingRecipe> WOODCUTTING = new SingleItemRecipe.Serializer<>(WoodcuttingRecipe::new) {};
 
+    @SuppressWarnings("unused")
     @SubscribeEvent
     public static void onRegisterSerializers(final RegistryEvent.Register<RecipeSerializer<?>> event) {
         event.getRegistry().register(WOODCUTTING.setRegistryName(new ResourceLocation(MOD_ID, "woodcutting")));

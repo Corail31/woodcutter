@@ -15,6 +15,7 @@ import ovh.corail.woodcutter.item.WoodcutterItem;
 
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 
@@ -29,6 +30,7 @@ public class ModBlocks {
     private static final Random RANDOM = new Random();
     private static ItemStack RANDOM_STACK = ItemStack.EMPTY;
 
+    @SuppressWarnings("unused")
     @SubscribeEvent
     public static void onRegisterBlocks(final RegistryEvent.Register<Block> event) {
         for (VanillaWoodVariant variant : VanillaWoodVariant.values()) {
@@ -64,10 +66,11 @@ public class ModBlocks {
         }
     }
 
+    @SuppressWarnings("unused")
     @SubscribeEvent
     public static void onRegisterBlockItems(final RegistryEvent.Register<Item> event) {
         WOODCUTTERS.forEach(woodcutterBlock -> {
-            Item woodcutter = new WoodcutterItem(woodcutterBlock).setRegistryName(woodcutterBlock.getRegistryName());
+            Item woodcutter = new WoodcutterItem(woodcutterBlock).setRegistryName(Objects.requireNonNull(woodcutterBlock.getRegistryName()));
             event.getRegistry().register(woodcutter);
             WOODCUTTER_ITEMS.add(woodcutter);
         });

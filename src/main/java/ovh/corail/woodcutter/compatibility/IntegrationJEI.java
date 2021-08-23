@@ -1,6 +1,6 @@
 package ovh.corail.woodcutter.compatibility;
 
-/*import mezz.jei.api.IModPlugin;
+import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
@@ -18,10 +18,10 @@ import ovh.corail.woodcutter.registry.ModTabs;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;*/
+import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
-//@JeiPlugin
-public class IntegrationJEI {/*implements IModPlugin {
+@JeiPlugin
+public class IntegrationJEI implements IModPlugin {
     private static final ResourceLocation WOOD_RL = new ResourceLocation(MOD_ID, "woodcutting");
 
     @Override
@@ -36,13 +36,11 @@ public class IntegrationJEI {/*implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        Optional.ofNullable(Minecraft.getInstance().level).ifPresent(w -> {
-            registration.addRecipes(w.getRecipeManager().getRecipes(ModRecipeTypes.WOODCUTTING).values().stream().sorted(Helper.recipeComparator).collect(Collectors.toList()), WOOD_RL);
-        });
+        Optional.ofNullable(Minecraft.getInstance().level).ifPresent(w -> registration.addRecipes(w.getRecipeManager().byType(ModRecipeTypes.WOODCUTTING).values().stream().sorted(Helper.recipeComparator).collect(Collectors.toList()), WOOD_RL));
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         ModBlocks.WOODCUTTERS.forEach(woodcutter -> registration.addRecipeCatalyst(new ItemStack(woodcutter), WOOD_RL));
-    }*/
+    }
 }

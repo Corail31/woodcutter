@@ -17,6 +17,7 @@ import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 public class ModPointOfInterestTypes {
     private static final PoiType WOODSMITH = new PoiType("woodsmith", getAllStates(), 1, poi -> false, 1);
 
+    @SuppressWarnings("unused")
     @SubscribeEvent
     public static void onRegisterPointOfInterestTypes(final RegistryEvent.Register<PoiType> event) {
         event.getRegistry().register(WOODSMITH.setRegistryName(new ResourceLocation(MOD_ID, "woodsmith")));

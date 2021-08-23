@@ -1,6 +1,6 @@
 package ovh.corail.woodcutter.compatibility;
 
-/*import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
@@ -10,9 +10,9 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.SingleItemRecipe;*/
+import net.minecraft.world.item.crafting.SingleItemRecipe;
 
-public class CustomRecipeCategory {/*<T extends SingleItemRecipe> implements IRecipeCategory<T> {
+public class CustomRecipeCategory <T extends SingleItemRecipe> implements IRecipeCategory<T> {
     private static final ResourceLocation RECIPE_GUI_VANILLA = new ResourceLocation("jei", "textures/gui/gui_vanilla.png");
     private final ResourceLocation uid;
     private static final int WIDTH = 116, HEIGHT = 18;
@@ -39,12 +39,7 @@ public class CustomRecipeCategory {/*<T extends SingleItemRecipe> implements IRe
     }
 
     @Override
-    public String getTitle() { // deprecated but not default
-        return "Sawmill";
-    }
-
-    @Override
-    public Component getTitleAsTextComponent() { // default is not using translation
+    public Component getTitle() {
         return this.translation;
     }
 
@@ -71,5 +66,5 @@ public class CustomRecipeCategory {/*<T extends SingleItemRecipe> implements IRe
         guiItemStacks.init(1, false, 98, 0);
         guiItemStacks.set(0, ingredients.getInputs(VanillaTypes.ITEM).get(0));
         guiItemStacks.set(1, ingredients.getOutputs(VanillaTypes.ITEM).get(0));
-    }*/
+    }
 }
