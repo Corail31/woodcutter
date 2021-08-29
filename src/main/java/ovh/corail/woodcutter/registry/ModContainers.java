@@ -12,6 +12,7 @@ import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 public class ModContainers {
     public static final ContainerType<WoodcutterContainer> WOODCUTTER = new ContainerType<>(WoodcutterContainer::new);
 
+    @SuppressWarnings("unused")
     @SubscribeEvent
     public static void registerContainers(final RegistryEvent.Register<ContainerType<?>> event) {
         event.getRegistry().register(WOODCUTTER.setRegistryName(MOD_ID, "woodcutter"));

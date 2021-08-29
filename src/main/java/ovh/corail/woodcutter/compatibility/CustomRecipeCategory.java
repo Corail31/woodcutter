@@ -39,8 +39,8 @@ public class CustomRecipeCategory<T extends SingleItemRecipe> implements IRecipe
     }
 
     @Override
-    public String getTitle() { // deprecated but not default
-        return "Sawmill";
+    public String getTitle() {
+        return this.translation.getString();
     }
 
     @Override
