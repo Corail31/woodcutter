@@ -55,5 +55,22 @@
   "item.corail_woodcutter.woodcutter.desc": "Un bloc pour l'artisanat du bois étant similaire au tailleur de pierre",
   "item.corail_woodcutter.woodcutter.inventory": "Clic droit en t'accroupissant pour l'ouvrir depuis l'inventaire",
   "corail_woodcutter.config.general.open_woodcutter_in_inventory": "Autorise à utiliser la scierie à partir de l'inventaire avec le clic droit tout en s'accroupissant",
-  "stat.corail_woodcutter.interact_with_sawmill": "Interactions avec la Scierie"
+  "stat.corail_woodcutter.interact_with_sawmill": "Interactions avec la Scierie",
+  "corail_woodcutter.command.usage": "Génère les recettes d'artisanat de bois d'un mod dans le format de Corail Woodcutter dans ton répertoire config\n /woodcutter info\n /woodcutter datapack [generate|apply|remove] [modid]\napply & remove ne sont utilisables qu'en jeu solo et le datapack doit être généré avant de l'appliquer",
+  "corail_woodcutter.message.datapack.generate.success": "Le datapack a été généré avec succès dans ton répertoire config (%d recettes)",
+  "corail_woodcutter.message.datapack.generate.fail": "Le datapack n'a pu être généré: %s",
+  "corail_woodcutter.message.file.delete.fail": "Le fichier n'a pas pu être effacé: %s",
+  "corail_woodcutter.message.file.write.fail": "Le fichier n'a pas pu être écrit: %s",
+  "corail_woodcutter.message.file.copy.fail": "Le fichier n'a pas pu être copié: %s",
+  "corail_woodcutter.message.folder.create.fail": "Le répertoire n'a pu être créé: %s",
+  "corail_woodcutter.message.zip.create.fail": "La création du fichier zip a échoué",
+  "corail_woodcutter.message.mcmeta.create.fail": "Le fichier pack.mcmeta n'a pas pu être écrit",
+  "corail_woodcutter.message.no_valid_recipe_for_modid": "Aucune recette valide n'a été trouvée pour le modid: %s",
+  "corail_woodcutter.message.invalid_modid": "Modid invalide",
+  "corail_woodcutter.message.datapack.not_generated": "Aucun datapack généré pour le modid: %s",
+  "corail_woodcutter.message.datapack.apply.success": "Le datapack a été ajouté",
+  "corail_woodcutter.message.datapack.apply.fail": "Le datapack n'a pas pu être appliqué: %s",
+  "corail_woodcutter.message.datapack.remove.success": "Le datapack a été enlevé",
+  "corail_woodcutter.message.datapack.remove.absent": "Le datapack n'était pas présent",
+  "corail_woodcutter.message.datapack.remove.fail": "Le datapack n'a pas pu être enlevé: %s"
 }

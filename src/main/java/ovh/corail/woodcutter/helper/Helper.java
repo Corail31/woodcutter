@@ -17,7 +17,6 @@ import ovh.corail.woodcutter.config.CustomConfig;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
@@ -38,7 +37,7 @@ public class Helper {
                 .values().stream()
                 .flatMap(recipe -> Util.toStream(ModRecipeTypes.WOODCUTTING.tryMatch(recipe, level, inventory)))
                 .sorted(recipeComparator)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static final Comparator<Recipe<Container>> recipeComparator = (r1, r2) -> {

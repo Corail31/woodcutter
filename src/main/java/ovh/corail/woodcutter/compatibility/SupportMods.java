@@ -3,6 +3,7 @@ package ovh.corail.woodcutter.compatibility;
 import net.minecraft.util.StringRepresentable;
 import net.minecraftforge.fml.ModList;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 public enum SupportMods implements StringRepresentable {
@@ -28,5 +29,13 @@ public enum SupportMods implements StringRepresentable {
     @Override
     public String getSerializedName() {
         return this.modid;
+    }
+
+    public static boolean hasSupport(String modid) {
+        return Arrays.stream(values()).map(SupportMods::getSerializedName).anyMatch(modid::equals);
+    }
+
+    public static boolean noSupport(String modid) {
+        return !hasSupport(modid);
     }
 }
