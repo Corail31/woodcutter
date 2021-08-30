@@ -9,6 +9,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.ISuggestionProvider;
@@ -86,7 +87,7 @@ public class CommandWoodcutter {
 
     private int applyDataPack(CommandContext<CommandSource> context) {
         // copy the generated datapack in the datapack folder
-        String modid = StringArgumentType.getString(context, MODID);
+        String modid = StringArgumentType.getString(context, MODID_PARAM);
         if (INVALID_MODID.test(modid)) {
             throw LangKey.INVALID_MODID.asCommandException();
         }
@@ -104,7 +105,7 @@ public class CommandWoodcutter {
         }
         try {
             FileUtils.copyFile(configDatapackZip, destination);
-            reload(context.getSource().getServer());
+            discoverNewDataPack(context.getSource().getServer());
             context.getSource().sendFeedback(LangKey.DATAPACK_APPLY_SUCCESS.getText(), false);
             return 1;
         } catch (IOException e) {
@@ -115,7 +116,7 @@ public class CommandWoodcutter {
 
     private int removeDataPack(CommandContext<CommandSource> context) {
         // delete the datapack from the datapack folder
-        String modid = StringArgumentType.getString(context, MODID);
+        String modid = StringArgumentType.getString(context, MODID_PARAM);
         if (INVALID_MODID.test(modid)) {
             throw LangKey.INVALID_MODID.asCommandException();
         }
@@ -127,14 +128,13 @@ public class CommandWoodcutter {
         if (!destination.delete()) {
             throw LangKey.DATAPACK_REMOVE_FAIL.asCommandException(LangKey.FILE_DELETE_FAIL.getText(destination.getAbsolutePath()));
         }
-        reload(context.getSource().getServer());
         context.getSource().sendFeedback(LangKey.DATAPACK_REMOVE_SUCCESS.getText(), false);
         return 1;
     }
 
     private int generateDataPack(CommandContext<CommandSource> context) {
         // try to determine the existing wooden recipes, then generate theses recipes in the woodcutter format in the config folder and finalize that folder in a zip
-        String modid = StringArgumentType.getString(context, MODID);
+        String modid = StringArgumentType.getString(context, MODID_PARAM);
         if (INVALID_MODID.test(modid)) {
             throw LangKey.INVALID_MODID.asCommandException();
         }
@@ -352,27 +352,27 @@ public class CommandWoodcutter {
     }
 
     private void disableDataPack(CommandSource source, String modid) {
-        // disable datapack if enabled (without reload)
+        // disable datapack if enabled
         ResourcePackList packs = source.getServer().getResourcePacks();
-        ResourcePackInfo packInfo = packs.getPackInfo("file/" + getZipName(modid));
-        if (packInfo != null && packs.getEnabledPacks().contains(packInfo)) {
-            List<ResourcePackInfo> enabledPackInfos = Lists.newArrayList(packs.getEnabledPacks());
-            enabledPackInfos.remove(packInfo);
-            source.getServer().func_240780_a_(enabledPackInfos.stream().map(ResourcePackInfo::getName).collect(Collectors.toList()));
+        ResourcePackInfo pack = packs.getPackInfo("file/" + getZipName(modid));
+        if (pack != null && packs.getEnabledPacks().contains(pack)) {
+            List<ResourcePackInfo> selectedPacks = Lists.newArrayList(packs.getEnabledPacks());
+            selectedPacks.remove(pack);
+            source.getServer().func_240780_a_(selectedPacks.stream().map(ResourcePackInfo::getName).collect(Collectors.toList()));
         }
     }
 
-    private void reload(MinecraftServer server) {
+    private void discoverNewDataPack(MinecraftServer server) {
         ResourcePackList packs = server.getResourcePacks();
-        Collection<String> enabledPackInfos = Lists.newArrayList(server.getResourcePacks().func_232621_d_());
+        Collection<String> selectedPackIds = Lists.newArrayList(server.getResourcePacks().func_232621_d_());
         packs.reloadPacksFromFinders();
-        Collection<String> disabledPackInfos = server.getServerConfiguration().getDatapackCodec().getDisabled();
-        for (String packInfo : packs.func_232616_b_()) {
-            if (!disabledPackInfos.contains(packInfo) && !enabledPackInfos.contains(packInfo)) {
-                enabledPackInfos.add(packInfo);
+        Collection<String> disabledPackIds = server.getServerConfiguration().getDatapackCodec().getDisabled();
+        for (String packId : packs.func_232616_b_()) {
+            if (!disabledPackIds.contains(packId) && !selectedPackIds.contains(packId)) {
+                selectedPackIds.add(packId);
             }
         }
-        server.func_240780_a_(enabledPackInfos);
+        server.func_240780_a_(selectedPackIds);
     }
 
     private boolean toFile(File file, WoodcuttingJsonRecipe recipe) {
@@ -415,19 +415,21 @@ public class CommandWoodcutter {
     }
 
     private void register(CommandDispatcher<CommandSource> dispatcher) {
-        dispatcher.register(Commands.literal("woodcutter").requires(p -> p.hasPermissionLevel(2))
+        LiteralCommandNode<CommandSource> command = dispatcher.register(Commands.literal("cwc").requires(p -> p.hasPermissionLevel(2))
                 .executes(this::showUsage)
                 .then(BaseAction.INFO.literal().executes(this::showUsage)
                 ).then(BaseAction.DATAPACK.literal().executes(this::showUsage)
                         .then(DatapackAction.GENERATE.literal().executes(this::showUsage)
-                                .then(Commands.argument(MODID, StringArgumentType.word()).suggests(SUGGESTION_MODID).executes(this::generateDataPack))
+                                .then(Commands.argument(MODID_PARAM, StringArgumentType.word()).suggests(SUGGESTION_MODID).executes(this::generateDataPack))
                         ).then(DatapackAction.APPLY.literal().requires(p -> p.getServer().isSinglePlayer()).executes(this::showUsage)
-                                .then(Commands.argument(MODID, StringArgumentType.word()).suggests(SUGGESTION_MODID).executes(this::applyDataPack))
+                                .then(Commands.argument(MODID_PARAM, StringArgumentType.word()).suggests(SUGGESTION_MODID).executes(this::applyDataPack))
                         ).then(DatapackAction.REMOVE.literal().requires(p -> p.getServer().isSinglePlayer()).executes(this::showUsage)
-                                .then(Commands.argument(MODID, StringArgumentType.word()).suggests(SUGGESTION_MODID).executes(this::removeDataPack))
+                                .then(Commands.argument(MODID_PARAM, StringArgumentType.word()).suggests(SUGGESTION_MODID).executes(this::removeDataPack))
                         )
                 )
         );
+        // alphabetic order of literal is relevant for redirect (fixed in 1.17.1)
+        dispatcher.register(Commands.literal("woodcutter").requires(p -> p.hasPermissionLevel(2)).redirect(command));
     }
 
     @SuppressWarnings("unused")
@@ -470,7 +472,7 @@ public class CommandWoodcutter {
         }
     }
 
-    private static final String MODID = "modid";
+    private static final String MODID_PARAM = "modid";
     private static final Predicate<String> INVALID_MODID = modid -> modid == null || "minecraft".equals(modid) || (!ModList.get().isLoaded(modid) || SupportMods.hasSupport(modid));
     private static final Predicate<Item> VALID_INGREDIENT = item -> item == Items.AIR || item.isIn(ItemTags.LOGS) || item.isIn(ItemTags.PLANKS) || item.isIn(Tags.Items.RODS_WOODEN);
     private static final BiFunction<MinecraftServer, String, File> DATAPACK_FOLDER = (server, folder) -> new File(server.func_240776_a_(FolderName.DATAPACKS).toFile(), folder);
