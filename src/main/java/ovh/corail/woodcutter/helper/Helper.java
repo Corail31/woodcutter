@@ -10,10 +10,10 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import ovh.corail.woodcutter.config.ConfigWoodcutter;
+import ovh.corail.woodcutter.config.CustomConfig;
 import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
 import ovh.corail.woodcutter.registry.ModBlocks;
 import ovh.corail.woodcutter.registry.ModRecipeTypes;
-import ovh.corail.woodcutter.config.CustomConfig;
 
 import java.util.Comparator;
 import java.util.List;

@@ -23,13 +23,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import ovh.corail.woodcutter.block.WoodcutterBlock;
+import ovh.corail.woodcutter.config.ConfigWoodcutter;
 import ovh.corail.woodcutter.inventory.WoodcutterContainer;
 import ovh.corail.woodcutter.registry.ModBlocks;
 import ovh.corail.woodcutter.registry.ModTabs;
-import ovh.corail.woodcutter.config.ConfigWoodcutter;
 
 import javax.annotation.Nullable;
-
 import java.util.List;
 
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;

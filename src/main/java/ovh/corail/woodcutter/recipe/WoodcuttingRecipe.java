@@ -1,10 +1,10 @@
 package ovh.corail.woodcutter.recipe;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.SingleItemRecipe;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import ovh.corail.woodcutter.registry.ModBlocks;
 import ovh.corail.woodcutter.registry.ModRecipeSerializers;

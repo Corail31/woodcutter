@@ -175,7 +175,6 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
         }
     }
 
-
     @Override
     protected void slotClicked(Slot slotIn, int slotId, int mouseButton, ClickType type) {
         // reset the slider if 2 items are switched from the input slot

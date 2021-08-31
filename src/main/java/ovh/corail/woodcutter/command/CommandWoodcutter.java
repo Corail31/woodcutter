@@ -258,6 +258,7 @@ public class CommandWoodcutter {
     }
 
     private record WoodCompo(ResourceLocation plankName, boolean isPlankTag, ResourceLocation logName, boolean isLogTag) {
+        @SuppressWarnings("ConstantConditions")
         private static final WoodCompo INVALID = new WoodCompo(null, false, null, false);
     }
 
@@ -325,15 +326,15 @@ public class CommandWoodcutter {
                 @SuppressWarnings("UnstableApiUsage")
                 @Override
                 public FileVisitResult visitFile(Path visitedPath, BasicFileAttributes attributes) {
-                    try {
-                        if (!visitedPath.toFile().isDirectory() && !visitedPath.endsWith("session.lock")) {
-                            String stringPath = visitedPath.toString();
-                            ZipEntry zipentry = new ZipEntry(stringPath.endsWith("pack.mcmeta") ? "pack.mcmeta" : stringPath.substring(stringPath.indexOf("data")).replace('\\', '/'));
+                    if (!visitedPath.toFile().isDirectory()) {
+                        String stringPath = visitedPath.toString();
+                        ZipEntry zipentry = new ZipEntry(stringPath.endsWith("pack.mcmeta") ? "pack.mcmeta" : stringPath.substring(stringPath.indexOf("data")).replace('\\', '/'));
+                        try {
                             outputStream.putNextEntry(zipentry);
                             asByteSource(visitedPath.toFile()).copyTo(outputStream);
                             outputStream.closeEntry();
+                        } catch (Throwable ignored) {
                         }
-                    } catch (Throwable ignored) {
                     }
                     return FileVisitResult.CONTINUE;
                 }
@@ -387,7 +388,7 @@ public class CommandWoodcutter {
         try {
             if (file.createNewFile()) {
                 FileWriter fw = new FileWriter(file);
-                fw.write(GSON.toJson(new JsonParser().parse("{\"pack\":{\"description\":\"Corail WoodCutter " + StringUtils.capitalize(modid) + " Resources\",\"pack_format\":5}}")));
+                fw.write(GSON.toJson(new JsonParser().parse("{\"pack\":{\"description\":\"Corail WoodCutter " + StringUtils.capitalize(modid) + " Resources\",\"pack_format\":7}}")));
                 fw.close();
                 return true;
             }
@@ -423,7 +424,7 @@ public class CommandWoodcutter {
 
     @SuppressWarnings("unused")
     @SubscribeEvent
-    public static void onServerStarting(RegisterCommandsEvent event) {
+    public static void onRegisterCommands(RegisterCommandsEvent event) {
         new CommandWoodcutter().register(event.getDispatcher());
     }
 
@@ -463,7 +464,7 @@ public class CommandWoodcutter {
 
     private static final String MODID_PARAM = "modid";
     private static final Predicate<String> INVALID_MODID = modid -> modid == null || "minecraft".equals(modid) || (!ModList.get().isLoaded(modid) || SupportMods.hasSupport(modid));
-    private static final Predicate<Item> VALID_INGREDIENT = item -> item == Items.AIR || ItemTags.LOGS.contains(item) || ItemTags.PLANKS.contains(item) || Tags.Items.RODS_WOODEN.contains(item);
+    private static final Predicate<Item> VALID_INGREDIENT = item -> item == Items.AIR || ItemTags.LOGS.contains(item) || ItemTags.PLANKS.contains(item) || Tags.Items.RODS_WOODEN.contains(item) || ItemTags.WOODEN_SLABS.contains(item);
     private static final BiFunction<MinecraftServer, String, File> DATAPACK_FOLDER = (server, folder) -> new File(server.getWorldPath(LevelResource.DATAPACK_DIR).toFile(), folder);
     private static final Function<String, File> CONFIG_FOLDER = folder -> new File(FMLPaths.CONFIGDIR.get().toFile(), "corail_woodcutter" + File.separatorChar + folder);
     private static final SuggestionProvider<CommandSourceStack> SUGGESTION_MODID = (ctx, build) -> SharedSuggestionProvider.suggest(ModList.get().applyForEachModContainer(ModContainer::getModId).filter(SupportMods::noSupport).filter(modid -> !"minecraft".equals(modid)), build);

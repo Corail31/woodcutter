@@ -1,9 +1,9 @@
 package ovh.corail.woodcutter.registry;
 
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.resources.ResourceLocation;
 import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
 
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
