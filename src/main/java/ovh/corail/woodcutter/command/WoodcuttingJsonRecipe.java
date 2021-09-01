@@ -44,7 +44,7 @@ class WoodcuttingJsonRecipe {
         }
     }
 
-    WoodcuttingJsonRecipe setConditions(Conditions... conditions) {
+    WoodcuttingJsonRecipe withConditions(Conditions... conditions) {
         this.conditions = conditions;
         return this;
     }
