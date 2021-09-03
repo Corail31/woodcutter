@@ -253,7 +253,7 @@ public class CommandWoodcutter {
                 ResourceLocation plankName = plank.getRegistryName();
                 assert plankName != null;
                 Ingredient ingredient = logRecipe.getIngredients().get(0);
-                ResourceLocation tagName = Arrays.stream(ingredient.acceptedItems).filter(v -> v instanceof Ingredient.TagList).findFirst().map(tagValue -> ((Ingredient.TagList) tagValue.tag)).map(tag -> TagCollectionManager.getManager().getItemTags().getDirectIdFromTag(tag)).orElse(null);
+                ResourceLocation tagName = Arrays.stream(ingredient.acceptedItems).filter(v -> v instanceof Ingredient.TagList).findFirst().map(tagValue -> ((Ingredient.TagList) tagValue).tag).map(tag -> TagCollectionManager.getManager().getItemTags().getDirectIdFromTag(tag)).orElse(null);
                 if (tagName != null) {
                     return new WoodCompo(plankName, false, tagName, true);
                 }
