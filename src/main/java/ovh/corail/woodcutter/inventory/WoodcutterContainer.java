@@ -23,6 +23,7 @@ import ovh.corail.woodcutter.registry.ModContainers;
 import ovh.corail.woodcutter.registry.ModRecipeTypes;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class WoodcutterContainer extends AbstractContainerMenu {
@@ -133,12 +134,9 @@ public class WoodcutterContainer extends AbstractContainerMenu {
     }
 
     private void setupRecipeList(Container inventoryIn, ItemStack stack) {
-        this.recipes.clear();
         this.selectedRecipeIndex.set(-1);
         this.resultSlot.set(ItemStack.EMPTY);
-        if (!stack.isEmpty()) {
-            this.recipes = Helper.getSortedMatchingRecipes(this.level, inventoryIn);
-        }
+        this.recipes = stack.isEmpty() ? Collections.emptyList() : Helper.getSortedMatchingRecipes(this.level, inventoryIn);
     }
 
     private void setupResultSlot() {
