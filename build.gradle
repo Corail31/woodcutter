@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-version = '2.1.0'
+version = '2.1.1'
 group = 'ovh.corail'
 archivesBaseName = 'corail_woodcutter'
 
@@ -50,10 +50,10 @@ repositories {
 }
 
 dependencies {
-  minecraft 'net.minecraftforge:forge:1.17.1-37.0.50'
+  minecraft 'net.minecraftforge:forge:1.17.1-37.0.53'
   runtimeOnly fg.deobf("mezz.jei:jei-1.17.1:8.0.0.14")
   compileOnly fg.deobf("mezz.jei:jei-1.17.1:8.0.0.14:api")
-  //runtimeOnly fg.deobf("modlib:BiomesOPlenty:1.17.1-14.0.0.32:universal")
+  runtimeOnly fg.deobf("modlib:BiomesOPlenty:1.17.1-14.0.0.32:universal")
 }
 
 jar {
