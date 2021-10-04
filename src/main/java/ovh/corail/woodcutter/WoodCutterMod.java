@@ -23,7 +23,7 @@ public class WoodCutterMod {
 
     @SuppressWarnings("UnstableApiUsage")
     public WoodCutterMod() {
-        Reflection.initialize(ModStats.class);
+        Reflection.initialize(ModStats.class, ModRecipeTypes.class);
         Helper.registerSharedConfig();
         MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);

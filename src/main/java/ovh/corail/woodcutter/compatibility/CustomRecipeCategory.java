@@ -67,4 +67,9 @@ public class CustomRecipeCategory<T extends SingleItemRecipe> implements IRecipe
         guiItemStacks.set(0, ingredients.getInputs(VanillaTypes.ITEM).get(0));
         guiItemStacks.set(1, ingredients.getOutputs(VanillaTypes.ITEM).get(0));
     }
+
+    @Override
+    public boolean isHandled(T recipe) {
+        return true;
+    }
 }
