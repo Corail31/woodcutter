@@ -17,12 +17,14 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackRepository;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.SerializationTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -39,6 +41,7 @@ import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -86,6 +89,7 @@ import static ovh.corail.woodcutter.WoodCutterMod.MOD_NAME;
 
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CommandWoodcutter {
+    private final Set<Item> logs = new HashSet<>();
     private final Map<Item, WoodCompo> plankToLog = new HashMap<>();
 
     private CommandWoodcutter() {
@@ -162,26 +166,26 @@ public class CommandWoodcutter {
             ResourceLocation outputName = result.getItem().getRegistryName();
             assert outputName != null;
             if (ingredients.size() == 1) {
-                WoodCompo compo = this.plankToLog.get(result.getItem());
-                if (compo != null && compo.logName() != null) {
-                    // logs to planks recipes
-                    addRecipe(recipes, compo.logName(), outputName, Mth.floor(result.getCount() / (double) ingredients.get(0).getItems()[0].getCount()), compo.isLogTag());
-                    continue;
+                ItemStack stack = ingredients.get(0).getItems()[0];
+                if (this.logs.contains(stack.getItem())) {
+                    WoodCompo compo = this.plankToLog.get(result.getItem());
+                    if (compo != null) {
+                        // logs to planks recipes
+                        addLogRecipe(recipes, compo, outputName, result.getCount() / stack.getCount());
+                        continue;
+                    }
                 }
             }
             WoodCompo compo = getWoodCompo(ingredients);
             if (compo == null) {
                 continue;
             }
-            if (weight < 1d) { // slab
-                int count = Mth.floor(1 / weight);
-                Optional.ofNullable(compo.logName()).ifPresent(logName -> addRecipe(recipes, logName, outputName, count * 4, compo.isLogTag()));
-                addRecipe(recipes, compo.plankName(), outputName, count, compo.isPlankTag());
-            } else if (weight >= 3.1d) { // boat / fence_gate
-                Optional.ofNullable(compo.logName()).ifPresent(logName -> addRecipe(recipes, logName, outputName, 1, compo.isLogTag()));
-            } else { // others
-                Optional.ofNullable(compo.logName()).ifPresent(logName -> addRecipe(recipes, logName, outputName, 4, compo.isLogTag()));
-                addRecipe(recipes, compo.plankName(), outputName, 1, compo.isPlankTag());
+            final int count = weight < 1d ? Mth.floor(1d / weight) : 1;
+            if (weight < 3.1d) {
+                addPlankRecipe(recipes, compo, outputName, count);
+                addLogRecipe(recipes, compo, outputName, count * 4);
+            } else {
+                addLogRecipe(recipes, compo, outputName, count);
             }
         }
         if (recipes.isEmpty()) {
@@ -218,8 +222,8 @@ public class CommandWoodcutter {
             return 1;
         } catch (IOException e) {
             e.printStackTrace();
+            throw LangKey.ZIP_CREATE_FAIL.asCommandException();
         }
-        throw LangKey.ZIP_CREATE_FAIL.asCommandException();
     }
 
     @Nullable
@@ -235,7 +239,7 @@ public class CommandWoodcutter {
                 }
             }
         }
-        return planks.size() == 0 ? WoodCompo.ANY_WOOD : planks.size() == 1 ? this.plankToLog.get(planks.iterator().next()) : planks.stream().map(this.plankToLog::get).filter(Objects::nonNull).findFirst().orElse(null);
+        return planks.size() == 0 ? WoodCompo.ANY_WOOD : planks.size() == 1 ? this.plankToLog.get(planks.iterator().next()) : ingredients.stream().filter(ing -> !ing.isEmpty()).filter(ing -> this.plankToLog.containsKey(ing.getItems()[0].getItem())).findFirst().map(this::getTagForIngredient).filter(Optional::isPresent).map(tag -> new WoodCompo(tag.get(), true, null, false)).orElse(this.plankToLog.get(planks.iterator().next()));
     }
 
     private record WoodCompo(ResourceLocation plankName, boolean isPlankTag, @Nullable ResourceLocation logName, boolean isLogTag) {
@@ -247,15 +251,16 @@ public class CommandWoodcutter {
         if (!this.plankToLog.isEmpty()) {
             return;
         }
-        server.getRecipeManager().byType(RecipeType.CRAFTING).entrySet().stream().filter(entry -> !"minecraft".equals(entry.getKey().getNamespace())).map(Map.Entry::getValue).filter(r -> r.getIngredients().size() == 1).filter(ShapelessRecipe.class::isInstance).filter(r -> NON_VANILLA_PLANKS.test(r.getResultItem())).filter(r -> NON_VANILLA_LOG.test(r.getIngredients().get(0)))
+        ForgeRegistries.ITEMS.getEntries().stream().filter(entry -> ItemTags.LOGS.contains(entry.getValue()) || entry.getKey().getRegistryName().getPath().endsWith("_log") || entry.getKey().getRegistryName().getPath().endsWith("_stem")).map(Map.Entry::getValue).forEach(this.logs::add);
+        server.getRecipeManager().byType(RecipeType.CRAFTING).entrySet().stream().filter(entry -> !"minecraft".equals(entry.getKey().getNamespace())).map(Map.Entry::getValue).filter(r -> r.getIngredients().size() == 1).filter(ShapelessRecipe.class::isInstance).filter(r -> NON_VANILLA_PLANKS.test(r.getResultItem())).filter(r -> isNonVanillaLogIngredient(r.getIngredients().get(0)))
             .forEach(logRecipe -> this.plankToLog.computeIfAbsent(logRecipe.getResultItem().getItem(), plank -> {
                 ResourceLocation plankName = plank.getRegistryName();
                 assert plankName != null;
                 // if a tag is provided in the recipe
                 Ingredient ingredient = logRecipe.getIngredients().get(0);
-                ResourceLocation tagName = Arrays.stream(ingredient.values).filter(v -> v instanceof Ingredient.TagValue).findFirst().map(tagValue -> ((Ingredient.TagValue) tagValue).tag).map(tag -> SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY).getId(tag)).orElse(null);
-                if (tagName != null) {
-                    return new WoodCompo(plankName, false, tagName, true);
+                Optional<ResourceLocation> tagName = getTagForIngredient(ingredient);
+                if (tagName.isPresent()) {
+                    return new WoodCompo(plankName, false, tagName.get(), true);
                 }
                 ItemStack[] stacks = ingredient.getItems();
                 // fallback from the common tags of that namespace
@@ -266,13 +271,14 @@ public class CommandWoodcutter {
                     String logPath = logName.getPath().replace("stripped_", "");
                     return commonTags.stream().filter(rl -> ALMOSTLY_SIMILAR_PATH.test(logPath, rl.getPath())).findFirst().map(rl -> new WoodCompo(plankName, false, rl, true)).orElse(new WoodCompo(plankName, false, logName, false));
                 }
+                final Set<ResourceLocation> logNames = Arrays.stream(stacks).map(ItemStack::getItem).map(ForgeRegistryEntry::getRegistryName).collect(Collectors.toSet());
                 for (ResourceLocation tagRL : commonTags) {
                     // having a name similar to one of the logs
-                    if (Arrays.stream(stacks).map(ItemStack::getItem).map(ForgeRegistryEntry::getRegistryName).filter(Objects::nonNull).anyMatch(logName -> ALMOSTLY_SIMILAR_PATH.test(logName.getPath().replace("stripped_", ""), tagRL.getPath()))) {
+                    if (logNames.stream().anyMatch(logName -> ALMOSTLY_SIMILAR_PATH.test(logName.getPath().replace("stripped_", ""), tagRL.getPath()))) {
                         return new WoodCompo(plankName, false, tagRL, true);
                     }
                 }
-                return new WoodCompo(plankName, false, Arrays.stream(stacks).map(ItemStack::getItem).map(ForgeRegistryEntry::getRegistryName).filter(Objects::nonNull).min(Comparator.comparing(rl -> Levenshtein.distance(rl.getPath(), plankName.getPath()))).orElse(null), false);
+                return new WoodCompo(plankName, false, logNames.stream().min(Comparator.comparingInt(rl -> Levenshtein.distance(rl.getPath(), plankName.getPath()))).orElse(null), false);
             }))
         ;
         this.plankToLog.put(Items.ACACIA_PLANKS, new WoodCompo(Objects.requireNonNull(Items.ACACIA_PLANKS.getRegistryName()), false, ItemTags.ACACIA_LOGS.getName(), true));
@@ -292,11 +298,19 @@ public class CommandWoodcutter {
             return Collections.emptySet();
         }
         Set<ResourceLocation> commonTags = new HashSet<>(stacks[0].getItem().getTags());
+        commonTags.removeIf(rl -> !namespace.equals(rl.getNamespace()));
         if (stacks.length > 1) {
             IntStream.range(1, stacks.length).forEach(i -> commonTags.retainAll(stacks[i].getItem().getTags()));
         }
-        commonTags.removeIf(rl -> !namespace.equals(rl.getNamespace()));
         return commonTags;
+    }
+
+    private Optional<ResourceLocation> getTagForIngredient(Ingredient ingredient) {
+        return Arrays.stream(ingredient.values).filter(v -> v instanceof Ingredient.TagValue).findFirst().map(tagValue -> ((Ingredient.TagValue) tagValue).tag).map(tag -> SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY).getId(tag));
+    }
+
+    private boolean isNonVanillaLogIngredient(Ingredient ingredient) {
+        return !ingredient.isEmpty() && VALID_RESULT.test(ingredient.getItems()[0]) && this.logs.contains(ingredient.getItems()[0].getItem()) && Arrays.stream(ingredient.getItems()).noneMatch(VANILLA_ITEM);
     }
 
     private String getZipName(String modid) {
@@ -381,6 +395,14 @@ public class CommandWoodcutter {
         recipes.put(output.getPath() + "_from_" + input.getPath(), new WoodcuttingJsonRecipe(input.toString(), output.toString(), count, isTag));
     }
 
+    private void addPlankRecipe(final Map<String, WoodcuttingJsonRecipe> recipes, WoodCompo compo, ResourceLocation output, int count) {
+        addRecipe(recipes, compo.plankName(), output, count, compo.isPlankTag());
+    }
+
+    private void addLogRecipe(final Map<String, WoodcuttingJsonRecipe> recipes, WoodCompo compo, ResourceLocation output, int count) {
+        Optional.ofNullable(compo.logName()).ifPresent(logName -> addRecipe(recipes, logName, output, count, compo.isLogTag()));
+    }
+
     private double getWeight(Recipe<CraftingContainer> recipe) {
         final NonNullList<Ingredient> ingredients = recipe.getIngredients();
         double weight = 0d;
@@ -390,8 +412,8 @@ public class CommandWoodcutter {
                 ItemStack[] stacks = ingredient.getItems();
                 ItemStack stack = stacks[0];
                 final Predicate<Item> predicate;
-                if (stack.is(ItemTags.LOGS)) {
-                    predicate = ItemTags.LOGS::contains;
+                if (this.logs.contains(stack.getItem())) {
+                    predicate = this.logs::contains;
                     weight += 4d * stack.getCount();
                 } else if (this.plankToLog.containsKey(stack.getItem())) {
                     predicate = this.plankToLog::containsKey;
@@ -414,20 +436,28 @@ public class CommandWoodcutter {
     }
 
     private void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        LiteralCommandNode<CommandSourceStack> command = dispatcher.register(Commands.literal("woodcutter").requires(p -> p.hasPermission(2))
+        LiteralCommandNode<CommandSourceStack> command = dispatcher.register(Commands.literal("woodcutter").requires(this::hasPermission)
                 .executes(this::showUsage)
                 .then(BaseAction.INFO.literal().executes(this::showUsage)
                 ).then(BaseAction.DATAPACK.literal().executes(this::showUsage)
                         .then(DataPackAction.GENERATE.literal().executes(this::showUsage)
                                 .then(Commands.argument(MODID_PARAM, StringArgumentType.word()).suggests(SUGGESTION_MODID).executes(this::generateDataPack))
-                        ).then(DataPackAction.APPLY.literal().requires(p -> p.getServer().isSingleplayer()).executes(this::showUsage)
+                        ).then(DataPackAction.APPLY.literal().requires(this::isSinglePlayerOwner).executes(this::showUsage)
                                 .then(Commands.argument(MODID_PARAM, StringArgumentType.word()).suggests(SUGGESTION_MODID).executes(this::applyDataPack))
-                        ).then(DataPackAction.REMOVE.literal().requires(p -> p.getServer().isSingleplayer()).executes(this::showUsage)
+                        ).then(DataPackAction.REMOVE.literal().requires(this::isSinglePlayerOwner).executes(this::showUsage)
                                 .then(Commands.argument(MODID_PARAM, StringArgumentType.word()).suggests(SUGGESTION_MODID).executes(this::removeDataPack))
                         )
                 )
         );
-        dispatcher.register(Commands.literal("cwc").requires(p -> p.hasPermission(2)).redirect(command));
+        dispatcher.register(Commands.literal("cwc").requires(this::hasPermission).redirect(command));
+    }
+
+    private boolean hasPermission(CommandSourceStack source) {
+        return source.hasPermission(2) || isSinglePlayerOwner(source);
+    }
+
+    private boolean isSinglePlayerOwner(CommandSourceStack source) {
+        return !source.getServer().isDedicatedServer() && source.getServer().isSingleplayer() && Optional.ofNullable(source.getEntity()).filter(ServerPlayer.class::isInstance).map(ServerPlayer.class::cast).map(Player::getGameProfile).map(profil -> source.getServer().isSingleplayerOwner(profil)).orElse(false);
     }
 
     @SuppressWarnings("unused")
@@ -475,7 +505,6 @@ public class CommandWoodcutter {
     private static final Predicate<ItemStack> VANILLA_ITEM = stack -> Optional.ofNullable(stack.getItem().getRegistryName()).map(ResourceLocation::getNamespace).map("minecraft"::equals).orElse(false);
     private static final Predicate<ItemStack> VALID_RESULT = result -> !result.isEmpty() && !VANILLA_ITEM.test(result);
     private static final Predicate<ItemStack> NON_VANILLA_PLANKS = stack -> VALID_RESULT.test(stack) && (stack.is(ItemTags.PLANKS) || Optional.ofNullable(stack.getItem().getRegistryName()).map(ResourceLocation::getPath).map(e -> e.endsWith("_planks")).orElse(false));
-    private static final Predicate<Ingredient> NON_VANILLA_LOG = ing -> !ing.isEmpty() && (ing.getItems()[0].is(ItemTags.LOGS) || Optional.ofNullable(ing.getItems()[0].getItem().getRegistryName()).map(ResourceLocation::getPath).map(e -> e.endsWith("_log") || e.endsWith("_stem")).orElse(false)) && Arrays.stream(ing.getItems()).noneMatch(VANILLA_ITEM);
     private static final Predicate<String> INVALID_MODID = modid -> modid == null || "minecraft".equals(modid) || !ModList.get().isLoaded(modid) || SupportMods.hasSupport(modid);
     private static final BiPredicate<String, String> ALMOSTLY_SIMILAR_PATH = (s1, s2) -> Levenshtein.distance(s1, s2, 1, 0, 1, 10) <= 3;
     private static final BiFunction<MinecraftServer, String, File> DATAPACK_FOLDER = (server, folder) -> new File(server.getWorldPath(LevelResource.DATAPACK_DIR).toFile(), folder);
