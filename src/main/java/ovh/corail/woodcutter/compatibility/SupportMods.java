@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public enum SupportMods implements StringRepresentable {
     BIOMESOPLENTY("biomesoplenty"),
-    QUARK("quark"),
     TWILIGHT_FOREST("twilightforest"),
     EXTENSION_BYG("corail_woodcutter_extension_byg"),
     BYG("byg"),

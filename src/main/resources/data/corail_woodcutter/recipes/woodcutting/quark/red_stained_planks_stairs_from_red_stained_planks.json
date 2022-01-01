@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:item_exists","item":"quark:red_stained_planks"},{"type":"forge:item_exists","item":"quark:red_stained_planks_stairs"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"quark:red_stained_planks"},"result":"quark:red_stained_planks_stairs","count":1}

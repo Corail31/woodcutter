@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:item_exists","item":"quark:light_blue_stained_planks"},{"type":"forge:item_exists","item":"quark:light_blue_stained_planks_vertical_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"quark:light_blue_stained_planks"},"result":"quark:light_blue_stained_planks_vertical_slab","count":2}

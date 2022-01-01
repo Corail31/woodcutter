@@ -41,11 +41,6 @@ public class ModBlocks {
                 registerWoodcutter(event.getRegistry(), variant.getSerializedName());
             }
         }
-        if (SupportMods.QUARK.isLoaded()) {
-            for (QuarkWoodVariant variant : QuarkWoodVariant.values()) {
-                registerWoodcutter(event.getRegistry(), variant.getSerializedName() + "_stained");
-            }
-        }
         if (SupportMods.TWILIGHT_FOREST.isLoaded()) {
             for (TFWoodVariant variant : TFWoodVariant.values()) {
                 registerWoodcutter(event.getRegistry(), variant.getSerializedName());
@@ -108,20 +103,6 @@ public class ModBlocks {
         private final String name;
 
         BOPWoodVariant() {
-            this.name = name().toLowerCase(Locale.US);
-        }
-
-        @Override
-        public String getSerializedName() {
-            return this.name;
-        }
-    }
-
-    public enum QuarkWoodVariant implements StringRepresentable {
-        BLACK, BLUE, BROWN, CYAN, GRAY, GREEN, LIGHT_BLUE, LIGHT_GRAY, LIME, MAGENTA, ORANGE, PINK, PURPLE, RED, WHITE, YELLOW;
-        private final String name;
-
-        QuarkWoodVariant() {
             this.name = name().toLowerCase(Locale.US);
         }
 

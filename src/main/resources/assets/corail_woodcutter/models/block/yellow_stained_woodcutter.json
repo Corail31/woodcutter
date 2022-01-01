@@ -1,6 +1,0 @@
-{
-    "parent": "corail_woodcutter:block/woodcutter",
-    "textures": {
-        "base": "quark:block/yellow_stained_planks"
-    }
-}

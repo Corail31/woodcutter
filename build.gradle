@@ -51,8 +51,8 @@ repositories {
 
 dependencies {
   minecraft 'net.minecraftforge:forge:1.18.1-39.0.0'
-  //runtimeOnly fg.deobf("mezz.jei:jei-1.18:9.0.0.40")
-  compileOnly fg.deobf("mezz.jei:jei-1.18:9.0.0.40:api")
+  runtimeOnly fg.deobf("mezz.jei:jei-1.18.1:9.1.1.48")
+  compileOnly fg.deobf("mezz.jei:jei-1.18.1:9.1.1.48:api")
   //runtimeOnly fg.deobf("modlib:BiomesOPlenty:1.17.1-14.0.0.32:universal")
 }
 

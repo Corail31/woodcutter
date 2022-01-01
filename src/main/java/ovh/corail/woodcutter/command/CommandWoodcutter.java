@@ -501,7 +501,7 @@ public class CommandWoodcutter {
     }
 
     private static final String MODID_PARAM = "modid";
-    private static final int PACK_FORMAT = 7;
+    private static final int PACK_FORMAT = 8;
     private static final Predicate<ItemStack> VANILLA_ITEM = stack -> Optional.ofNullable(stack.getItem().getRegistryName()).map(ResourceLocation::getNamespace).map("minecraft"::equals).orElse(false);
     private static final Predicate<ItemStack> VALID_RESULT = result -> !result.isEmpty() && !VANILLA_ITEM.test(result);
     private static final Predicate<ItemStack> NON_VANILLA_PLANKS = stack -> VALID_RESULT.test(stack) && (stack.is(ItemTags.PLANKS) || Optional.ofNullable(stack.getItem().getRegistryName()).map(ResourceLocation::getPath).map(e -> e.endsWith("_planks")).orElse(false));
