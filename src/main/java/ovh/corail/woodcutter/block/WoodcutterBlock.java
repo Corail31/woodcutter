@@ -116,7 +116,7 @@ public class WoodcutterBlock extends HorizontalDirectionalBlock implements Bucke
     @Override
     public BlockState updateShape(BlockState olState, Direction facing, BlockState newState, LevelAccessor levelAccessor, BlockPos oldPos, BlockPos newPos) {
         if (olState.getValue(WATERLOGGED)) {
-            levelAccessor.getLiquidTicks().scheduleTick(oldPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelAccessor));
+            levelAccessor.scheduleTick(oldPos, Fluids.WATER, Fluids.WATER.getTickDelay(levelAccessor));
         }
         return super.updateShape(olState, facing, newState, levelAccessor, oldPos, newPos);
     }
@@ -150,7 +150,7 @@ public class WoodcutterBlock extends HorizontalDirectionalBlock implements Bucke
         if (!state.getValue(WATERLOGGED) && fluidState.getType() == Fluids.WATER) {
             if (!levelAccessor.isClientSide()) {
                 levelAccessor.setBlock(pos, state.setValue(WATERLOGGED, true), 3);
-                levelAccessor.getLiquidTicks().scheduleTick(pos, fluidState.getType(), fluidState.getType().getTickDelay(levelAccessor));
+                levelAccessor.scheduleTick(pos, fluidState.getType(), fluidState.getType().getTickDelay(levelAccessor));
             }
             return true;
         }

@@ -3,10 +3,10 @@ package ovh.corail.woodcutter;
 import com.google.common.reflect.Reflection;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fmlserverevents.FMLServerStartingEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ovh.corail.woodcutter.client.gui.WoodcutterScreen;
@@ -34,7 +34,7 @@ public class WoodCutterMod {
         event.enqueueWork(Helper::initItemModels);
     }
 
-    private void onServerStarting(FMLServerStartingEvent event) {
+    private void onServerStarting(ServerStartingEvent event) {
         int count = event.getServer().overworld().getRecipeManager().byType(ModRecipeTypes.WOODCUTTING).size();
         LOGGER.info(count + " woodcutting recipes loaded");
     }
