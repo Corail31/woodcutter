@@ -11,6 +11,7 @@ public enum SupportMods implements StringRepresentable {
     TWILIGHT_FOREST("twilightforest"),
     EXTENSION_BYG("corail_woodcutter_extension_byg"),
     BYG("byg"),
+    QUARK("quark"),
     TROPICRAFT("tropicraft");
 
     private final String modid;

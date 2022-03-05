@@ -13,7 +13,7 @@ class WoodcuttingJsonRecipe {
         this.count = count;
     }
 
-    class Ingredient {
+    static class Ingredient {
         String item;
         String tag;
 

@@ -8,11 +8,12 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.nio.file.Path;
+import java.util.Locale;
 import java.util.function.Function;
 
 public class CustomConfig extends ModConfig {
     public CustomConfig(ForgeConfigSpec spec, ModContainer container) {
-        super(Type.SERVER, spec, container, String.format("%s-%s.toml", container.getModId(), Type.SERVER.extension()));
+        super(Type.SERVER, spec, container, String.format(Locale.US, "%s-%s.toml", container.getModId(), Type.SERVER.extension()));
     }
 
     @Override

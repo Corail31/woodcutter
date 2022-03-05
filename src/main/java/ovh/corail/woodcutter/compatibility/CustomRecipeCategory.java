@@ -1,11 +1,11 @@
 package ovh.corail.woodcutter.compatibility;
 
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +23,7 @@ public class CustomRecipeCategory<T extends SingleItemRecipe> implements IRecipe
     CustomRecipeCategory(Component translation, ResourceLocation uid, ItemStack icon, Class<T> tClass, IGuiHelper guiHelper) {
         this.uid = uid;
         this.background = guiHelper.drawableBuilder(RECIPE_GUI_VANILLA, 49, 168, WIDTH, HEIGHT).addPadding(0, 0, 40, 0).build();
-        this.icon = guiHelper.createDrawableIngredient(icon);
+        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, icon);
         this.translation = translation;
         this.tClass = tClass;
     }
@@ -54,18 +54,9 @@ public class CustomRecipeCategory<T extends SingleItemRecipe> implements IRecipe
     }
 
     @Override
-    public void setIngredients(T recipe, IIngredients ingredients) {
-        ingredients.setInputIngredients(recipe.getIngredients());
-        ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
-    }
-
-    @Override
-    public void setRecipe(IRecipeLayout recipeLayout, T recipe, IIngredients ingredients) {
-        IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-        guiItemStacks.init(0, true, 40, 0);
-        guiItemStacks.init(1, false, 98, 0);
-        guiItemStacks.set(0, ingredients.getInputs(VanillaTypes.ITEM).get(0));
-        guiItemStacks.set(1, ingredients.getOutputs(VanillaTypes.ITEM).get(0));
+    public void setRecipe(IRecipeLayoutBuilder recipeLayoutBuilder, T recipe, IFocusGroup focuses) {
+        recipeLayoutBuilder.addSlot(RecipeIngredientRole.INPUT, 40, 0).addIngredients(recipe.getIngredients().get(0));
+        recipeLayoutBuilder.addSlot(RecipeIngredientRole.OUTPUT, 98, 0).addItemStack(recipe.getResultItem());
     }
 
     @Override

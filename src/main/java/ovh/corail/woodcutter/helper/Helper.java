@@ -1,10 +1,13 @@
 package ovh.corail.woodcutter.helper;
 
-import net.minecraft.Util;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -17,10 +20,11 @@ import ovh.corail.woodcutter.registry.ModRecipeTypes;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.StreamSupport;
 
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
-@SuppressWarnings("unused")
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class Helper {
     public static void initItemModels() {
@@ -35,7 +39,7 @@ public class Helper {
     public static List<WoodcuttingRecipe> getSortedMatchingRecipes(Level level, Container inventory) {
         return level.getRecipeManager().byType(ModRecipeTypes.WOODCUTTING)
                 .values().stream()
-                .flatMap(recipe -> Util.toStream(ModRecipeTypes.WOODCUTTING.tryMatch(recipe, level, inventory)))
+                .flatMap(recipe -> ModRecipeTypes.WOODCUTTING.tryMatch(recipe, level, inventory).stream())
                 .sorted(recipeComparator)
                 .toList();
     }
@@ -49,4 +53,19 @@ public class Helper {
         int comp = name1[name1.length - 1].compareTo(name2[name2.length - 1]);
         return comp == 0 ? registryName1.compareTo(registryName2) : comp;
     };
+
+    public static void fillItemSet(Set<Item> items, TagKey<Item> tagKey) {
+        //noinspection deprecation
+        Registry.ITEM.getTagOrEmpty(tagKey).forEach(holder -> items.add(holder.value()));
+    }
+
+    public static Iterable<Holder<Item>> getItems(TagKey<Item> tagKey) {
+        //noinspection deprecation
+        return Registry.ITEM.getTagOrEmpty(tagKey);
+    }
+
+    public static boolean isInTag(Item item, TagKey<Item> tagKey) {
+        // TODO re-evaluate
+        return StreamSupport.stream(Registry.ITEM.getTagOrEmpty(tagKey).spliterator(), false).anyMatch(holder -> holder.value() == item);
+    }
 }

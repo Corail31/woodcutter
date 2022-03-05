@@ -14,14 +14,13 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackRepository;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.SerializationTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
@@ -49,6 +48,7 @@ import org.jline.utils.Levenshtein;
 import ovh.corail.woodcutter.command.WoodcuttingJsonRecipe.ConditionItem;
 import ovh.corail.woodcutter.command.WoodcuttingJsonRecipe.ConditionMod;
 import ovh.corail.woodcutter.compatibility.SupportMods;
+import ovh.corail.woodcutter.helper.Helper;
 import ovh.corail.woodcutter.helper.LangKey;
 
 import javax.annotation.Nullable;
@@ -243,7 +243,7 @@ public class CommandWoodcutter {
     }
 
     private record WoodCompo(ResourceLocation plankName, boolean isPlankTag, @Nullable ResourceLocation logName, boolean isLogTag) {
-        private static final WoodCompo ANY_WOOD = new WoodCompo(ItemTags.PLANKS.getName(), true, ItemTags.LOGS.getName(), true);
+        private static final WoodCompo ANY_WOOD = new WoodCompo(ItemTags.PLANKS.location(), true, ItemTags.LOGS.location(), true);
     }
 
     private void initPlanksToLogs(MinecraftServer server) {
@@ -251,7 +251,9 @@ public class CommandWoodcutter {
         if (!this.plankToLog.isEmpty()) {
             return;
         }
-        ForgeRegistries.ITEMS.getEntries().stream().filter(entry -> ItemTags.LOGS.contains(entry.getValue()) || entry.getKey().getRegistryName().getPath().endsWith("_log") || entry.getKey().getRegistryName().getPath().endsWith("_stem")).map(Map.Entry::getValue).forEach(this.logs::add);
+        // init log
+        Helper.fillItemSet(this.logs, ItemTags.LOGS);
+        ForgeRegistries.ITEMS.getEntries().stream().filter(entry -> entry.getKey().getRegistryName().getPath().endsWith("_log") || entry.getKey().getRegistryName().getPath().endsWith("_stem")).map(Map.Entry::getValue).forEach(this.logs::add);
         server.getRecipeManager().byType(RecipeType.CRAFTING).entrySet().stream().filter(entry -> !"minecraft".equals(entry.getKey().getNamespace())).map(Map.Entry::getValue).filter(r -> r.getIngredients().size() == 1).filter(ShapelessRecipe.class::isInstance).filter(r -> NON_VANILLA_PLANKS.test(r.getResultItem())).filter(r -> isNonVanillaLogIngredient(r.getIngredients().get(0)))
             .forEach(logRecipe -> this.plankToLog.computeIfAbsent(logRecipe.getResultItem().getItem(), plank -> {
                 ResourceLocation plankName = plank.getRegistryName();
@@ -281,32 +283,32 @@ public class CommandWoodcutter {
                 return new WoodCompo(plankName, false, logNames.stream().min(Comparator.comparingInt(rl -> Levenshtein.distance(rl.getPath(), plankName.getPath()))).orElse(null), false);
             }))
         ;
-        this.plankToLog.put(Items.ACACIA_PLANKS, new WoodCompo(Objects.requireNonNull(Items.ACACIA_PLANKS.getRegistryName()), false, ItemTags.ACACIA_LOGS.getName(), true));
-        this.plankToLog.put(Items.BIRCH_PLANKS, new WoodCompo(Objects.requireNonNull(Items.BIRCH_PLANKS.getRegistryName()), false, ItemTags.BIRCH_LOGS.getName(), true));
-        this.plankToLog.put(Items.DARK_OAK_PLANKS, new WoodCompo(Objects.requireNonNull(Items.DARK_OAK_PLANKS.getRegistryName()), false, ItemTags.DARK_OAK_LOGS.getName(), true));
-        this.plankToLog.put(Items.JUNGLE_PLANKS, new WoodCompo(Objects.requireNonNull(Items.JUNGLE_PLANKS.getRegistryName()), false, ItemTags.JUNGLE_LOGS.getName(), true));
-        this.plankToLog.put(Items.OAK_PLANKS, new WoodCompo(Objects.requireNonNull(Items.OAK_PLANKS.getRegistryName()), false, ItemTags.OAK_LOGS.getName(), true));
-        this.plankToLog.put(Items.SPRUCE_PLANKS, new WoodCompo(Objects.requireNonNull(Items.SPRUCE_PLANKS.getRegistryName()), false, ItemTags.SPRUCE_LOGS.getName(), true));
-        this.plankToLog.put(Items.CRIMSON_PLANKS, new WoodCompo(Objects.requireNonNull(Items.CRIMSON_PLANKS.getRegistryName()), false, ItemTags.CRIMSON_STEMS.getName(), true));
-        this.plankToLog.put(Items.WARPED_PLANKS, new WoodCompo(Objects.requireNonNull(Items.WARPED_PLANKS.getRegistryName()), false, ItemTags.WARPED_STEMS.getName(), true));
+        this.plankToLog.put(Items.ACACIA_PLANKS, new WoodCompo(Objects.requireNonNull(Items.ACACIA_PLANKS.getRegistryName()), false, ItemTags.ACACIA_LOGS.location(), true));
+        this.plankToLog.put(Items.BIRCH_PLANKS, new WoodCompo(Objects.requireNonNull(Items.BIRCH_PLANKS.getRegistryName()), false, ItemTags.BIRCH_LOGS.location(), true));
+        this.plankToLog.put(Items.DARK_OAK_PLANKS, new WoodCompo(Objects.requireNonNull(Items.DARK_OAK_PLANKS.getRegistryName()), false, ItemTags.DARK_OAK_LOGS.location(), true));
+        this.plankToLog.put(Items.JUNGLE_PLANKS, new WoodCompo(Objects.requireNonNull(Items.JUNGLE_PLANKS.getRegistryName()), false, ItemTags.JUNGLE_LOGS.location(), true));
+        this.plankToLog.put(Items.OAK_PLANKS, new WoodCompo(Objects.requireNonNull(Items.OAK_PLANKS.getRegistryName()), false, ItemTags.OAK_LOGS.location(), true));
+        this.plankToLog.put(Items.SPRUCE_PLANKS, new WoodCompo(Objects.requireNonNull(Items.SPRUCE_PLANKS.getRegistryName()), false, ItemTags.SPRUCE_LOGS.location(), true));
+        this.plankToLog.put(Items.CRIMSON_PLANKS, new WoodCompo(Objects.requireNonNull(Items.CRIMSON_PLANKS.getRegistryName()), false, ItemTags.CRIMSON_STEMS.location(), true));
+        this.plankToLog.put(Items.WARPED_PLANKS, new WoodCompo(Objects.requireNonNull(Items.WARPED_PLANKS.getRegistryName()), false, ItemTags.WARPED_STEMS.location(), true));
         // planks with no log recipe
-        ItemTags.PLANKS.getValues().forEach(key -> this.plankToLog.computeIfAbsent(key, item -> new WoodCompo(Objects.requireNonNull(item.getRegistryName()), false, null, false)));
+        Helper.getItems(ItemTags.PLANKS).forEach(key -> this.plankToLog.computeIfAbsent(key.value(), item -> new WoodCompo(Objects.requireNonNull(item.getRegistryName()), false, null, false)));
     }
 
     private Set<ResourceLocation> getCommonTags(ItemStack[] stacks, String namespace) {
         if (stacks.length == 0) {
             return Collections.emptySet();
         }
-        Set<ResourceLocation> commonTags = new HashSet<>(stacks[0].getItem().getTags());
+        Set<ResourceLocation> commonTags = stacks[0].getTags().map(TagKey::location).collect(Collectors.toSet());
         commonTags.removeIf(rl -> !namespace.equals(rl.getNamespace()));
         if (stacks.length > 1) {
-            IntStream.range(1, stacks.length).forEach(i -> commonTags.retainAll(stacks[i].getItem().getTags()));
+            IntStream.range(1, stacks.length).forEach(i -> commonTags.retainAll(stacks[i].getTags().map(TagKey::location).collect(Collectors.toSet())));
         }
         return commonTags;
     }
 
     private Optional<ResourceLocation> getTagForIngredient(Ingredient ingredient) {
-        return Arrays.stream(ingredient.values).filter(v -> v instanceof Ingredient.TagValue).findFirst().map(tagValue -> ((Ingredient.TagValue) tagValue).tag).map(tag -> SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY).getId(tag));
+        return Arrays.stream(ingredient.values).filter(v -> v instanceof Ingredient.TagValue).findFirst().map(tagValue -> ((Ingredient.TagValue) tagValue).tag).map(TagKey::location);
     }
 
     private boolean isNonVanillaLogIngredient(Ingredient ingredient) {
@@ -325,7 +327,6 @@ public class CommandWoodcutter {
                     return FileVisitResult.CONTINUE;
                 }
 
-                @SuppressWarnings("UnstableApiUsage")
                 @Override
                 public FileVisitResult visitFile(Path visitedPath, BasicFileAttributes attributes) {
                     if (!visitedPath.toFile().isDirectory()) {
@@ -419,10 +420,10 @@ public class CommandWoodcutter {
                     predicate = this.plankToLog::containsKey;
                     weight += 1d * stack.getCount();
                 } else if (stack.is(Tags.Items.RODS_WOODEN)) {
-                    predicate = Tags.Items.RODS_WOODEN::contains;
+                    predicate = item -> Helper.isInTag(item, Tags.Items.RODS_WOODEN);
                     weight += 0.5d * stack.getCount();
                 } else if (stack.is(ItemTags.WOODEN_SLABS)) {
-                    predicate = ItemTags.WOODEN_SLABS::contains;
+                    predicate = item -> Helper.isInTag(item, ItemTags.WOODEN_SLABS);
                     weight += 0.5d * stack.getCount();
                 } else {
                     return 0d;
@@ -501,7 +502,7 @@ public class CommandWoodcutter {
     }
 
     private static final String MODID_PARAM = "modid";
-    private static final int PACK_FORMAT = 8;
+    private static final int PACK_FORMAT = 9;
     private static final Predicate<ItemStack> VANILLA_ITEM = stack -> Optional.ofNullable(stack.getItem().getRegistryName()).map(ResourceLocation::getNamespace).map("minecraft"::equals).orElse(false);
     private static final Predicate<ItemStack> VALID_RESULT = result -> !result.isEmpty() && !VANILLA_ITEM.test(result);
     private static final Predicate<ItemStack> NON_VANILLA_PLANKS = stack -> VALID_RESULT.test(stack) && (stack.is(ItemTags.PLANKS) || Optional.ofNullable(stack.getItem().getRegistryName()).map(ResourceLocation::getPath).map(e -> e.endsWith("_planks")).orElse(false));

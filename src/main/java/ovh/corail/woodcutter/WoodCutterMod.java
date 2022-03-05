@@ -1,6 +1,5 @@
 package ovh.corail.woodcutter;
 
-import com.google.common.reflect.Reflection;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -13,7 +12,6 @@ import ovh.corail.woodcutter.client.gui.WoodcutterScreen;
 import ovh.corail.woodcutter.helper.Helper;
 import ovh.corail.woodcutter.registry.ModContainers;
 import ovh.corail.woodcutter.registry.ModRecipeTypes;
-import ovh.corail.woodcutter.registry.ModStats;
 
 @Mod("corail_woodcutter")
 public class WoodCutterMod {
@@ -21,9 +19,7 @@ public class WoodCutterMod {
     public static final String MOD_NAME = "Corail Woodcutter";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
-    @SuppressWarnings("UnstableApiUsage")
     public WoodCutterMod() {
-        Reflection.initialize(ModStats.class, ModRecipeTypes.class);
         Helper.registerSharedConfig();
         MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);

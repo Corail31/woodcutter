@@ -1,5 +1,6 @@
 package ovh.corail.woodcutter.registry;
 
+import com.google.common.reflect.Reflection;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -75,6 +76,8 @@ public class ModBlocks {
         Block woodcutter = new WoodcutterBlock().setRegistryName(MOD_ID, name + "_woodcutter");
         registry.register(woodcutter);
         WOODCUTTERS.add(woodcutter);
+        //noinspection UnstableApiUsage
+        Reflection.initialize(ModStats.class, ModRecipeTypes.class);
     }
 
     public static ItemStack createRandomStack() {
