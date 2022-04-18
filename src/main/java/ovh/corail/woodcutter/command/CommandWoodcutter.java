@@ -387,7 +387,7 @@ public class CommandWoodcutter {
         JsonObject json = new JsonObject();
         JsonObject pack = new JsonObject();
         json.add("pack", pack);
-        pack.addProperty("description", MOD_NAME + " " + StringUtils.capitalize(modid) + " Resources");
+        pack.addProperty("description", MOD_NAME + ": " + StringUtils.capitalize(modid) + " Resources");
         pack.addProperty("pack_format", PACK_FORMAT);
         return toFile(file, json);
     }

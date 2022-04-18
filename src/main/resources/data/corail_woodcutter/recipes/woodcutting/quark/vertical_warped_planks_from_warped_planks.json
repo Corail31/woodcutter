@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:mod_loaded","modid":"corail_woodcutter"},{"type":"forge:item_exists","item":"quark:vertical_warped_planks"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:warped_planks"},"result":"quark:vertical_warped_planks","count":1}

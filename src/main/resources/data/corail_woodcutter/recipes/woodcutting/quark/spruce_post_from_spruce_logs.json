@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:mod_loaded","modid":"corail_woodcutter"},{"type":"forge:item_exists","item":"quark:spruce_post"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:spruce_logs"},"result":"quark:spruce_post","count":4}

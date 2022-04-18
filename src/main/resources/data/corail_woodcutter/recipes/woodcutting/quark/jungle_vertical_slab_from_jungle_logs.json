@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:item_exists","item":"quark:jungle_vertical_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:jungle_logs"},"result":"quark:jungle_vertical_slab","count":8}
+{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:mod_loaded","modid":"corail_woodcutter"},{"type":"forge:item_exists","item":"quark:jungle_vertical_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:jungle_logs"},"result":"quark:jungle_vertical_slab","count":8}

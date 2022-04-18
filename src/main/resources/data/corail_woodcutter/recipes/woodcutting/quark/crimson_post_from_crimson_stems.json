@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:mod_loaded","modid":"corail_woodcutter"},{"type":"forge:item_exists","item":"quark:crimson_post"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:crimson_stems"},"result":"quark:crimson_post","count":4}

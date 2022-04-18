@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:mod_loaded","modid":"corail_woodcutter"},{"type":"forge:item_exists","item":"quark:blossom_button"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"quark:blossom_planks"},"result":"quark:blossom_button","count":1}

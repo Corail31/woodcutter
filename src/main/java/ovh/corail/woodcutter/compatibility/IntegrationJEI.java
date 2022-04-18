@@ -19,7 +19,7 @@ import java.util.Optional;
 
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "removal"})
 @JeiPlugin
 public class IntegrationJEI implements IModPlugin {
     private static final ResourceLocation WOOD_RL = new ResourceLocation(MOD_ID, "woodcutting");

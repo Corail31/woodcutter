@@ -12,6 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.SingleItemRecipe;
 
+@SuppressWarnings("removal")
 public class CustomRecipeCategory<T extends SingleItemRecipe> implements IRecipeCategory<T> {
     private static final ResourceLocation RECIPE_GUI_VANILLA = new ResourceLocation("jei", "textures/gui/gui_vanilla.png");
     private final ResourceLocation uid;

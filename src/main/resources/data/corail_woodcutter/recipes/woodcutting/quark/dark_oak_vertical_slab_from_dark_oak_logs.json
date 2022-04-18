@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:item_exists","item":"quark:dark_oak_vertical_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:dark_oak_logs"},"result":"quark:dark_oak_vertical_slab","count":8}
+{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:mod_loaded","modid":"corail_woodcutter"},{"type":"forge:item_exists","item":"quark:dark_oak_vertical_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:dark_oak_logs"},"result":"quark:dark_oak_vertical_slab","count":8}

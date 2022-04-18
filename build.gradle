@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-version = '2.3.0'
+version = '2.3.1'
 group = 'ovh.corail'
 archivesBaseName = 'corail_woodcutter'
 
@@ -24,7 +24,8 @@ minecraft {
       workingDirectory project.file('run')
       property 'forge.logging.markers', '' // REGISTRIES
       property 'forge.logging.console.level', 'debug'
-
+      //property 'mixin.env.remapRefMap', 'true'
+      //property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
       mods {
         corail_woodcutter {
           source sourceSets.main
@@ -45,14 +46,16 @@ minecraft {
 }
 
 repositories {
-  flatDir { dirs 'modlib' }
+  //flatDir { dirs 'modlib' }
   maven { url = "https://dvs1.progwml6.com/files/maven" } // JEI
 }
 
 dependencies {
-  minecraft 'net.minecraftforge:forge:1.18.2-40.0.2'
-  runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:9.4.1.117")
-  compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.4.1.117:api")
+  minecraft 'net.minecraftforge:forge:1.18.2-40.0.52'
+  runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.192")
+  compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.192:api")
+  //runtimeOnly fg.deobf("modlib:AutoRegLib:1.7.53")
+  //runtimeOnly fg.deobf("modlib:Quark:3.2.349")
 }
 
 jar {
