@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-version = '2.3.1'
+version = '2.3.2'
 group = 'ovh.corail'
 archivesBaseName = 'corail_woodcutter'
 
@@ -46,7 +46,7 @@ minecraft {
 }
 
 repositories {
-  //flatDir { dirs 'modlib' }
+  flatDir { dirs 'modlib' }
   maven { url = "https://dvs1.progwml6.com/files/maven" } // JEI
 }
 
@@ -56,6 +56,9 @@ dependencies {
   compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.192:api")
   //runtimeOnly fg.deobf("modlib:AutoRegLib:1.7.53")
   //runtimeOnly fg.deobf("modlib:Quark:3.2.349")
+  //runtimeOnly fg.deobf("modlib:TerraBlender:1.18.2-1.1.0.99")
+  //runtimeOnly fg.deobf("modlib:BYG:1.18.2")
+  //runtimeOnly fg.deobf("modlib:corail_woodcutter_extension_byg:1.0.1")
 }
 
 jar {
