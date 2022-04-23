@@ -6,37 +6,42 @@ import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.SingleItemRecipe;
 
-@SuppressWarnings("removal")
 public class CustomRecipeCategory<T extends SingleItemRecipe> implements IRecipeCategory<T> {
     private static final ResourceLocation RECIPE_GUI_VANILLA = new ResourceLocation("jei", "textures/gui/gui_vanilla.png");
-    private final ResourceLocation uid;
     private static final int WIDTH = 116, HEIGHT = 18;
-    private final IDrawable background, icon;
+    private final RecipeType<T> recipeType;
     private final Component translation;
-    private final Class<T> tClass;
+    private final IDrawable icon, background;
 
-    CustomRecipeCategory(Component translation, ResourceLocation uid, ItemStack icon, Class<T> tClass, IGuiHelper guiHelper) {
-        this.uid = uid;
-        this.background = guiHelper.drawableBuilder(RECIPE_GUI_VANILLA, 49, 168, WIDTH, HEIGHT).addPadding(0, 0, 40, 0).build();
-        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, icon);
+    CustomRecipeCategory(RecipeType<T> recipeType, Component translation, ItemStack icon, IGuiHelper guiHelper) {
+        this.recipeType = recipeType;
         this.translation = translation;
-        this.tClass = tClass;
+        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, icon);
+        this.background = guiHelper.drawableBuilder(RECIPE_GUI_VANILLA, 49, 168, WIDTH, HEIGHT).addPadding(0, 0, 40, 0).build();
     }
 
     @Override
+    public RecipeType<T> getRecipeType() {
+        return this.recipeType;
+    }
+
+    @SuppressWarnings("removal")
     public ResourceLocation getUid() {
-        return this.uid;
+        // TODO remove later
+        return this.recipeType.getUid();
     }
 
-    @Override
-    public Class<T> getRecipeClass() {
-        return this.tClass;
+    @SuppressWarnings("removal")
+    public Class<? extends T> getRecipeClass() {
+        // TODO remove later
+        return this.recipeType.getRecipeClass();
     }
 
     @Override

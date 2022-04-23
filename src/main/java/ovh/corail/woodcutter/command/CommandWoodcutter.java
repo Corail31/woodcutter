@@ -148,7 +148,7 @@ public class CommandWoodcutter {
     }
 
     private int generateDataPack(CommandContext<CommandSourceStack> context) {
-        // try to determine the existing wooden recipes, then generate theses recipes in the woodcutter format in the config folder and finalize that folder in a zip
+        // try to determine the existing wooden recipes, then generate these recipes in the woodcutter format in the config folder and finalize that folder in a zip
         String modid = StringArgumentType.getString(context, MODID_PARAM);
         if (INVALID_MODID.test(modid)) {
             throw LangKey.INVALID_MODID.asCommandException();

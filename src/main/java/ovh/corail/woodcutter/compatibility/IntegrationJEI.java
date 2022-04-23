@@ -2,6 +2,7 @@ package ovh.corail.woodcutter.compatibility;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
@@ -16,13 +17,19 @@ import ovh.corail.woodcutter.registry.ModRecipeTypes;
 import ovh.corail.woodcutter.registry.ModTabs;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
-@SuppressWarnings({"unused", "removal"})
+@SuppressWarnings("unused")
 @JeiPlugin
 public class IntegrationJEI implements IModPlugin {
     private static final ResourceLocation WOOD_RL = new ResourceLocation(MOD_ID, "woodcutting");
+    private final RecipeType<WoodcuttingRecipe> recipeType;
+
+    public IntegrationJEI() {
+        this.recipeType = RecipeType.create(MOD_ID, "woodcutting", WoodcuttingRecipe.class);
+    }
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -31,16 +38,16 @@ public class IntegrationJEI implements IModPlugin {
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
-        registry.addRecipeCategories(new CustomRecipeCategory<>(WoodcutterBlock.TRANSLATION, WOOD_RL, ModTabs.mainTab.getIconItem(), WoodcuttingRecipe.class, registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new CustomRecipeCategory<>(this.recipeType, WoodcutterBlock.TRANSLATION, ModTabs.mainTab.getIconItem(), registry.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        Optional.ofNullable(Minecraft.getInstance().level).ifPresent(w -> registration.addRecipes(w.getRecipeManager().byType(ModRecipeTypes.WOODCUTTING).values().stream().sorted(Helper.recipeComparator).toList(), WOOD_RL));
+        Optional.ofNullable(Minecraft.getInstance().level).ifPresent(level -> registration.addRecipes(recipeType, level.getRecipeManager().byType(ModRecipeTypes.WOODCUTTING).values().stream().map(v -> (WoodcuttingRecipe) v).sorted(Helper.recipeComparator).collect(Collectors.toList())));
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        ModBlocks.WOODCUTTERS.forEach(woodcutter -> registration.addRecipeCatalyst(new ItemStack(woodcutter), WOOD_RL));
+        ModBlocks.WOODCUTTERS.forEach(woodcutter -> registration.addRecipeCatalyst(new ItemStack(woodcutter), recipeType));
     }
 }
