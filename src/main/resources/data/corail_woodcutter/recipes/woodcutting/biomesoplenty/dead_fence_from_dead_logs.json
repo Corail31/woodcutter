@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:dead_logs"},"result":"biomesoplenty:dead_fence","count":4}
+{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:dead_fence"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:dead_logs"},"result":"biomesoplenty:dead_fence","count":4}

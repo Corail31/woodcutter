@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:dead_planks"},"result":"biomesoplenty:dead_button","count":1}
+{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:dead_button"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:dead_planks"},"result":"biomesoplenty:dead_button","count":1}

@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:fir_logs"},"result":"biomesoplenty:fir_pressure_plate","count":4}
+{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:fir_pressure_plate"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:fir_logs"},"result":"biomesoplenty:fir_pressure_plate","count":4}

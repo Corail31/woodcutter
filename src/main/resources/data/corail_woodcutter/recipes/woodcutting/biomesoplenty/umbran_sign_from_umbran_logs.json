@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:umbran_sign"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:umbran_logs"},"result":"biomesoplenty:umbran_sign","count":4}

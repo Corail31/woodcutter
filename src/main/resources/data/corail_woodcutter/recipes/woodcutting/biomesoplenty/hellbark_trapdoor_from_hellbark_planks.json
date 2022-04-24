@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:hellbark_planks"},"result":"biomesoplenty:hellbark_trapdoor","count":1}
+{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:hellbark_trapdoor"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:hellbark_planks"},"result":"biomesoplenty:hellbark_trapdoor","count":1}

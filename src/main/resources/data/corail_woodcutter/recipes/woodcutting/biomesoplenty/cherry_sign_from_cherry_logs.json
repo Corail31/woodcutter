@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:cherry_sign"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:cherry_logs"},"result":"biomesoplenty:cherry_sign","count":4}

@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:umbran_planks"},"result":"biomesoplenty:umbran_slab","count":2}
+{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:umbran_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:umbran_planks"},"result":"biomesoplenty:umbran_slab","count":2}

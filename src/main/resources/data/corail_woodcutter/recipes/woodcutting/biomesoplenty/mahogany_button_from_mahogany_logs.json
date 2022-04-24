@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:mahogany_logs"},"result":"biomesoplenty:mahogany_button","count":4}
+{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:mahogany_button"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:mahogany_logs"},"result":"biomesoplenty:mahogany_button","count":4}

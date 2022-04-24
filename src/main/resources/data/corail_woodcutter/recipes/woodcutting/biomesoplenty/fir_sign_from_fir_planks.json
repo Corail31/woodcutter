@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:fir_sign"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:fir_planks"},"result":"biomesoplenty:fir_sign","count":1}

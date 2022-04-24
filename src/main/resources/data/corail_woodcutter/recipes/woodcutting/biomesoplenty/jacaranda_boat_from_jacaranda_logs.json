@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:jacaranda_logs"},"result":"biomesoplenty:jacaranda_boat","count":1}
+{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:jacaranda_boat"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:jacaranda_logs"},"result":"biomesoplenty:jacaranda_boat","count":1}

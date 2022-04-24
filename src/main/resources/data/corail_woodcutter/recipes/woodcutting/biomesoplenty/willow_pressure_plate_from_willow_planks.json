@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:willow_planks"},"result":"biomesoplenty:willow_pressure_plate","count":1}
+{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:willow_pressure_plate"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:willow_planks"},"result":"biomesoplenty:willow_pressure_plate","count":1}
