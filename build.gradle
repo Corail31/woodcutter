@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-version = '2.0.1'
+version = '2.0.2'
 group = 'ovh.corail'
 archivesBaseName = 'corail_woodcutter'
 
@@ -50,23 +50,12 @@ minecraft {
 repositories {
     flatDir { dirs 'modlib' }
     maven { url = "https://dvs1.progwml6.com/files/maven" } // JEI
-    //maven { url = "https://minecraft.curseforge.com/api/maven/" } // official curseForge api
-    //maven { url = "https://www.cursemaven.com" } // unofficial repost mods
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.2.2'
-    runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.1.122")
-    compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.1.122:api")
-    runtimeOnly fg.deobf("modlib:twilightforest-1.16.5:4.0.546:universal")
-    /*runtimeOnly fg.deobf("modlib:biomesoplenty-1.16.4:13.0.0.431")
-    runtimeOnly fg.deobf("biomes-o-plenty:BiomesOPlenty-1.16.5:13.1.0.477:universal")
-    runtimeOnly fg.deobf("curse.maven:autoreglib-250363:3326041")
-    runtimeOnly fg.deobf("curse.maven:quark-243121:3326040")
-    runtimeOnly fg.deobf("curse.maven:oh-the-biomes-youll-go-247560:3337158")
-    runtimeOnly fg.deobf("curse.maven:twilightforest-227639:3334287")
-    runtimeOnly "corail-woodcutter-extension:corail_woodcutter_extension_byg:1.0.0"
-    runtimeOnly fg.deobf("tropicraft:Tropicraft:9.0.0:beta+54")*/
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.34'
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.1.152")
+    compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.1.152:api")
 }
 
 jar {

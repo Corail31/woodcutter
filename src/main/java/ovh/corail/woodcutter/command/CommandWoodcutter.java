@@ -400,7 +400,7 @@ public class CommandWoodcutter {
     }
 
     private void addRecipe(final Map<String, WoodcuttingJsonRecipe> recipes, ResourceLocation input, ResourceLocation output, int count, boolean isTag) {
-        recipes.put(output.getPath() + "_from_" + input.getPath(), new WoodcuttingJsonRecipe(input.toString(), output.toString(), count, isTag));
+        recipes.put(output.getPath() + "_from_" + input.getPath().replaceAll("/|\\\\", "_"), new WoodcuttingJsonRecipe(input.toString(), output.toString(), count, isTag));
     }
 
     private void addPlankRecipe(final Map<String, WoodcuttingJsonRecipe> recipes, WoodCompo compo, ResourceLocation output, int count) {
