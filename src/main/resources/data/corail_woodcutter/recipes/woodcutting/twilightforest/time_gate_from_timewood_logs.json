@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:time_gate"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"twilightforest:timewood_logs"},"result":"twilightforest:time_gate","count":1}

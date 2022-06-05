@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:sort_trapdoor"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"twilightforest:sort_planks"},"result":"twilightforest:sort_trapdoor","count":1}

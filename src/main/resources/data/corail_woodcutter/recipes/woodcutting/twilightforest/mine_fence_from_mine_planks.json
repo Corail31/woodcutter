@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:mine_fence"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"twilightforest:mine_planks"},"result":"twilightforest:mine_fence","count":1}

@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:jungle_banister"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:jungle_planks"},"result":"twilightforest:jungle_banister","count":1}

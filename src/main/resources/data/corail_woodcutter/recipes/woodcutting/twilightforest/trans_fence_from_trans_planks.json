@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:trans_fence"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"twilightforest:trans_planks"},"result":"twilightforest:trans_fence","count":1}

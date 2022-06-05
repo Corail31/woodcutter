@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:mining_sign"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"twilightforest:mining_planks"},"result":"twilightforest:mining_sign","count":1}

@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:oak_banister"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:oak_logs"},"result":"twilightforest:oak_banister","count":4}

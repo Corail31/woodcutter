@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:mining_trapdoor"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"twilightforest:mining_logs"},"result":"twilightforest:mining_trapdoor","count":4}

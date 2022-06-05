@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:trans_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"twilightforest:transwood_logs"},"result":"twilightforest:trans_slab","count":8}

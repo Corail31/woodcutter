@@ -20,9 +20,9 @@
 	"corail_woodcutter:mangrove_woodcutter",
 	"corail_woodcutter:dark_woodcutter",
 	"corail_woodcutter:time_woodcutter",
-	"corail_woodcutter:trans_woodcutter",
-	"corail_woodcutter:mine_woodcutter",
-	"corail_woodcutter:sort_woodcutter",
+	"corail_woodcutter:transformation_woodcutter",
+	"corail_woodcutter:mining_woodcutter",
+	"corail_woodcutter:sorting_woodcutter",
 	"corail_woodcutter:tropicraft_palm_woodcutter",
 	"corail_woodcutter:tropicraft_mahogany_woodcutter"
   ]

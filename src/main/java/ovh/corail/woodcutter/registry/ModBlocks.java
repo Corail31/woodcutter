@@ -116,7 +116,7 @@ public class ModBlocks {
     }
 
     public enum TFWoodVariant implements StringRepresentable {
-        TWILIGHT_OAK, CANOPY, MANGROVE, DARK, TIME, TRANS, MINE, SORT;
+        TWILIGHT_OAK, CANOPY, MANGROVE, DARK, TIME, TRANSFORMATION, MINING, SORTING;
         private final String name;
 
         TFWoodVariant() {
