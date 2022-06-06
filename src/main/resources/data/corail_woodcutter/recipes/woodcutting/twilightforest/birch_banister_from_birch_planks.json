@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:birch_banister"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:birch_planks"},"result":"twilightforest:birch_banister","count":1}
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:birch_banister"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"forge:planks/birch"},"result":"twilightforest:birch_banister","count":1}

@@ -32,12 +32,15 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolAction;
 import ovh.corail.woodcutter.inventory.WoodcutterContainer;
 import ovh.corail.woodcutter.registry.ModStats;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +50,16 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 @SuppressWarnings("deprecation")
 public class WoodcutterBlock extends HorizontalDirectionalBlock implements BucketPickup, LiquidBlockContainer {
     public static final TranslatableComponent TRANSLATION = new TranslatableComponent("container.corail_woodcutter.woodcutter");
-    protected static final VoxelShape SHAPE = Block.box(0d, 0d, 0d, 16d, 9d, 16d);
+    private static final EnumMap<Direction, VoxelShape> map = new EnumMap<>(Direction.class);
+    protected static final double[][] bounds = new double[][] {
+        new double[] { 0d, 0.5d, 0.1875d, 1d, 0.5625d, 0.8125d },
+        new double[] { 0.125d, 0d, 0.3125d, 0.1875d, 0.5d, 0.375d },
+        new double[] { 0.125d, 0d, 0.625d, 0.1875d, 0.5d, 0.6875d },
+        new double[] { 0.8125d, 0d, 0.625d, 0.875d, 0.5d, 0.6875d },
+        new double[] { 0.8125d, 0d, 0.3125d, 0.875d, 0.5d, 0.375d },
+        new double[] { 0.1875d, 0.3125d, 0.625d, 0.8125d, 0.375d, 0.6875d },
+        new double[] { 0.1875d, 0.3125d, 0.3125d, 0.8125d, 0.375d, 0.375d }
+    };
 
     public WoodcutterBlock() {
         super(BlockBehaviour.Properties.of(Material.WOOD).requiresCorrectToolForDrops().strength(3.5f));
@@ -77,7 +89,16 @@ public class WoodcutterBlock extends HorizontalDirectionalBlock implements Bucke
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        return map.computeIfAbsent(state.getValue(HORIZONTAL_FACING), direction -> Arrays.stream(bounds).map(b -> createShapeForDirection(b, direction)).reduce(Shapes.empty(), Shapes::or));
+    }
+
+    private VoxelShape createShapeForDirection(double[] bounds, Direction direction) {
+        return switch (direction) {
+            case SOUTH -> Shapes.box(bounds[0], bounds[1], 1d - bounds[5], bounds[3], bounds[4], 1d - bounds[2]);
+            case WEST -> Shapes.box(bounds[2], bounds[1], bounds[0], bounds[5], bounds[4], bounds[3]);
+            case EAST -> Shapes.box(1d - bounds[5], bounds[1], bounds[0], 1d - bounds[2], bounds[4], bounds[3]);
+            default -> Shapes.box(bounds[0], bounds[1], bounds[2], bounds[3], bounds[4], bounds[5]);
+        };
     }
 
     @Override
@@ -155,5 +176,10 @@ public class WoodcutterBlock extends HorizontalDirectionalBlock implements Bucke
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean propagatesSkylightDown(BlockState state, BlockGetter blockGetter, BlockPos pos) {
+        return true;
     }
 }

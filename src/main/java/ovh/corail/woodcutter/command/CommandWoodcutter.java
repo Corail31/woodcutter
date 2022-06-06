@@ -10,10 +10,13 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import net.minecraft.commands.CommandRuntimeException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -155,39 +158,7 @@ public class CommandWoodcutter {
         }
         final Map<String, WoodcuttingJsonRecipe> recipes = new HashMap<>();
         initPlanksToLogs(context.getSource().getServer());
-        final Map<Recipe<CraftingContainer>, Double> entries = context.getSource().getServer().getRecipeManager().byType(RecipeType.CRAFTING).entrySet().stream().filter(entry -> modid.equals(entry.getKey().getNamespace())).map(Map.Entry::getValue).filter(r -> VALID_RESULT.test(r.getResultItem())).collect(Collectors.toMap(Function.identity(), this::getWeight));
-        for (Map.Entry<Recipe<CraftingContainer>, Double> entry : entries.entrySet()) {
-            double weight = entry.getValue();
-            if (weight == 0d) {
-                continue;
-            }
-            ItemStack result = entry.getKey().getResultItem();
-            NonNullList<Ingredient> ingredients = entry.getKey().getIngredients();
-            ResourceLocation outputName = result.getItem().getRegistryName();
-            assert outputName != null;
-            if (ingredients.size() == 1) {
-                ItemStack stack = ingredients.get(0).getItems()[0];
-                if (this.logs.contains(stack.getItem())) {
-                    WoodCompo compo = this.plankToLog.get(result.getItem());
-                    if (compo != null) {
-                        // logs to planks recipes
-                        addLogRecipe(recipes, compo, outputName, result.getCount() / stack.getCount());
-                        continue;
-                    }
-                }
-            }
-            WoodCompo compo = getWoodCompo(ingredients);
-            if (compo == null) {
-                continue;
-            }
-            final int count = weight < 1d ? Mth.floor(1d / weight) : 1;
-            if (weight < 3.1d) {
-                addPlankRecipe(recipes, compo, outputName, count);
-                addLogRecipe(recipes, compo, outputName, count * 4);
-            } else {
-                addLogRecipe(recipes, compo, outputName, count);
-            }
-        }
+        context.getSource().getServer().getRecipeManager().byType(RecipeType.CRAFTING).entrySet().stream().filter(entry -> modid.equals(entry.getKey().getNamespace())).map(Map.Entry::getValue).filter(r -> VALID_RESULT.test(r.getResultItem())).forEach(recipe -> addRecipesToMap(recipes, recipe));
         if (recipes.isEmpty()) {
             throw LangKey.NO_VALID_RECIPE_FOR_MODID.asCommandException(modid);
         }
@@ -228,18 +199,32 @@ public class CommandWoodcutter {
 
     @Nullable
     private WoodCompo getWoodCompo(NonNullList<Ingredient> ingredients) {
-        Set<Item> planks = new HashSet<>();
-        int vanillaPlanks = 0;
-        for (Ingredient ingredient : ingredients) {
-            if (!ingredient.isEmpty()) {
-                for (ItemStack stack : ingredient.getItems()) {
-                    if (this.plankToLog.containsKey(stack.getItem()) && planks.add(stack.getItem()) && VANILLA_ITEM.test(stack) && ++vanillaPlanks > 1) {
-                        return WoodCompo.ANY_WOOD;
-                    }
+        final Function<Predicate<ItemStack>, Ingredient> findIngredient = predic -> ingredients.stream().filter(ing -> !ing.isEmpty() && Arrays.stream(ing.getItems()).allMatch(predic)).findFirst().orElse(null);
+        Ingredient plankIngredient = findIngredient.apply(stack -> this.plankToLog.containsKey(stack.getItem()));
+        if (plankIngredient != null) {
+            Set<Item> planks = new HashSet<>();
+            int vanillaPlanks = 0;
+            for (ItemStack stack : plankIngredient.getItems()) {
+                if (planks.add(stack.getItem()) && VANILLA_ITEM.test(stack) && ++vanillaPlanks > 1) {
+                    return WoodCompo.ANY_WOOD;
                 }
             }
+            if (planks.size() == 1) {
+                return this.plankToLog.get(planks.iterator().next());
+            }
+            return getTagForIngredient(plankIngredient).map(tag -> {
+                WoodCompo woodCompo = this.plankToLog.get(planks.iterator().next());
+                return new WoodCompo(tag, true, woodCompo.logName(), woodCompo.isLogTag());
+            }).orElse(this.plankToLog.get(planks.iterator().next()));
         }
-        return planks.size() == 0 ? WoodCompo.ANY_WOOD : planks.size() == 1 ? this.plankToLog.get(planks.iterator().next()) : ingredients.stream().filter(ing -> !ing.isEmpty()).filter(ing -> this.plankToLog.containsKey(ing.getItems()[0].getItem())).findFirst().map(this::getTagForIngredient).filter(Optional::isPresent).map(tag -> new WoodCompo(tag.get(), true, null, false)).orElse(this.plankToLog.get(planks.iterator().next()));
+        Ingredient ingredient = Optional.ofNullable(findIngredient.apply(stack -> Helper.isInTag(stack.getItem(), ItemTags.LOGS))).orElse(findIngredient.apply(stack -> Helper.isInTag(stack.getItem(), ItemTags.WOODEN_SLABS)));
+        if (ingredient != null) {
+            WoodCompo compo = this.plankToLog.entrySet().stream().filter(entry -> ALMOSTLY_SIMILAR_PATH.test(entry.getKey().getRegistryName().toString(), ingredient.getItems()[0].getItem().getRegistryName().toString().replaceAll("_log|_stem|_slab", "_plank"))).findFirst().map(Map.Entry::getValue).orElse(null);
+            if (compo != null) {
+                return compo;
+            }
+        }
+        return WoodCompo.ANY_WOOD;
     }
 
     private record WoodCompo(ResourceLocation plankName, boolean isPlankTag, @Nullable ResourceLocation logName, boolean isLogTag) {
@@ -283,14 +268,14 @@ public class CommandWoodcutter {
                 return new WoodCompo(plankName, false, logNames.stream().min(Comparator.comparingInt(rl -> Levenshtein.distance(rl.getPath(), plankName.getPath()))).orElse(null), false);
             }))
         ;
-        this.plankToLog.put(Items.ACACIA_PLANKS, new WoodCompo(Objects.requireNonNull(Items.ACACIA_PLANKS.getRegistryName()), false, ItemTags.ACACIA_LOGS.location(), true));
-        this.plankToLog.put(Items.BIRCH_PLANKS, new WoodCompo(Objects.requireNonNull(Items.BIRCH_PLANKS.getRegistryName()), false, ItemTags.BIRCH_LOGS.location(), true));
-        this.plankToLog.put(Items.DARK_OAK_PLANKS, new WoodCompo(Objects.requireNonNull(Items.DARK_OAK_PLANKS.getRegistryName()), false, ItemTags.DARK_OAK_LOGS.location(), true));
-        this.plankToLog.put(Items.JUNGLE_PLANKS, new WoodCompo(Objects.requireNonNull(Items.JUNGLE_PLANKS.getRegistryName()), false, ItemTags.JUNGLE_LOGS.location(), true));
-        this.plankToLog.put(Items.OAK_PLANKS, new WoodCompo(Objects.requireNonNull(Items.OAK_PLANKS.getRegistryName()), false, ItemTags.OAK_LOGS.location(), true));
-        this.plankToLog.put(Items.SPRUCE_PLANKS, new WoodCompo(Objects.requireNonNull(Items.SPRUCE_PLANKS.getRegistryName()), false, ItemTags.SPRUCE_LOGS.location(), true));
-        this.plankToLog.put(Items.CRIMSON_PLANKS, new WoodCompo(Objects.requireNonNull(Items.CRIMSON_PLANKS.getRegistryName()), false, ItemTags.CRIMSON_STEMS.location(), true));
-        this.plankToLog.put(Items.WARPED_PLANKS, new WoodCompo(Objects.requireNonNull(Items.WARPED_PLANKS.getRegistryName()), false, ItemTags.WARPED_STEMS.location(), true));
+        this.plankToLog.put(Items.ACACIA_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/acacia"), true, ItemTags.ACACIA_LOGS.location(), true));
+        this.plankToLog.put(Items.BIRCH_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/birch"), true, ItemTags.BIRCH_LOGS.location(), true));
+        this.plankToLog.put(Items.DARK_OAK_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/dark_oak"), true, ItemTags.DARK_OAK_LOGS.location(), true));
+        this.plankToLog.put(Items.JUNGLE_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/jungle"), true, ItemTags.JUNGLE_LOGS.location(), true));
+        this.plankToLog.put(Items.OAK_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/oak"), true, ItemTags.OAK_LOGS.location(), true));
+        this.plankToLog.put(Items.SPRUCE_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/spruce"), true, ItemTags.SPRUCE_LOGS.location(), true));
+        this.plankToLog.put(Items.CRIMSON_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/crimson"), true, ItemTags.CRIMSON_STEMS.location(), true));
+        this.plankToLog.put(Items.WARPED_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/warped"), true, ItemTags.WARPED_STEMS.location(), true));
         // planks with no log recipe
         Helper.getItems(ItemTags.PLANKS).forEach(key -> this.plankToLog.computeIfAbsent(key.value(), item -> new WoodCompo(Objects.requireNonNull(item.getRegistryName()), false, null, false)));
     }
@@ -392,6 +377,39 @@ public class CommandWoodcutter {
         return toFile(file, json);
     }
 
+    private void addRecipesToMap(Map<String, WoodcuttingJsonRecipe> recipes, Recipe<CraftingContainer> recipe) {
+        double weight = getWeight(recipe);
+        if (weight == 0d) {
+            return;
+        }
+        ItemStack result = recipe.getResultItem();
+        NonNullList<Ingredient> ingredients = recipe.getIngredients();
+        ResourceLocation outputName = result.getItem().getRegistryName();
+        assert outputName != null;
+        if (ingredients.size() == 1) {
+            ItemStack stack = ingredients.get(0).getItems()[0];
+            if (this.logs.contains(stack.getItem())) {
+                WoodCompo compo = this.plankToLog.get(result.getItem());
+                if (compo != null) {
+                    // logs to planks recipes
+                    addLogRecipe(recipes, compo, outputName, result.getCount() / stack.getCount());
+                    return;
+                }
+            }
+        }
+        WoodCompo compo = getWoodCompo(ingredients);
+        if (compo == null) {
+            return;
+        }
+        final int count = weight < 1d ? Mth.floor(1d / weight) : 1;
+        if (weight < 3.1d) {
+            addPlankRecipe(recipes, compo, outputName, count);
+            addLogRecipe(recipes, compo, outputName, count * 4);
+        } else {
+            addLogRecipe(recipes, compo, outputName, count);
+        }
+    }
+
     private void addRecipe(final Map<String, WoodcuttingJsonRecipe> recipes, ResourceLocation input, ResourceLocation output, int count, boolean isTag) {
         recipes.put(output.getPath() + "_from_" + input.getPath().replaceAll("/|\\\\", "_"), new WoodcuttingJsonRecipe(input.toString(), output.toString(), count, isTag));
     }
@@ -436,6 +454,27 @@ public class CommandWoodcutter {
         return weight / (double) recipe.getResultItem().getCount();
     }
 
+    private int testRecipe(CommandContext<CommandSourceStack> context) {
+        final Map<String, WoodcuttingJsonRecipe> recipes = new HashMap<>();
+        initPlanksToLogs(context.getSource().getServer());
+        ResourceLocation recipeRL = ResourceLocationArgument.getId(context, RECIPE_PARAM);
+        Recipe<CraftingContainer> recipe = context.getSource().getServer().getRecipeManager().byType(RecipeType.CRAFTING).values().stream().filter(r -> r.getId().equals(recipeRL)).findFirst().orElseThrow(() -> new CommandRuntimeException(new TextComponent("[" + recipeRL + "] is not a crafting recipe")));
+        addRecipesToMap(recipes, recipe);
+        if (recipes.isEmpty()) {
+            throw new CommandRuntimeException(new TextComponent("[" + recipeRL + "] is not a wood recipe"));
+        }
+        boolean genericTag = false;
+        for (Map.Entry<String, WoodcuttingJsonRecipe> entry : recipes.entrySet()) {
+            String ingredient = Optional.ofNullable(entry.getValue().ingredient.tag).orElse(entry.getValue().ingredient.item);
+            context.getSource().sendSuccess(new TextComponent("name=" + entry.getKey()).append("\n").append("ingredient=" + ingredient + " (" + (entry.getValue().ingredient.tag == null ? "item" : "tag") + ")").append("\n").append("result=" + entry.getValue().result + "*" + entry.getValue().count), false);
+            if (entry.getValue().ingredient.tag != null && (ingredient.equals("minecraft:logs") || ingredient.equals("minecraft:planks"))) {
+                genericTag = true;
+            }
+        }
+        context.getSource().sendSuccess(new TextComponent(genericTag ? "check this recipe as it uses a generic tag that may be incorrect" : "[" + recipeRL + "] is a valid recipe"), false);
+        return 1;
+    }
+
     private void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         LiteralCommandNode<CommandSourceStack> command = dispatcher.register(Commands.literal("woodcutter").requires(this::hasPermission)
                 .executes(this::showUsage)
@@ -448,6 +487,8 @@ public class CommandWoodcutter {
                         ).then(DataPackAction.REMOVE.literal().requires(this::isSinglePlayerOwner).executes(this::showUsage)
                                 .then(Commands.argument(MODID_PARAM, StringArgumentType.word()).suggests(SUGGESTION_MODID).executes(this::removeDataPack))
                         )
+                ).then(BaseAction.TEST.literal().executes(this::showUsage)
+                        .then(Commands.argument(RECIPE_PARAM, ResourceLocationArgument.id()).suggests(SUGGESTION_CRAFTING_RECIPES).executes(this::testRecipe))
                 )
         );
         dispatcher.register(Commands.literal("cwc").requires(this::hasPermission).redirect(command));
@@ -468,7 +509,7 @@ public class CommandWoodcutter {
     }
 
     private enum BaseAction implements IAction {
-        INFO, DATAPACK;
+        INFO, DATAPACK, TEST;
         private final String name;
 
         BaseAction() {
@@ -502,6 +543,7 @@ public class CommandWoodcutter {
     }
 
     private static final String MODID_PARAM = "modid";
+    private static final String RECIPE_PARAM = "recipe";
     private static final int PACK_FORMAT = 9;
     private static final Predicate<ItemStack> VANILLA_ITEM = stack -> Optional.ofNullable(stack.getItem().getRegistryName()).map(ResourceLocation::getNamespace).map("minecraft"::equals).orElse(false);
     private static final Predicate<ItemStack> VALID_RESULT = result -> !result.isEmpty() && !VANILLA_ITEM.test(result);
@@ -511,5 +553,6 @@ public class CommandWoodcutter {
     private static final BiFunction<MinecraftServer, String, File> DATAPACK_FOLDER = (server, folder) -> new File(server.getWorldPath(LevelResource.DATAPACK_DIR).toFile(), folder);
     private static final Function<String, File> CONFIG_FOLDER = folder -> new File(FMLPaths.CONFIGDIR.get().toFile(), "corail_woodcutter" + File.separatorChar + folder);
     private static final SuggestionProvider<CommandSourceStack> SUGGESTION_MODID = (ctx, build) -> SharedSuggestionProvider.suggest(ModList.get().applyForEachModContainer(ModContainer::getModId).filter(SupportMods::noSupport).filter(modid -> !"minecraft".equals(modid)), build);
+    private static final SuggestionProvider<CommandSourceStack> SUGGESTION_CRAFTING_RECIPES = (ctx, build) -> SharedSuggestionProvider.suggestResource(ctx.getSource().getServer().getRecipeManager().byType(RecipeType.CRAFTING).keySet().stream(), build);
     private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
 }

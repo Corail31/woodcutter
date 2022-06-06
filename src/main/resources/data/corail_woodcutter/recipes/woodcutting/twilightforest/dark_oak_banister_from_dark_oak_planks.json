@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:dark_oak_banister"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:dark_oak_planks"},"result":"twilightforest:dark_oak_banister","count":1}
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:dark_oak_banister"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"forge:planks/dark_oak"},"result":"twilightforest:dark_oak_banister","count":1}
