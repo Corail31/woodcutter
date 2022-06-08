@@ -12,11 +12,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import ovh.corail.woodcutter.block.WoodcutterBlock;
 import ovh.corail.woodcutter.compatibility.SupportMods;
+import ovh.corail.woodcutter.helper.Helper;
 import ovh.corail.woodcutter.item.WoodcutterItem;
 
 import java.util.HashSet;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 
@@ -66,18 +66,18 @@ public class ModBlocks {
     @SubscribeEvent
     public static void onRegisterBlockItems(final RegistryEvent.Register<Item> event) {
         WOODCUTTERS.forEach(woodcutterBlock -> {
-            Item woodcutter = new WoodcutterItem(woodcutterBlock).setRegistryName(Objects.requireNonNull(woodcutterBlock.getRegistryName()));
+            Item woodcutter = new WoodcutterItem(woodcutterBlock).setRegistryName(Helper.getRegistryName(woodcutterBlock));
             event.getRegistry().register(woodcutter);
             WOODCUTTER_ITEMS.add(woodcutter);
         });
+        //noinspection UnstableApiUsage
+        Reflection.initialize(ModStats.class, ModRecipeTypes.class);
     }
 
     private static void registerWoodcutter(IForgeRegistry<Block> registry, String name) {
         Block woodcutter = new WoodcutterBlock().setRegistryName(MOD_ID, name + "_woodcutter");
         registry.register(woodcutter);
         WOODCUTTERS.add(woodcutter);
-        //noinspection UnstableApiUsage
-        Reflection.initialize(ModStats.class, ModRecipeTypes.class);
     }
 
     public static ItemStack createRandomStack() {

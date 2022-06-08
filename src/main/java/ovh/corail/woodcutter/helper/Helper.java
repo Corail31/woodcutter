@@ -8,10 +8,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 import ovh.corail.woodcutter.config.ConfigWoodcutter;
 import ovh.corail.woodcutter.config.CustomConfig;
 import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
@@ -20,6 +22,7 @@ import ovh.corail.woodcutter.registry.ModRecipeTypes;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.StreamSupport;
 
@@ -40,19 +43,34 @@ public class Helper {
         return level.getRecipeManager().byType(ModRecipeTypes.WOODCUTTING)
                 .values().stream()
                 .flatMap(recipe -> ModRecipeTypes.WOODCUTTING.tryMatch(recipe, level, inventory).stream())
-                .sorted(recipeComparator)
+                .sorted(RECIPE_COMPARATOR)
                 .toList();
     }
 
-    public static final Comparator<Recipe<Container>> recipeComparator = (r1, r2) -> {
-        ResourceLocation registryName1 = r1.getResultItem().getItem().getRegistryName();
-        ResourceLocation registryName2 = r2.getResultItem().getItem().getRegistryName();
-        assert registryName1 != null && registryName2 != null;
-        String[] name1 = registryName1.getPath().split("_");
-        String[] name2 = registryName2.getPath().split("_");
-        int comp = name1[name1.length - 1].compareTo(name2[name2.length - 1]);
-        return comp == 0 ? registryName1.compareTo(registryName2) : comp;
-    };
+    public static final Comparator<Recipe<Container>> RECIPE_COMPARATOR = Comparator.<Recipe<Container>, String>comparing(recipe -> {
+        String[] name = getRegistryPath(recipe.getResultItem().getItem()).split("_");
+        return name[name.length - 1];
+    }).thenComparing(recipe -> getRegistryName(recipe.getResultItem().getItem()));
+
+    public static ResourceLocation getRegistryRL(ItemStack stack) {
+        return getRegistryRL(stack.getItem());
+    }
+
+    public static ResourceLocation getRegistryRL(IForgeRegistryEntry<?> entry) {
+        return entry.getRegistryName();
+    }
+
+    public static String getRegistryNamespace(IForgeRegistryEntry<?> entry) {
+        return Optional.ofNullable(entry.getRegistryName()).map(ResourceLocation::getNamespace).map(String::toString).orElse("");
+    }
+
+    public static String getRegistryPath(IForgeRegistryEntry<?> entry) {
+        return Optional.ofNullable(entry.getRegistryName()).map(ResourceLocation::getPath).map(String::toString).orElse("");
+    }
+
+    public static String getRegistryName(IForgeRegistryEntry<?> entry) {
+        return Optional.ofNullable(entry.getRegistryName()).map(ResourceLocation::toString).orElse("");
+    }
 
     public static void fillItemSet(Set<Item> items, TagKey<Item> tagKey) {
         //noinspection deprecation

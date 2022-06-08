@@ -76,7 +76,7 @@
 		"to": [12, 13, 8],
 		"faces": {
 			"north": {"uv": [0, 8, 16, 16], "texture": "#saw"},
-			"south": {"uv": [0, 8, 16, 16], "texture": "#saw"}
+			"south": {"uv": [16, 8, 0, 16], "texture": "#saw"}
 		}
 	}, {
 		"name": "saw-bottom",
@@ -84,7 +84,7 @@
 		"to": [12, 8, 8],
 		"faces": {
 			"north": {"uv": [0, 8, 16, 16], "rotation": 180, "texture": "#saw"},
-			"south": {"uv": [0, 8, 16, 16], "rotation": 180, "texture": "#saw"}
+			"south": {"uv": [16, 8, 0, 16], "rotation": 180, "texture": "#saw"}
 		}
 	}, {
 		"name": "foot-link1",
