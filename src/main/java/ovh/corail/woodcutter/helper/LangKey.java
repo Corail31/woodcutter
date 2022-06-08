@@ -2,7 +2,6 @@ package ovh.corail.woodcutter.helper;
 
 import net.minecraft.commands.CommandRuntimeException;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
@@ -36,7 +35,7 @@ public enum LangKey {
     }
 
     public Component getText(Object... args) {
-        return new TranslatableComponent(this.getKey(), args);
+        return Component.translatable(this.getKey(), args);
     }
 
     public CommandRuntimeException asCommandException(Object... args) {

@@ -31,7 +31,7 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
 
     public WoodcutterScreen(WoodcutterContainer containerIn, Inventory playerInv, Component title) {
         super(containerIn, playerInv, title);
-        containerIn.registerUpdateListener(this::onInventoryUpdate);
+        containerIn.registerUpdateListener(this::containerChanged);
         --this.titleLabelY;
     }
 
@@ -126,7 +126,7 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
             j = this.topPos + 14;
             if (mouseX >= (double) i && mouseX < (double) (i + 12) && mouseY >= (double) j && mouseY < (double) (j + 54)) {
                 this.scrolling = true;
-                // click on the slider move the position (before drag)
+                // allows to click on the slide bar to change the position (without drag)
                 this.scrollOffs = Mth.clamp((float) (mouseY - j - 7.5f) / 40f, 0f, 1f);
                 this.startIndex = (int) ((double) (this.scrollOffs * (float) getOffscreenRows()) + 0.5d) * 4;
             }
@@ -152,8 +152,8 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
     public boolean mouseScrolled(double p_mouseScrolled_1_, double p_mouseScrolled_3_, double p_mouseScrolled_5_) {
         if (isScrollBarActive()) {
             int i = getOffscreenRows();
-            this.scrollOffs = (float) ((double) this.scrollOffs - p_mouseScrolled_5_ / (double) i);
-            this.scrollOffs = Mth.clamp(this.scrollOffs, 0f, 1f);
+            float f = (float) p_mouseScrolled_5_ / (float) i;
+            this.scrollOffs = Mth.clamp(this.scrollOffs - f, 0f, 1f);
             this.startIndex = (int) ((double) (this.scrollOffs * (float) i) + 0.5d) * 4;
         }
         return true;
@@ -167,7 +167,7 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
         return (this.menu.getNumRecipes() + 4 - 1) / 4 - 3;
     }
 
-    private void onInventoryUpdate() {
+    private void containerChanged() {
         this.displayRecipes = this.menu.hasInputItem();
         if (!this.displayRecipes) {
             this.scrollOffs = 0f;
@@ -177,7 +177,7 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
 
     @Override
     protected void slotClicked(Slot slotIn, int slotId, int mouseButton, ClickType type) {
-        // reset the slider if 2 items are switched from the input slot
+        // reset the slider bar if 2 items are switched from the input slot
         if (type == ClickType.PICKUP && slotId == 0 && mouseButton == 0 && slotIn != null && slotIn.index == 0) {
             if (!this.menu.getCarried().isEmpty() && !slotIn.getItem().isEmpty() && (this.menu.getCarried().getItem() != slotIn.getItem().getItem() || !ItemStack.tagMatches(this.menu.getCarried(), slotIn.getItem()))) {
                 this.scrollOffs = 0f;

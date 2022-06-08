@@ -1,6 +1,6 @@
 {
     "parent": "corail_woodcutter:block/woodcutter",
     "textures": {
-        "base": "twilightforest:block/wood/planks_mangrove_0"
+        "base": "minecraft:block/mangrove_planks"
     }
 }

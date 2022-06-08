@@ -10,19 +10,19 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-version = '2.3.5'
+version = '2.4.0'
 group = 'ovh.corail'
 archivesBaseName = 'corail_woodcutter'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
-  mappings channel: 'official', version: '1.18.2'
+  mappings channel: 'official', version: '1.19'
   accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
   runs {
     client {
       workingDirectory project.file('run')
-      property 'forge.logging.markers', '' // REGISTRIES
+      property 'forge.logging.markers', 'REGISTRIES'
       property 'forge.logging.console.level', 'debug'
       //property 'mixin.env.remapRefMap', 'true'
       //property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
@@ -34,7 +34,7 @@ minecraft {
     }
     server {
       workingDirectory project.file('run')
-      property 'forge.logging.markers', '' // REGISTRIES
+      property 'forge.logging.markers', 'REGISTRIES'
       property 'forge.logging.console.level', 'debug'
       mods {
         corail_woodcutter {
@@ -51,9 +51,9 @@ repositories {
 }
 
 dependencies {
-  minecraft 'net.minecraftforge:forge:1.18.2-40.1.0'
-  runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.192")
-  compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.192:api")
+  minecraft 'net.minecraftforge:forge:1.19-41.0.1'
+  //runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.196")
+  compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.196:api")
   //runtimeOnly fg.deobf("modlib:twilightforest:1.18.2-4.1.1052:universal")
   //runtimeOnly fg.deobf("modlib:AutoRegLib:1.7.53")
   //runtimeOnly fg.deobf("modlib:Quark:3.2.349")

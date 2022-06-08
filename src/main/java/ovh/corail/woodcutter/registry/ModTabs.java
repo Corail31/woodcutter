@@ -1,7 +1,6 @@
 package ovh.corail.woodcutter.registry;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 
@@ -17,7 +16,7 @@ public class ModTabs {
 
         @Override
         public Component getDisplayName() {
-            return new TextComponent(MOD_NAME);
+            return Component.literal(MOD_NAME);
         }
     };
 }

@@ -1,15 +1,16 @@
 package ovh.corail.woodcutter.registry;
 
 import com.google.common.reflect.Reflection;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 import ovh.corail.woodcutter.block.WoodcutterBlock;
 import ovh.corail.woodcutter.compatibility.SupportMods;
 import ovh.corail.woodcutter.helper.Helper;
@@ -23,38 +24,42 @@ import java.util.Set;
 import static ovh.corail.woodcutter.WoodCutterMod.LOGGER;
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
+@SuppressWarnings("unused")
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModBlocks {
-
     public static final Set<Block> WOODCUTTERS = new HashSet<>();
     public static final Set<Item> WOODCUTTER_ITEMS = new HashSet<>();
     private static final Random RANDOM = new Random();
     private static ItemStack RANDOM_STACK = ItemStack.EMPTY;
 
-    @SuppressWarnings("unused")
     @SubscribeEvent
-    public static void onRegisterBlocks(final RegistryEvent.Register<Block> event) {
+    public static void onRegisterBlocks(final RegisterEvent event) {
+        if (!event.getRegistryKey().equals(ForgeRegistries.Keys.BLOCKS)) {
+            return;
+        }
         for (VanillaWoodVariant variant : VanillaWoodVariant.values()) {
-            registerWoodcutter(event.getRegistry(), variant.getSerializedName());
+            registerWoodcutter(event, variant.getSerializedName());
         }
         if (SupportMods.BIOMESOPLENTY.isLoaded()) {
             for (BOPWoodVariant variant : BOPWoodVariant.values()) {
-                registerWoodcutter(event.getRegistry(), variant.getSerializedName());
+                registerWoodcutter(event, variant.getSerializedName());
             }
         }
         if (SupportMods.TWILIGHT_FOREST.isLoaded()) {
             for (TFWoodVariant variant : TFWoodVariant.values()) {
-                registerWoodcutter(event.getRegistry(), variant.getSerializedName());
+                if (variant != TFWoodVariant.MANGROVE) {
+                    registerWoodcutter(event, variant.getSerializedName());
+                }
             }
         }
         if (SupportMods.TROPICRAFT.isLoaded()) {
-            registerWoodcutter(event.getRegistry(), SupportMods.TROPICRAFT.getSerializedName() + "_" + TropicraftVariant.PALM.getSerializedName());
-            registerWoodcutter(event.getRegistry(), SupportMods.TROPICRAFT.getSerializedName() + "_" + TropicraftVariant.MAHOGANY.getSerializedName());
+            registerWoodcutter(event, SupportMods.TROPICRAFT.getSerializedName() + "_" + TropicraftVariant.PALM.getSerializedName());
+            registerWoodcutter(event, SupportMods.TROPICRAFT.getSerializedName() + "_" + TropicraftVariant.MAHOGANY.getSerializedName());
         }
         if (SupportMods.BYG.isLoaded()) {
             if (SupportMods.EXTENSION_BYG.isLoaded()) {
                 for (BYGWoodVariant variant : BYGWoodVariant.values()) {
-                    registerWoodcutter(event.getRegistry(), SupportMods.BYG.getSerializedName() + "_" + variant.getSerializedName());
+                    registerWoodcutter(event, SupportMods.BYG.getSerializedName() + "_" + variant.getSerializedName());
                 }
             } else {
                 LOGGER.info("missing extension for \"Oh Biome You'll Go\" recipes");
@@ -62,22 +67,24 @@ public class ModBlocks {
         }
     }
 
-    @SuppressWarnings("unused")
     @SubscribeEvent
-    public static void onRegisterBlockItems(final RegistryEvent.Register<Item> event) {
+    public static void onRegisterBlockItems(final RegisterEvent event) {
+        if (!event.getRegistryKey().equals(ForgeRegistries.Keys.ITEMS)) {
+            return;
+        }
         WOODCUTTERS.forEach(woodcutterBlock -> {
-            Item woodcutter = new WoodcutterItem(woodcutterBlock).setRegistryName(Helper.getRegistryName(woodcutterBlock));
-            event.getRegistry().register(woodcutter);
+            Item woodcutter = new WoodcutterItem(woodcutterBlock);
             WOODCUTTER_ITEMS.add(woodcutter);
+            event.register(ForgeRegistries.Keys.ITEMS, Helper.getRegistryRL(woodcutterBlock), () -> woodcutter);
         });
         //noinspection UnstableApiUsage
         Reflection.initialize(ModStats.class, ModRecipeTypes.class);
     }
 
-    private static void registerWoodcutter(IForgeRegistry<Block> registry, String name) {
-        Block woodcutter = new WoodcutterBlock().setRegistryName(MOD_ID, name + "_woodcutter");
-        registry.register(woodcutter);
+    private static void registerWoodcutter(final RegisterEvent event, String name) {
+        Block woodcutter = new WoodcutterBlock();
         WOODCUTTERS.add(woodcutter);
+        event.register(ForgeRegistries.Keys.BLOCKS, new ResourceLocation(MOD_ID, name + "_woodcutter"), () -> woodcutter);
     }
 
     public static ItemStack createRandomStack() {
@@ -88,7 +95,7 @@ public class ModBlocks {
     }
 
     public enum VanillaWoodVariant implements StringRepresentable {
-        OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARK_OAK, CRIMSON, WARPED;
+        OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARK_OAK, CRIMSON, WARPED, MANGROVE;
         private final String name;
 
         VanillaWoodVariant() {

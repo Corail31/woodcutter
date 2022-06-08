@@ -2,7 +2,6 @@ package ovh.corail.woodcutter.item;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -35,8 +34,8 @@ import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class WoodcutterItem extends BlockItem {
-    private static final Component DEFAULT_DESCRIPTION = new TranslatableComponent("item.corail_woodcutter.woodcutter.desc").withStyle(ChatFormatting.GRAY);
-    private static final Component ACCESS_FROM_INVENTORY = new TranslatableComponent("item.corail_woodcutter.woodcutter.inventory").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC);
+    private static final Component DEFAULT_DESCRIPTION = Component.translatable("item.corail_woodcutter.woodcutter.desc").withStyle(ChatFormatting.GRAY);
+    private static final Component ACCESS_FROM_INVENTORY = Component.translatable("item.corail_woodcutter.woodcutter.inventory").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC);
 
     public WoodcutterItem(Block woodcutterBlock) {
         super(woodcutterBlock, new Item.Properties().tab(ModTabs.mainTab).stacksTo(1));

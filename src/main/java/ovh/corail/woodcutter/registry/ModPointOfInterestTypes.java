@@ -5,22 +5,27 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
+import ovh.corail.woodcutter.helper.Helper;
 
 import java.util.Set;
 
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
+@SuppressWarnings("unused")
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModPointOfInterestTypes {
-    private static final PoiType WOODSMITH = new PoiType("woodsmith", getAllStates(), 1, poi -> false, 1);
+    private static PoiType WOODSMITH = Helper.unsafeNullCast();
 
-    @SuppressWarnings("unused")
     @SubscribeEvent
-    public static void onRegisterPointOfInterestTypes(final RegistryEvent.Register<PoiType> event) {
-        event.getRegistry().register(WOODSMITH.setRegistryName(new ResourceLocation(MOD_ID, "woodsmith")));
+    public static void onRegisterPointOfInterestTypes(final RegisterEvent event) {
+        if (event.getRegistryKey().equals(ForgeRegistries.Keys.POI_TYPES)) {
+            WOODSMITH = new PoiType(getAllStates(), 1, 1);
+            event.register(ForgeRegistries.Keys.POI_TYPES, new ResourceLocation(MOD_ID, "woodsmith"), () -> WOODSMITH);
+        }
     }
 
     private static Set<BlockState> getAllStates() {

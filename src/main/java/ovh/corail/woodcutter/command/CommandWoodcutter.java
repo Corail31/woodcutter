@@ -16,7 +16,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.core.NonNullList;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -44,7 +44,6 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jline.utils.Levenshtein;
@@ -89,6 +88,7 @@ import static com.google.common.io.Files.asByteSource;
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_NAME;
 
+@SuppressWarnings("unused")
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CommandWoodcutter {
     private final Set<Item> logs = new HashSet<>();
@@ -238,7 +238,7 @@ public class CommandWoodcutter {
         }
         // init log
         Helper.fillItemSet(this.logs, ItemTags.LOGS);
-        ForgeRegistries.ITEMS.getEntries().stream().filter(entry -> entry.getKey().getRegistryName().getPath().endsWith("_log") || entry.getKey().getRegistryName().getPath().endsWith("_stem")).map(Map.Entry::getValue).forEach(this.logs::add);
+        ForgeRegistries.ITEMS.getEntries().stream().filter(entry -> entry.getKey().location().getPath().endsWith("_log") || entry.getKey().location().getPath().endsWith("_stem")).map(Map.Entry::getValue).forEach(this.logs::add);
         getCraftingRecipes(server, this::isLogToPlankRecipe)
             .forEach(logRecipe -> this.plankToLog.computeIfAbsent(logRecipe.getResultItem().getItem(), plank -> {
                 ResourceLocation plankName = Helper.getRegistryRL(plank);
@@ -256,7 +256,7 @@ public class CommandWoodcutter {
                     String logPath = logName.getPath().replace("stripped_", "");
                     return commonTags.stream().filter(rl -> ALMOSTLY_SIMILAR_PATH.test(logPath, rl.getPath())).findFirst().map(rl -> new WoodCompo(plankName, false, rl, true)).orElse(new WoodCompo(plankName, false, logName, false));
                 }
-                final Set<ResourceLocation> logNames = Arrays.stream(stacks).map(ItemStack::getItem).map(ForgeRegistryEntry::getRegistryName).collect(Collectors.toSet());
+                final Set<ResourceLocation> logNames = Arrays.stream(stacks).map(ItemStack::getItem).map(Helper::getRegistryRL).collect(Collectors.toSet());
                 for (ResourceLocation tagRL : commonTags) {
                     // having a name similar to one of the logs
                     if (logNames.stream().anyMatch(logName -> ALMOSTLY_SIMILAR_PATH.test(logName.getPath().replace("stripped_", ""), tagRL.getPath()))) {
@@ -274,6 +274,7 @@ public class CommandWoodcutter {
         this.plankToLog.put(Items.SPRUCE_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/spruce"), true, ItemTags.SPRUCE_LOGS.location(), true));
         this.plankToLog.put(Items.CRIMSON_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/crimson"), true, ItemTags.CRIMSON_STEMS.location(), true));
         this.plankToLog.put(Items.WARPED_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/warped"), true, ItemTags.WARPED_STEMS.location(), true));
+        this.plankToLog.put(Items.MANGROVE_PLANKS, new WoodCompo(new ResourceLocation("minecraft", "mangrove_planks"), false, ItemTags.MANGROVE_LOGS.location(), true));
         // planks with no log recipe
         Helper.getItems(ItemTags.PLANKS).forEach(key -> this.plankToLog.computeIfAbsent(key.value(), item -> new WoodCompo(Helper.getRegistryRL(item), false, null, false)));
     }
@@ -421,7 +422,13 @@ public class CommandWoodcutter {
     }
 
     private void addRecipe(final Map<String, WoodcuttingJsonRecipe> recipes, ResourceLocation input, ResourceLocation output, int count, boolean isTag) {
-        recipes.put(output.getPath() + "_from_" + input.getPath().replaceAll("/|\\\\", "_"), new WoodcuttingJsonRecipe(input.toString(), output.toString(), count, isTag));
+        final String inputName;
+        if (input.getNamespace().equals("forge") && input.getPath().startsWith("planks/")) {
+            inputName = input.getPath().replace("planks/", "") + "_planks";
+        } else {
+            inputName = input.getPath().replaceAll("/|\\\\", "_");
+        }
+        recipes.put(output.getPath() + "_from_" + inputName, new WoodcuttingJsonRecipe(input.toString(), output.toString(), count, isTag));
     }
 
     private void addPlankRecipe(final Map<String, WoodcuttingJsonRecipe> recipes, WoodCompo compo, ResourceLocation output, int count) {
@@ -467,20 +474,20 @@ public class CommandWoodcutter {
     private int testRecipe(CommandContext<CommandSourceStack> context) {
         initPlanksToLogs(context.getSource().getServer());
         ResourceLocation recipeRL = ResourceLocationArgument.getId(context, RECIPE_PARAM);
-        Recipe<CraftingContainer> recipe = context.getSource().getServer().getRecipeManager().byType(RecipeType.CRAFTING).values().stream().filter(r -> r.getId().equals(recipeRL)).findFirst().orElseThrow(() -> new CommandRuntimeException(new TextComponent("[" + recipeRL + "] is not a crafting recipe")));
+        Recipe<CraftingContainer> recipe = context.getSource().getServer().getRecipeManager().byType(RecipeType.CRAFTING).values().stream().filter(r -> r.getId().equals(recipeRL)).findFirst().orElseThrow(() -> new CommandRuntimeException(Component.literal("[" + recipeRL + "] is not a crafting recipe")));
         final Map<String, WoodcuttingJsonRecipe> recipes = getJsonRecipes(Collections.singleton(recipe));
         if (recipes.isEmpty()) {
-            throw new CommandRuntimeException(new TextComponent("[" + recipeRL + "] is not a wood recipe"));
+            throw new CommandRuntimeException(Component.literal("[" + recipeRL + "] is not a wood recipe"));
         }
         boolean genericTag = false;
         for (Map.Entry<String, WoodcuttingJsonRecipe> entry : recipes.entrySet()) {
             String ingredient = Optional.ofNullable(entry.getValue().ingredient.tag).orElse(entry.getValue().ingredient.item);
-            context.getSource().sendSuccess(new TextComponent("name=" + entry.getKey()).append("\n").append("ingredient=" + ingredient + " (" + (entry.getValue().ingredient.tag == null ? "item" : "tag") + ")").append("\n").append("result=" + entry.getValue().result + "*" + entry.getValue().count), false);
+            context.getSource().sendSuccess(Component.literal("name=" + entry.getKey()).append("\n").append("ingredient=" + ingredient + " (" + (entry.getValue().ingredient.tag == null ? "item" : "tag") + ")").append("\n").append("result=" + entry.getValue().result + "*" + entry.getValue().count), false);
             if (entry.getValue().ingredient.tag != null && (ingredient.equals("minecraft:logs") || ingredient.equals("minecraft:planks"))) {
                 genericTag = true;
             }
         }
-        context.getSource().sendSuccess(new TextComponent(genericTag ? "check this recipe as it uses a generic tag that may be incorrect" : "[" + recipeRL + "] is a valid recipe"), false);
+        context.getSource().sendSuccess(Component.literal(genericTag ? "check this recipe as it uses a generic tag that may be incorrect" : "[" + recipeRL + "] is a valid recipe"), false);
         return 1;
     }
 
@@ -511,7 +518,6 @@ public class CommandWoodcutter {
         return !source.getServer().isDedicatedServer() && source.getServer().isSingleplayer() && Optional.ofNullable(source.getEntity()).filter(ServerPlayer.class::isInstance).map(ServerPlayer.class::cast).map(Player::getGameProfile).map(profil -> source.getServer().isSingleplayerOwner(profil)).orElse(false);
     }
 
-    @SuppressWarnings("unused")
     @SubscribeEvent
     public static void onRegisterCommands(RegisterCommandsEvent event) {
         new CommandWoodcutter().register(event.getDispatcher());

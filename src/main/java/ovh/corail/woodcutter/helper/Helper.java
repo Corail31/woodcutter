@@ -11,9 +11,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraftforge.registries.ForgeRegistries;
 import ovh.corail.woodcutter.config.ConfigWoodcutter;
 import ovh.corail.woodcutter.config.CustomConfig;
 import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
@@ -22,6 +23,7 @@ import ovh.corail.woodcutter.registry.ModRecipeTypes;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.StreamSupport;
@@ -42,7 +44,7 @@ public class Helper {
     public static List<WoodcuttingRecipe> getSortedMatchingRecipes(Level level, Container inventory) {
         return level.getRecipeManager().byType(ModRecipeTypes.WOODCUTTING)
                 .values().stream()
-                .flatMap(recipe -> ModRecipeTypes.WOODCUTTING.tryMatch(recipe, level, inventory).stream())
+                .filter(recipe -> recipe.matches(inventory, level))
                 .sorted(RECIPE_COMPARATOR)
                 .toList();
     }
@@ -56,20 +58,24 @@ public class Helper {
         return getRegistryRL(stack.getItem());
     }
 
-    public static ResourceLocation getRegistryRL(IForgeRegistryEntry<?> entry) {
-        return entry.getRegistryName();
+    public static ResourceLocation getRegistryRL(Item item) {
+        return Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item));
     }
 
-    public static String getRegistryNamespace(IForgeRegistryEntry<?> entry) {
-        return Optional.ofNullable(entry.getRegistryName()).map(ResourceLocation::getNamespace).map(String::toString).orElse("");
+    public static ResourceLocation getRegistryRL(Block block) {
+        return Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block));
     }
 
-    public static String getRegistryPath(IForgeRegistryEntry<?> entry) {
-        return Optional.ofNullable(entry.getRegistryName()).map(ResourceLocation::getPath).map(String::toString).orElse("");
+    public static String getRegistryNamespace(Item item) {
+        return Optional.ofNullable(ForgeRegistries.ITEMS.getKey(item)).map(ResourceLocation::getNamespace).map(String::toString).orElse("");
     }
 
-    public static String getRegistryName(IForgeRegistryEntry<?> entry) {
-        return Optional.ofNullable(entry.getRegistryName()).map(ResourceLocation::toString).orElse("");
+    public static String getRegistryPath(Item item) {
+        return Optional.ofNullable(ForgeRegistries.ITEMS.getKey(item)).map(ResourceLocation::getPath).map(String::toString).orElse("");
+    }
+
+    public static String getRegistryName(Item item) {
+        return Optional.ofNullable(ForgeRegistries.ITEMS.getKey(item)).map(ResourceLocation::toString).orElse("");
     }
 
     public static void fillItemSet(Set<Item> items, TagKey<Item> tagKey) {
@@ -85,5 +91,10 @@ public class Helper {
     public static boolean isInTag(Item item, TagKey<Item> tagKey) {
         // TODO re-evaluate
         return StreamSupport.stream(Registry.ITEM.getTagOrEmpty(tagKey).spliterator(), false).anyMatch(holder -> holder.value() == item);
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    public static <T> T unsafeNullCast() {
+        return null;
     }
 }

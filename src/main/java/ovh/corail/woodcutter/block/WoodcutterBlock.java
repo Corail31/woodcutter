@@ -2,7 +2,7 @@ package ovh.corail.woodcutter.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -13,6 +13,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -49,7 +50,7 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 
 @SuppressWarnings("deprecation")
 public class WoodcutterBlock extends HorizontalDirectionalBlock implements BucketPickup, LiquidBlockContainer {
-    public static final TranslatableComponent TRANSLATION = new TranslatableComponent("container.corail_woodcutter.woodcutter");
+    public static final Component TRANSLATION = Component.translatable("container.corail_woodcutter.woodcutter");
     private static final EnumMap<Direction, VoxelShape> SHAPES = new EnumMap<>(Direction.class);
     protected static final double[][] BOUNDS = new double[][] {
         new double[] { 0d, 0.5d, 0.1875d, 1d, 0.5625d, 0.8125d },
@@ -123,7 +124,7 @@ public class WoodcutterBlock extends HorizontalDirectionalBlock implements Bucke
 
     @Override
     @Nullable
-    public BlockState getToolModifiedState(BlockState state, Level world, BlockPos pos, Player player, ItemStack stack, ToolAction toolAction) {
+    public BlockState getToolModifiedState(BlockState state, UseOnContext context, ToolAction toolAction, boolean simulate) {
         return null;
     }
 
