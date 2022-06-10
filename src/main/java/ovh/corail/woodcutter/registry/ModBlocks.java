@@ -1,14 +1,11 @@
 package ovh.corail.woodcutter.registry;
 
-import com.google.common.reflect.Reflection;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 import ovh.corail.woodcutter.block.WoodcutterBlock;
@@ -24,19 +21,13 @@ import java.util.Set;
 import static ovh.corail.woodcutter.WoodCutterMod.LOGGER;
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
-@SuppressWarnings("unused")
-@Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModBlocks {
     public static final Set<Block> WOODCUTTERS = new HashSet<>();
     public static final Set<Item> WOODCUTTER_ITEMS = new HashSet<>();
     private static final Random RANDOM = new Random();
     private static ItemStack RANDOM_STACK = ItemStack.EMPTY;
 
-    @SubscribeEvent
-    public static void onRegisterBlocks(final RegisterEvent event) {
-        if (!event.getRegistryKey().equals(ForgeRegistries.Keys.BLOCKS)) {
-            return;
-        }
+    static void onRegisterBlocks(final RegisterEvent event) {
         for (VanillaWoodVariant variant : VanillaWoodVariant.values()) {
             registerWoodcutter(event, variant.getSerializedName());
         }
@@ -67,18 +58,12 @@ public class ModBlocks {
         }
     }
 
-    @SubscribeEvent
-    public static void onRegisterBlockItems(final RegisterEvent event) {
-        if (!event.getRegistryKey().equals(ForgeRegistries.Keys.ITEMS)) {
-            return;
-        }
+    static void onRegisterBlockItems(final RegisterEvent event) {
         WOODCUTTERS.forEach(woodcutterBlock -> {
             Item woodcutter = new WoodcutterItem(woodcutterBlock);
             WOODCUTTER_ITEMS.add(woodcutter);
             event.register(ForgeRegistries.Keys.ITEMS, Helper.getRegistryRL(woodcutterBlock), () -> woodcutter);
         });
-        //noinspection UnstableApiUsage
-        Reflection.initialize(ModStats.class, ModRecipeTypes.class);
     }
 
     private static void registerWoodcutter(final RegisterEvent event, String name) {

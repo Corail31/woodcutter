@@ -13,7 +13,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import ovh.corail.woodcutter.config.ConfigWoodcutter;
 import ovh.corail.woodcutter.config.CustomConfig;
@@ -30,7 +29,6 @@ import java.util.stream.StreamSupport;
 
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
-@Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class Helper {
     public static void initItemModels() {
         ModBlocks.WOODCUTTERS.forEach(block -> ItemBlockRenderTypes.setRenderLayer(block, RenderType.cutout()));

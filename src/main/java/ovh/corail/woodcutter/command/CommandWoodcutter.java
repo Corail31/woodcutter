@@ -47,13 +47,13 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jline.utils.Levenshtein;
+import org.jetbrains.annotations.Nullable;
 import ovh.corail.woodcutter.command.WoodcuttingJsonRecipe.ConditionItem;
 import ovh.corail.woodcutter.command.WoodcuttingJsonRecipe.ConditionMod;
 import ovh.corail.woodcutter.compatibility.SupportMods;
 import ovh.corail.woodcutter.helper.Helper;
 import ovh.corail.woodcutter.helper.LangKey;
 
-import javax.annotation.Nullable;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileWriter;

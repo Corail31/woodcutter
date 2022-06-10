@@ -51,7 +51,7 @@ repositories {
 }
 
 dependencies {
-  minecraft 'net.minecraftforge:forge:1.19-41.0.1'
+  minecraft 'net.minecraftforge:forge:1.19-41.0.13'
   //runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.196")
   compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.196:api")
   //runtimeOnly fg.deobf("modlib:twilightforest:1.18.2-4.1.1052:universal")
@@ -78,3 +78,7 @@ jar {
 }
 
 jar.finalizedBy('reobfJar')
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}

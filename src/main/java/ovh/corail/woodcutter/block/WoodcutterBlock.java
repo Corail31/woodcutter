@@ -36,10 +36,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolAction;
+import org.jetbrains.annotations.Nullable;
 import ovh.corail.woodcutter.inventory.WoodcutterContainer;
 import ovh.corail.woodcutter.registry.ModStats;
 
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
@@ -51,7 +51,7 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 @SuppressWarnings("deprecation")
 public class WoodcutterBlock extends HorizontalDirectionalBlock implements BucketPickup, LiquidBlockContainer {
     public static final Component TRANSLATION = Component.translatable("container.corail_woodcutter.woodcutter");
-    private static final EnumMap<Direction, VoxelShape> SHAPES = new EnumMap<>(Direction.class);
+    private static final EnumMap<Direction, VoxelShape> SHAPE_BY_DIRECTION = new EnumMap<>(Direction.class);
     protected static final double[][] BOUNDS = new double[][] {
         new double[] { 0d, 0.5d, 0.1875d, 1d, 0.5625d, 0.8125d },
         new double[] { 0.125d, 0d, 0.3125d, 0.1875d, 0.5d, 0.375d },
@@ -90,7 +90,7 @@ public class WoodcutterBlock extends HorizontalDirectionalBlock implements Bucke
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return SHAPES.computeIfAbsent(state.getValue(HORIZONTAL_FACING), direction -> Arrays.stream(BOUNDS).map(b -> createShapeForDirection(b, direction)).reduce(Shapes.empty(), Shapes::or));
+        return SHAPE_BY_DIRECTION.computeIfAbsent(state.getValue(HORIZONTAL_FACING), direction -> Arrays.stream(BOUNDS).map(b -> createShapeForDirection(b, direction)).reduce(Shapes.empty(), Shapes::or));
     }
 
     private VoxelShape createShapeForDirection(double[] bounds, Direction direction) {
