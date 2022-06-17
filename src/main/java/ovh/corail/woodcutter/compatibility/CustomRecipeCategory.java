@@ -32,18 +32,6 @@ public class CustomRecipeCategory<T extends SingleItemRecipe> implements IRecipe
         return this.recipeType;
     }
 
-    @SuppressWarnings("removal")
-    public ResourceLocation getUid() {
-        // TODO remove later
-        return this.recipeType.getUid();
-    }
-
-    @SuppressWarnings("removal")
-    public Class<? extends T> getRecipeClass() {
-        // TODO remove later
-        return this.recipeType.getRecipeClass();
-    }
-
     @Override
     public Component getTitle() {
         return this.translation;

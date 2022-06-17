@@ -19,7 +19,7 @@ public class Registration {
         } else if (event.getRegistryKey().equals(ITEMS)) {
             ModBlocks.onRegisterBlockItems(event);
             //noinspection UnstableApiUsage
-            Reflection.initialize(ModStats.class, ModRecipeTypes.class);
+            Reflection.initialize(ModStats.class);
         } else if (event.getRegistryKey().equals(ForgeRegistries.Keys.CONTAINER_TYPES)) {
             ModContainers.onRegister(event);
         } else if (event.getRegistryKey().equals(ForgeRegistries.Keys.POI_TYPES)) {
