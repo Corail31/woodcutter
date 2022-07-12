@@ -27,10 +27,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.StreamSupport;
 
-import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
-
 public class Helper {
+    @SuppressWarnings("removal")
     public static void initItemModels() {
+        // TODO re-evaluate
         ModBlocks.WOODCUTTERS.forEach(block -> ItemBlockRenderTypes.setRenderLayer(block, RenderType.cutout()));
     }
 

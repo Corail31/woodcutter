@@ -9,11 +9,11 @@ import ovh.corail.woodcutter.inventory.WoodcutterContainer;
 
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
-public class ModContainers {
+public class ModMenuTypes {
     public static MenuType<WoodcutterContainer> WOODCUTTER = Helper.unsafeNullCast();
 
     static void onRegister(final RegisterEvent event) {
         WOODCUTTER = new MenuType<>(WoodcutterContainer::new);
-        event.register(ForgeRegistries.Keys.CONTAINER_TYPES, new ResourceLocation(MOD_ID, "woodcutter"), () -> WOODCUTTER);
+        event.register(ForgeRegistries.Keys.MENU_TYPES, new ResourceLocation(MOD_ID, "woodcutter"), () -> WOODCUTTER);
     }
 }

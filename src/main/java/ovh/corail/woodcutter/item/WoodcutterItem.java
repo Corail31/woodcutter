@@ -53,7 +53,7 @@ public class WoodcutterItem extends BlockItem {
         if (ConfigWoodcutter.general.openWoodcutterInInventory.get() && hand == InteractionHand.MAIN_HAND && player.isDiscrete()) {
             ItemStack heldItem = player.getItemInHand(hand);
             if (!world.isClientSide()) {
-                NetworkHooks.openGui((ServerPlayer) player, new SimpleMenuProvider((id, playerInventory, p) -> new WoodcutterContainer(id, playerInventory), WoodcutterBlock.TRANSLATION));
+                NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider((id, playerInventory, p) -> new WoodcutterContainer(id, playerInventory), WoodcutterBlock.TRANSLATION));
             }
             return InteractionResultHolder.success(heldItem);
         }
@@ -70,8 +70,8 @@ public class WoodcutterItem extends BlockItem {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onPlayerInteractEntity(PlayerInteractEvent.EntityInteract event) {
-        if (ConfigWoodcutter.general.openWoodcutterInInventory.get() && event.getPlayer() != null && !(event.getPlayer() instanceof FakePlayer) && event.getPlayer().isDiscrete()) {
-            ItemStack heldStack = event.getPlayer().getItemInHand(event.getHand());
+        if (ConfigWoodcutter.general.openWoodcutterInInventory.get() && event.getEntity() != null && !(event.getEntity() instanceof FakePlayer) && event.getEntity().isDiscrete()) {
+            ItemStack heldStack = event.getEntity().getItemInHand(event.getHand());
             /* prevents to interact with entities based on the held item */
             if (ModBlocks.WOODCUTTER_ITEMS.contains(heldStack.getItem())) {
                 event.setCancellationResult(InteractionResult.PASS);

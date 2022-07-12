@@ -20,8 +20,8 @@ public class Registration {
             ModBlocks.onRegisterBlockItems(event);
             //noinspection UnstableApiUsage
             Reflection.initialize(ModStats.class);
-        } else if (event.getRegistryKey().equals(ForgeRegistries.Keys.CONTAINER_TYPES)) {
-            ModContainers.onRegister(event);
+        } else if (event.getRegistryKey().equals(ForgeRegistries.Keys.MENU_TYPES)) {
+            ModMenuTypes.onRegister(event);
         } else if (event.getRegistryKey().equals(ForgeRegistries.Keys.POI_TYPES)) {
             ModPointOfInterestTypes.onRegister(event);
         } else if (event.getRegistryKey().equals(ForgeRegistries.Keys.RECIPE_SERIALIZERS)) {

@@ -10,7 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ovh.corail.woodcutter.client.gui.WoodcutterScreen;
 import ovh.corail.woodcutter.helper.Helper;
-import ovh.corail.woodcutter.registry.ModContainers;
+import ovh.corail.woodcutter.registry.ModMenuTypes;
 import ovh.corail.woodcutter.registry.ModRecipeTypes;
 
 @Mod("corail_woodcutter")
@@ -26,7 +26,7 @@ public class WoodCutterMod {
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
-        MenuScreens.register(ModContainers.WOODCUTTER, WoodcutterScreen::new);
+        MenuScreens.register(ModMenuTypes.WOODCUTTER, WoodcutterScreen::new);
         event.enqueueWork(Helper::initItemModels);
     }
 

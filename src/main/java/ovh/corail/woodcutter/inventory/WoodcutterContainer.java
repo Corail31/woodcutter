@@ -19,7 +19,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import ovh.corail.woodcutter.helper.Helper;
 import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
 import ovh.corail.woodcutter.registry.ModBlocks;
-import ovh.corail.woodcutter.registry.ModContainers;
+import ovh.corail.woodcutter.registry.ModMenuTypes;
 import ovh.corail.woodcutter.registry.ModRecipeTypes;
 
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class WoodcutterContainer extends AbstractContainerMenu {
     }
 
     public WoodcutterContainer(int id, Inventory playerInventory, final ContainerLevelAccess access) {
-        super(ModContainers.WOODCUTTER, id);
+        super(ModMenuTypes.WOODCUTTER, id);
         this.access = access;
         this.level = playerInventory.player.level;
         this.inputSlot = addSlot(new Slot(this.inputInventory, 0, 20, 33));
@@ -152,7 +152,7 @@ public class WoodcutterContainer extends AbstractContainerMenu {
 
     @Override
     public MenuType<?> getType() {
-        return ModContainers.WOODCUTTER;
+        return ModMenuTypes.WOODCUTTER;
     }
 
     public void registerUpdateListener(Runnable runnable) {
