@@ -26,8 +26,7 @@ public class WoodCutterMod {
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
-        MenuScreens.register(ModMenuTypes.WOODCUTTER, WoodcutterScreen::new);
-        event.enqueueWork(Helper::initItemModels);
+        event.enqueueWork(() -> MenuScreens.register(ModMenuTypes.WOODCUTTER, WoodcutterScreen::new));
     }
 
     private void onServerStarting(ServerStartingEvent event) {

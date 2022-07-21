@@ -51,12 +51,12 @@ repositories {
 }
 
 dependencies {
-  minecraft 'net.minecraftforge:forge:1.19-41.0.94'
+  minecraft 'net.minecraftforge:forge:1.19-41.0.98'
   // JEI requires forge 41.0.28
-  //runtimeOnly fg.deobf("mezz.jei:jei-1.19-common:11.0.0.206")
-  //runtimeOnly fg.deobf("mezz.jei:jei-1.19-forge:11.0.0.206")
-  compileOnly fg.deobf("mezz.jei:jei-1.19-common-api:11.0.0.206")
-  compileOnly fg.deobf("mezz.jei:jei-1.19-forge-api:11.0.0.206")
+  runtimeOnly fg.deobf("mezz.jei:jei-1.19-common:11.0.0.211")
+  runtimeOnly fg.deobf("mezz.jei:jei-1.19-forge:11.0.0.211")
+  compileOnly fg.deobf("mezz.jei:jei-1.19-common-api:11.0.0.211")
+  compileOnly fg.deobf("mezz.jei:jei-1.19-forge-api:11.0.0.211")
 }
 
 jar {

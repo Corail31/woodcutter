@@ -1,7 +1,5 @@
 package ovh.corail.woodcutter.helper;
 
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -17,7 +15,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import ovh.corail.woodcutter.config.ConfigWoodcutter;
 import ovh.corail.woodcutter.config.CustomConfig;
 import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
-import ovh.corail.woodcutter.registry.ModBlocks;
 import ovh.corail.woodcutter.registry.ModRecipeTypes;
 
 import java.util.Comparator;
@@ -28,12 +25,6 @@ import java.util.Set;
 import java.util.stream.StreamSupport;
 
 public class Helper {
-    @SuppressWarnings("removal")
-    public static void initItemModels() {
-        // TODO re-evaluate
-        ModBlocks.WOODCUTTERS.forEach(block -> ItemBlockRenderTypes.setRenderLayer(block, RenderType.cutout()));
-    }
-
     public static void registerSharedConfig() {
         ModLoadingContext ctx = ModLoadingContext.get();
         ctx.getActiveContainer().addConfig(new CustomConfig(ConfigWoodcutter.GENERAL_SPEC, ctx.getActiveContainer()));
