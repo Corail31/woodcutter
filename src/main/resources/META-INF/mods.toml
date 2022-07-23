@@ -16,7 +16,7 @@ The wooden version of the StoneCutter
 [[dependencies.corail_woodcutter]]
     modId="forge"
     mandatory=true
-    versionRange="[37.0.33,)"
+    versionRange="[37.1.0,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.corail_woodcutter]]

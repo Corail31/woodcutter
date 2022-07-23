@@ -1,45 +1,154 @@
 {
   "replace": false,
   "values": [
-    "#corail_woodcutter:vanilla_woodcutters"
-  ],
-  "optional": [
-    "corail_woodcutter:cherry_woodcutter",
-    "corail_woodcutter:dead_woodcutter",
-    "corail_woodcutter:fir_woodcutter",
-    "corail_woodcutter:hellbark_woodcutter",
-    "corail_woodcutter:jacaranda_woodcutter",
-    "corail_woodcutter:magic_woodcutter",
-    "corail_woodcutter:mahogany_woodcutter",
-    "corail_woodcutter:palm_woodcutter",
-    "corail_woodcutter:redwood_woodcutter",
-    "corail_woodcutter:umbran_woodcutter",
-    "corail_woodcutter:willow_woodcutter",
-    "corail_woodcutter:black_stained_woodcutter",
-    "corail_woodcutter:blue_stained_woodcutter",
-    "corail_woodcutter:brown_stained_woodcutter",
-    "corail_woodcutter:cyan_stained_woodcutter",
-    "corail_woodcutter:gray_stained_woodcutter",
-    "corail_woodcutter:green_stained_woodcutter",
-    "corail_woodcutter:light_blue_stained_woodcutter",
-    "corail_woodcutter:light_gray_stained_woodcutter",
-    "corail_woodcutter:lime_stained_woodcutter",
-    "corail_woodcutter:magenta_stained_woodcutter",
-    "corail_woodcutter:orange_stained_woodcutter",
-    "corail_woodcutter:pink_stained_woodcutter",
-    "corail_woodcutter:purple_stained_woodcutter",
-    "corail_woodcutter:red_stained_woodcutter",
-    "corail_woodcutter:white_stained_woodcutter",
-    "corail_woodcutter:yellow_stained_woodcutter",
-	"corail_woodcutter:twilight_oak_woodcutter",
-	"corail_woodcutter:canopy_woodcutter",
-	"corail_woodcutter:mangrove_woodcutter",
-	"corail_woodcutter:dark_woodcutter",
-	"corail_woodcutter:time_woodcutter",
-	"corail_woodcutter:trans_woodcutter",
-	"corail_woodcutter:mine_woodcutter",
-	"corail_woodcutter:sort_woodcutter",
-	"corail_woodcutter:tropicraft_palm_woodcutter",
-	"corail_woodcutter:tropicraft_mahogany_woodcutter"
+    "#corail_woodcutter:vanilla_woodcutters",
+    {
+      "id": "corail_woodcutter:cherry_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:dead_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:fir_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:hellbark_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:jacaranda_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:magic_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:mahogany_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:palm_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:redwood_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:umbran_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:willow_woodcutter",
+      "required": false
+    },
+	{
+      "id": "corail_woodcutter:black_stained_woodcutter",
+      "required": false
+    },
+	{
+      "id": "corail_woodcutter:blue_stained_woodcutter",
+      "required": false
+    },
+	{
+      "id": "corail_woodcutter:brown_stained_woodcutter",
+      "required": false
+    },
+	{
+      "id": "corail_woodcutter:cyan_stained_woodcutter",
+      "required": false
+    },
+	{
+      "id": "corail_woodcutter:gray_stained_woodcutter",
+      "required": false
+    },
+	{
+      "id": "corail_woodcutter:green_stained_woodcutter",
+      "required": false
+    },
+	{
+      "id": "corail_woodcutter:light_blue_stained_woodcutter",
+      "required": false
+    },
+	{
+      "id": "corail_woodcutter:light_gray_stained_woodcutter",
+      "required": false
+    },
+	{
+      "id": "corail_woodcutter:lime_stained_woodcutter",
+      "required": false
+    },
+	{
+      "id": "corail_woodcutter:magenta_stained_woodcutter",
+      "required": false
+    },
+	{
+      "id": "corail_woodcutter:orange_stained_woodcutter",
+      "required": false
+    },
+	{
+      "id": "corail_woodcutter:pink_stained_woodcutter",
+      "required": false
+    },
+	{
+      "id": "corail_woodcutter:purple_stained_woodcutter",
+      "required": false
+    },
+	{
+      "id": "corail_woodcutter:red_stained_woodcutter",
+      "required": false
+    },
+	{
+      "id": "corail_woodcutter:white_stained_woodcutter",
+      "required": false
+    },
+	{
+      "id": "corail_woodcutter:yellow_stained_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:twilight_oak_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:canopy_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:mangrove_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:dark_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:time_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:trans_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:mine_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:sort_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:tropicraft_palm_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:tropicraft_mahogany_woodcutter",
+      "required": false
+    }
   ]
 }

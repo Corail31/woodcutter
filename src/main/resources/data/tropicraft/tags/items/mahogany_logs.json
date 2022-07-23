@@ -1,9 +1,17 @@
 {
   "replace": false,
-  "values": [],
-  "optional": [
-    "tropicraft:mahogany_log",
-    "tropicraft:mahogany_wood",
-    "tropicraft:mohogany_wood"
+  "values": [
+    {
+	  "id": "tropicraft:mahogany_log",
+	  "required": false
+    },
+    {
+	  "id": "tropicraft:mahogany_wood",
+	  "required": false
+    },
+    {
+	  "id": "tropicraft:mohogany_wood",
+	  "required": false
+    }
   ]
 }
