@@ -1,9 +1,10 @@
 {
   "replace": false,
   "values": [
-    "minecraft:crimson_planks"
-  ],
-  "optional": [
-    "quark:vertical_crimson_planks"
+    "minecraft:crimson_planks",
+	{
+	  "id": "quark:vertical_crimson_planks",
+	  "required": false
+	}
   ]
 }

@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-version = '2.3.5'
+version = '2.3.6'
 group = 'ovh.corail'
 archivesBaseName = 'corail_woodcutter'
 
@@ -51,7 +51,7 @@ repositories {
 }
 
 dependencies {
-  minecraft 'net.minecraftforge:forge:1.18.2-40.1.0'
+  minecraft 'net.minecraftforge:forge:1.18.2-40.1.68'
   runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.192")
   compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.192:api")
   //runtimeOnly fg.deobf("modlib:twilightforest:1.18.2-4.1.1052:universal")
@@ -59,7 +59,7 @@ dependencies {
   //runtimeOnly fg.deobf("modlib:Quark:3.2.349")
   //runtimeOnly fg.deobf("modlib:TerraBlender:1.18.2-1.1.0.99")
   //runtimeOnly fg.deobf("modlib:BYG:1.18.2")
-  //runtimeOnly fg.deobf("modlib:BiomesOPlenty:1.18.2-16.0.0.110")
+  //runtimeOnly fg.deobf("modlib:BiomesOPlenty:1.18.2-16.0.0.134")
   //runtimeOnly fg.deobf("modlib:corail_woodcutter_extension_byg:1.0.1")
 }
 

@@ -1,9 +1,10 @@
 {
   "replace": false,
   "values": [
-    "minecraft:birch_planks"
-  ],
-  "optional": [
-    "quark:vertical_birch_planks"
+    "minecraft:birch_planks",
+	{
+	  "id": "quark:vertical_birch_planks",
+	  "required": false
+	}
   ]
 }
