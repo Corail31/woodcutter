@@ -1,9 +1,10 @@
 {
   "replace": false,
   "values": [
-    "minecraft:warped_planks"
-  ],
-  "optional": [
-    "quark:vertical_warped_planks"
+    "minecraft:warped_planks",
+	{
+	  "id": "quark:vertical_warped_planks",
+	  "required": false
+    }
   ]
 }

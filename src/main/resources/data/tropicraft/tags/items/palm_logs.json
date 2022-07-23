@@ -1,8 +1,13 @@
 {
   "replace": false,
-  "values": [],
-  "optional": [
-    "tropicraft:palm_log",
-    "tropicraft:palm_wood"
+  "values": [
+    {
+	  "id": "tropicraft:palm_log",
+	  "required": false
+    },
+    {
+	  "id": "tropicraft:palm_wood",
+	  "required": false
+    }
   ]
 }

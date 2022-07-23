@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-version = '2.4.1'
+version = '2.4.2'
 group = 'ovh.corail'
 archivesBaseName = 'corail_woodcutter'
 
@@ -51,12 +51,13 @@ repositories {
 }
 
 dependencies {
-  minecraft 'net.minecraftforge:forge:1.19-41.0.98'
-  // JEI requires forge 41.0.28
-  runtimeOnly fg.deobf("mezz.jei:jei-1.19-common:11.0.0.211")
-  runtimeOnly fg.deobf("mezz.jei:jei-1.19-forge:11.0.0.211")
-  compileOnly fg.deobf("mezz.jei:jei-1.19-common-api:11.0.0.211")
-  compileOnly fg.deobf("mezz.jei:jei-1.19-forge-api:11.0.0.211")
+  minecraft 'net.minecraftforge:forge:1.19-41.0.110'
+  runtimeOnly fg.deobf("mezz.jei:jei-1.19-common:11.1.0.233")
+  runtimeOnly fg.deobf("mezz.jei:jei-1.19-forge:11.1.0.233")
+  compileOnly fg.deobf("mezz.jei:jei-1.19-common-api:11.1.0.233")
+  compileOnly fg.deobf("mezz.jei:jei-1.19-forge-api:11.1.0.233")
+  //runtimeOnly fg.deobf("modlib:TerraBlender-1.19:2.0.0.120")
+  //runtimeOnly fg.deobf("modlib:BiomesOPlenty-1.19:17.0.0.143")
 }
 
 jar {
