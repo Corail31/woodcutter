@@ -1,35 +1,121 @@
 {
   "replace": false,
-  "values": [],
-  "optional": [
-	"corail_woodcutter:byg_aspen_woodcutter",
-	"corail_woodcutter:byg_baobab_woodcutter",
-	"corail_woodcutter:byg_blue_enchanted_woodcutter",
-	"corail_woodcutter:byg_cherry_woodcutter",
-	"corail_woodcutter:byg_cika_woodcutter",
-	"corail_woodcutter:byg_cypress_woodcutter",
-	"corail_woodcutter:byg_ebony_woodcutter",
-	"corail_woodcutter:byg_fir_woodcutter",
-	"corail_woodcutter:byg_green_enchanted_woodcutter",
-	"corail_woodcutter:byg_holly_woodcutter",
-	"corail_woodcutter:byg_jacaranda_woodcutter",
-	"corail_woodcutter:byg_mahogany_woodcutter",
-	"corail_woodcutter:byg_mangrove_woodcutter",
-	"corail_woodcutter:byg_maple_woodcutter",
-	"corail_woodcutter:byg_pine_woodcutter",
-	"corail_woodcutter:byg_rainbow_eucalyptus_woodcutter",
-	"corail_woodcutter:byg_redwood_woodcutter",
-	"corail_woodcutter:byg_skyris_woodcutter",
-	"corail_woodcutter:byg_willow_woodcutter",
-	"corail_woodcutter:byg_witch_hazel_woodcutter",
-	"corail_woodcutter:byg_zelkova_woodcutter",
-	"corail_woodcutter:byg_sythian_woodcutter",
-	"corail_woodcutter:byg_embur_woodcutter",
-	"corail_woodcutter:byg_palm_woodcutter",
-	"corail_woodcutter:byg_lament_woodcutter",
-	"corail_woodcutter:byg_bulbis_woodcutter",
-	"corail_woodcutter:byg_nightshade_woodcutter",
-	"corail_woodcutter:byg_ether_woodcutter",
-	"corail_woodcutter:byg_imparius_woodcutter"
+  "values": [
+    {
+	  "id": "corail_woodcutter:byg_aspen_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_baobab_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_blue_enchanted_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_cherry_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_cika_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_cypress_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_ebony_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_fir_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_green_enchanted_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_holly_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_jacaranda_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_mahogany_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_mangrove_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_maple_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_pine_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_rainbow_eucalyptus_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_redwood_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_skyris_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_willow_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_witch_hazel_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_zelkova_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_sythian_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_embur_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_palm_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_lament_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_bulbis_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_nightshade_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_ether_woodcutter",
+	  "required": false
+    },
+    {
+	  "id": "corail_woodcutter:byg_imparius_woodcutter",
+	  "required": false
+    }
   ]
 }

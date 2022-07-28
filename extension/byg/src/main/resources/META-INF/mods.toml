@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[36,37)"
+loaderVersion="[34,)"
 issueTrackerURL="https://www.curseforge.com/minecraft/mc-mods/corail-woodcutter/issues"
 license="GNU GPL v3"
 [[mods]]
@@ -16,13 +16,13 @@ Corail Woodcutter: Extension for "Oh the Biomes You'll Go"
 [[dependencies.corail_woodcutter_extension_byg]]
     modId="forge"
     mandatory=true
-    versionRange="[36.0,37)"
+    versionRange="[34,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.corail_woodcutter_extension_byg]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.5,1.17)"
+    versionRange="[1.16,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.corail_woodcutter_extension_byg]]
