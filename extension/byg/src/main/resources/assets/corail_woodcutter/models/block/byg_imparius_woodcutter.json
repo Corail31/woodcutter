@@ -1,6 +1,6 @@
 {
     "parent": "corail_woodcutter:block/woodcutter",
     "textures": {
-        "base": "byg:block/imparius_planks"
+        "base": "byg:block/imparius/planks"
     }
 }

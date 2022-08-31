@@ -1,6 +1,6 @@
 {
     "parent": "corail_woodcutter:block/woodcutter",
     "textures": {
-        "base": "byg:block/zelkova_planks"
+        "base": "byg:block/zelkova/planks"
     }
 }

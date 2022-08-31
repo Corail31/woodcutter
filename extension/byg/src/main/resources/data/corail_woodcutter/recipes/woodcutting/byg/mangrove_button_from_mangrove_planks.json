@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"byg"},{"type":"forge:item_exists","item":"byg:mangrove_button"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"byg:mangrove_planks"},"result":"byg:mangrove_button","count":1}
