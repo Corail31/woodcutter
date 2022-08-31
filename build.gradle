@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-version = '2.3.6'
+version = '2.3.7'
 group = 'ovh.corail'
 archivesBaseName = 'corail_woodcutter'
 
