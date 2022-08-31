@@ -49,8 +49,8 @@ public class CustomRecipeCategory<T extends SingleItemRecipe> implements IRecipe
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder recipeLayoutBuilder, T recipe, IFocusGroup focuses) {
-        recipeLayoutBuilder.addSlot(RecipeIngredientRole.INPUT, 40, 0).addIngredients(recipe.getIngredients().get(0));
-        recipeLayoutBuilder.addSlot(RecipeIngredientRole.OUTPUT, 98, 0).addItemStack(recipe.getResultItem());
+        recipeLayoutBuilder.addSlot(RecipeIngredientRole.INPUT, 41, 1).addIngredients(recipe.getIngredients().get(0));
+        recipeLayoutBuilder.addSlot(RecipeIngredientRole.OUTPUT, 99, 1).addItemStack(recipe.getResultItem());
     }
 
     @Override
