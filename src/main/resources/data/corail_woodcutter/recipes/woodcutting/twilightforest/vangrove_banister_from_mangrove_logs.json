@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:vangrove_banister"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:mangrove_logs"},"result":"twilightforest:vangrove_banister","count":4}
