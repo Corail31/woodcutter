@@ -2,6 +2,7 @@ package ovh.corail.woodcutter.helper;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
@@ -69,17 +70,17 @@ public class Helper {
 
     public static void fillItemSet(Set<Item> items, TagKey<Item> tagKey) {
         //noinspection deprecation
-        Registry.ITEM.getTagOrEmpty(tagKey).forEach(holder -> items.add(holder.value()));
+        BuiltInRegistries.ITEM.getTagOrEmpty(tagKey).forEach(holder -> items.add(holder.value()));
     }
 
     public static Iterable<Holder<Item>> getItems(TagKey<Item> tagKey) {
         //noinspection deprecation
-        return Registry.ITEM.getTagOrEmpty(tagKey);
+        return BuiltInRegistries.ITEM.getTagOrEmpty(tagKey);
     }
 
     public static boolean isInTag(Item item, TagKey<Item> tagKey) {
         // TODO re-evaluate
-        return StreamSupport.stream(Registry.ITEM.getTagOrEmpty(tagKey).spliterator(), false).anyMatch(holder -> holder.value() == item);
+        return StreamSupport.stream(BuiltInRegistries.ITEM.getTagOrEmpty(tagKey).spliterator(), false).anyMatch(holder -> holder.value() == item);
     }
 
     @SuppressWarnings("ConstantConditions")

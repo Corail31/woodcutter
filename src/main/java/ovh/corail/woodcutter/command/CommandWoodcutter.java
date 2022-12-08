@@ -356,7 +356,7 @@ public class CommandWoodcutter {
         PackRepository packs = server.getPackRepository();
         Collection<String> selectedPackIds = Lists.newArrayList(packs.getSelectedIds());
         packs.reload();
-        Collection<String> disabledPackIds = server.getWorldData().getDataPackConfig().getDisabled();
+        Collection<String> disabledPackIds = server.getWorldData().getDataConfiguration().dataPacks().getDisabled();
         for (String packId : packs.getAvailableIds()) {
             if (!disabledPackIds.contains(packId) && !selectedPackIds.contains(packId)) {
                 selectedPackIds.add(packId);

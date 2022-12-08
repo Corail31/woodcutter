@@ -26,7 +26,6 @@ import ovh.corail.woodcutter.block.WoodcutterBlock;
 import ovh.corail.woodcutter.config.ConfigWoodcutter;
 import ovh.corail.woodcutter.inventory.WoodcutterContainer;
 import ovh.corail.woodcutter.registry.ModBlocks;
-import ovh.corail.woodcutter.registry.ModTabs;
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class WoodcutterItem extends BlockItem {
     private static final Component ACCESS_FROM_INVENTORY = Component.translatable("item.corail_woodcutter.woodcutter.inventory").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC);
 
     public WoodcutterItem(Block woodcutterBlock) {
-        super(woodcutterBlock, new Item.Properties().tab(ModTabs.mainTab).stacksTo(1));
+        super(woodcutterBlock, new Item.Properties().stacksTo(1));
     }
 
     @Override

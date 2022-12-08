@@ -14,7 +14,6 @@ import ovh.corail.woodcutter.helper.Helper;
 import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
 import ovh.corail.woodcutter.registry.ModBlocks;
 import ovh.corail.woodcutter.registry.ModRecipeTypes;
-import ovh.corail.woodcutter.registry.ModTabs;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,7 +37,7 @@ public class IntegrationJEI implements IModPlugin {
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
-        registry.addRecipeCategories(new CustomRecipeCategory<>(this.recipeType, WoodcutterBlock.TRANSLATION, ModTabs.mainTab.getIconItem(), registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new CustomRecipeCategory<>(this.recipeType, WoodcutterBlock.TRANSLATION, ModBlocks.createRandomStack(), registry.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
