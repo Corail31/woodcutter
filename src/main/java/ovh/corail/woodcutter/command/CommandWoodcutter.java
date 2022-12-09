@@ -422,13 +422,7 @@ public class CommandWoodcutter {
     }
 
     private void addRecipe(final Map<String, WoodcuttingJsonRecipe> recipes, ResourceLocation input, ResourceLocation output, int count, boolean isTag) {
-        final String inputName;
-        if (input.getNamespace().equals("forge") && input.getPath().startsWith("planks/")) {
-            inputName = input.getPath().replace("planks/", "") + "_planks";
-        } else {
-            inputName = input.getPath().replaceAll("/|\\\\", "_");
-        }
-        recipes.put(output.getPath() + "_from_" + inputName, new WoodcuttingJsonRecipe(input.toString(), output.toString(), count, isTag));
+        recipes.put(RL_TO_NAME.apply(output) + "_from_" + RL_TO_NAME.apply(input), new WoodcuttingJsonRecipe(input.toString(), output.toString(), count, isTag));
     }
 
     private void addPlankRecipe(final Map<String, WoodcuttingJsonRecipe> recipes, WoodCompo compo, ResourceLocation output, int count) {
@@ -559,13 +553,14 @@ public class CommandWoodcutter {
 
     private static final String MODID_PARAM = "modid";
     private static final String RECIPE_PARAM = "recipe";
-    private static final int PACK_FORMAT = 9;
+    private static final int PACK_FORMAT = 12;
     private static final Predicate<ItemStack> VANILLA_ITEM = stack -> !stack.isEmpty() && "minecraft".equals(Helper.getRegistryNamespace(stack.getItem()));
     private static final Predicate<ItemStack> NOT_VANILLA_ITEM = stack -> !stack.isEmpty() && !"minecraft".equals(Helper.getRegistryNamespace(stack.getItem()));
     private static final Predicate<String> INVALID_MODID = modid -> modid == null || "minecraft".equals(modid) || !ModList.get().isLoaded(modid) || SupportMods.hasSupport(modid);
     private static final BiPredicate<String, String> ALMOSTLY_SIMILAR_PATH = (s1, s2) -> Levenshtein.distance(s1, s2, 1, 0, 1, 10) <= 3;
     private static final BiFunction<MinecraftServer, String, File> DATAPACK_FOLDER = (server, folder) -> new File(server.getWorldPath(LevelResource.DATAPACK_DIR).toFile(), folder);
     private static final Function<String, File> CONFIG_FOLDER = folder -> new File(FMLPaths.CONFIGDIR.get().toFile(), "corail_woodcutter" + File.separatorChar + folder);
+    private static final Function<ResourceLocation, String> RL_TO_NAME = rl -> rl.getNamespace().equals("forge") && rl.getPath().startsWith("planks/") ? rl.getPath().replace("planks/", "") + "_planks" : rl.getPath().replaceAll("/|\\\\", "_");
     private static final SuggestionProvider<CommandSourceStack> SUGGESTION_MODID = (ctx, build) -> SharedSuggestionProvider.suggest(ModList.get().applyForEachModContainer(ModContainer::getModId).filter(SupportMods::noSupport).filter(modid -> !"minecraft".equals(modid)), build);
     private static final SuggestionProvider<CommandSourceStack> SUGGESTION_CRAFTING_RECIPES = (ctx, build) -> SharedSuggestionProvider.suggestResource(ctx.getSource().getServer().getRecipeManager().byType(RecipeType.CRAFTING).keySet().stream(), build);
     private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
