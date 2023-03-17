@@ -49,14 +49,14 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
         RenderSystem.setShaderTexture(0, BG_LOCATION);
         int i = this.leftPos;
         int j = this.topPos;
-        this.blit(poseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
+        blit(poseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
         int k = (int) (41f * this.scrollOffs);
-        this.blit(poseStack, i + 119, j + 15 + k, 176 + (this.isScrollBarActive() ? 0 : 12), 0, 12, 15);
+        blit(poseStack, i + 119, j + 15 + k, 176 + (this.isScrollBarActive() ? 0 : 12), 0, 12, 15);
         int l = this.leftPos + 52;
         int i1 = this.topPos + 14;
         int j1 = this.startIndex + 12;
         renderButtons(poseStack, mouseX, mouseY, l, i1, j1);
-        renderRecipes(l, i1, j1);
+        renderRecipes(poseStack, l, i1, j1);
     }
 
     @Override
@@ -72,7 +72,8 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
                 int j1 = i + i1 % 4 * 16;
                 int k1 = j + i1 / 4 * 18 + 2;
                 if (x >= j1 && x < j1 + 16 && y >= k1 && y < k1 + 18) {
-                    this.renderTooltip(poseStack, list.get(l).getResultItem(), x, y);
+                    assert  this.minecraft != null && this.minecraft.level != null;
+                    this.renderTooltip(poseStack, list.get(l).getResultItem(this.minecraft.level.registryAccess()), x, y);
                 }
             }
         }
@@ -90,18 +91,19 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
             } else if (mouseX >= k && mouseY >= i1 && mouseX < k + 16 && mouseY < i1 + 18) {
                 j1 += 36;
             }
-            this.blit(poseStack, k, i1 - 1, 0, j1, 16, 18);
+            blit(poseStack, k, i1 - 1, 0, j1, 16, 18);
         }
     }
 
-    private void renderRecipes(int x, int y, int scrollOffset) {
+    private void renderRecipes(PoseStack poseStack, int x, int y, int scrollOffset) {
         List<WoodcuttingRecipe> list = this.menu.getRecipes();
         for (int i = this.startIndex; i < scrollOffset && i < this.menu.getNumRecipes(); ++i) {
             int j = i - this.startIndex;
             int k = x + j % 4 * 16;
             int l = j / 4;
             int i1 = y + l * 18 + 2;
-            getMinecraft().getItemRenderer().renderAndDecorateItem(list.get(i).getResultItem(), k, i1);
+            assert  this.minecraft != null && this.minecraft.level != null;
+            this.minecraft.getItemRenderer().renderAndDecorateItem(poseStack, list.get(i).getResultItem(this.minecraft.level.registryAccess()), k, i1);
         }
     }
 
@@ -116,9 +118,11 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
                 int i1 = l - this.startIndex;
                 double d0 = mouseX - (double) (i + i1 % 4 * 16);
                 double d1 = mouseY - (double) (j + i1 / 4 * 18);
+                assert this.minecraft != null && this.minecraft.player != null;
                 if (d0 >= 0d && d1 >= 0d && d0 < 16d && d1 < 18d && this.menu.clickMenuButton(this.minecraft.player, l)) {
                     Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1f));
-                    getMinecraft().gameMode.handleInventoryButtonClick((this.menu).containerId, l);
+                    assert this.minecraft.gameMode != null;
+                    this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, l);
                     return true;
                 }
             }

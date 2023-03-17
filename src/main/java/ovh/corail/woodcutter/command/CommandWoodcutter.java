@@ -16,6 +16,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -156,8 +157,9 @@ public class CommandWoodcutter {
             throw LangKey.INVALID_MODID.asCommandException();
         }
         MinecraftServer server = context.getSource().getServer();
-        initPlanksToLogs(server);
-        final Map<String, WoodcuttingJsonRecipe> recipes = getJsonRecipes(getCraftingRecipes(server, recipe -> modid.equals(recipe.getId().getNamespace()) && NOT_VANILLA_ITEM.test(recipe.getResultItem())));
+        RegistryAccess registryAccess = context.getSource().getLevel().registryAccess();
+        initPlanksToLogs(server, registryAccess);
+        final Map<String, WoodcuttingJsonRecipe> recipes = getJsonRecipes(getCraftingRecipes(server, recipe -> modid.equals(recipe.getId().getNamespace()) && NOT_VANILLA_ITEM.test(recipe.getResultItem(registryAccess))), registryAccess);
         if (recipes.isEmpty()) {
             throw LangKey.NO_VALID_RECIPE_FOR_MODID.asCommandException(modid);
         }
@@ -231,7 +233,7 @@ public class CommandWoodcutter {
         private static final WoodCompo ANY_WOOD = new WoodCompo(ItemTags.PLANKS.location(), true, ItemTags.LOGS.location(), true);
     }
 
-    private void initPlanksToLogs(MinecraftServer server) {
+    private void initPlanksToLogs(MinecraftServer server, RegistryAccess registryAccess) {
         // locate the logs to planks recipes to determine the pairs planks/logs and if a tag can be used
         if (!this.plankToLog.isEmpty()) {
             return;
@@ -239,8 +241,8 @@ public class CommandWoodcutter {
         // init log
         Helper.fillItemSet(this.logs, ItemTags.LOGS);
         ForgeRegistries.ITEMS.getEntries().stream().filter(entry -> entry.getKey().location().getPath().endsWith("_log") || entry.getKey().location().getPath().endsWith("_stem")).map(Map.Entry::getValue).forEach(this.logs::add);
-        getCraftingRecipes(server, this::isLogToPlankRecipe)
-            .forEach(logRecipe -> this.plankToLog.computeIfAbsent(logRecipe.getResultItem().getItem(), plank -> {
+        getCraftingRecipes(server, recipe -> isLogToPlankRecipe(recipe, registryAccess))
+            .forEach(logRecipe -> this.plankToLog.computeIfAbsent(logRecipe.getResultItem(registryAccess).getItem(), plank -> {
                 ResourceLocation plankName = Helper.getRegistryRL(plank);
                 // if a tag is provided in the recipe
                 Ingredient ingredient = logRecipe.getIngredients().get(0);
@@ -299,11 +301,11 @@ public class CommandWoodcutter {
         return server.getRecipeManager().byType(RecipeType.CRAFTING).values().stream().filter(recipePredicate).collect(Collectors.toSet());
     }
 
-    private boolean isLogToPlankRecipe(Recipe<CraftingContainer> recipe) {
+    private boolean isLogToPlankRecipe(Recipe<CraftingContainer> recipe, RegistryAccess registryAccess) {
         if ("minecraft".equals(recipe.getId().getNamespace()) || recipe.getIngredients().size() != 1 || !(recipe instanceof ShapelessRecipe)) {
             return false;
         }
-        ItemStack resultItem = recipe.getResultItem();
+        ItemStack resultItem = recipe.getResultItem(registryAccess);
         if (NOT_VANILLA_ITEM.test(resultItem) && (resultItem.is(ItemTags.PLANKS) || Helper.getRegistryPath(resultItem.getItem()).endsWith("_planks"))) {
             final Ingredient ingredient = recipe.getIngredients().stream().filter(ing -> !ing.isEmpty()).findFirst().orElse(Ingredient.EMPTY);
             return NOT_VANILLA_ITEM.test(ingredient.getItems()[0]) && this.logs.contains(ingredient.getItems()[0].getItem()) && Arrays.stream(ingredient.getItems()).allMatch(NOT_VANILLA_ITEM);
@@ -388,14 +390,14 @@ public class CommandWoodcutter {
         return toFile(file, json);
     }
 
-    private Map<String, WoodcuttingJsonRecipe> getJsonRecipes(Set<Recipe<CraftingContainer>> recipes) {
+    private Map<String, WoodcuttingJsonRecipe> getJsonRecipes(Set<Recipe<CraftingContainer>> recipes, RegistryAccess registryAccess) {
         final Map<String, WoodcuttingJsonRecipe> jsonRecipes = new HashMap<>();
         for (Recipe<CraftingContainer> recipe : recipes) {
-            double weight = getWeight(recipe);
+            double weight = getWeight(recipe, registryAccess);
             if (weight == 0d) {
                 continue;
             }
-            ItemStack result = recipe.getResultItem();
+            ItemStack result = recipe.getResultItem(registryAccess);
             NonNullList<Ingredient> ingredients = recipe.getIngredients();
             ResourceLocation outputName = Helper.getRegistryRL(result);
             if (ingredients.size() == 1) {
@@ -433,10 +435,10 @@ public class CommandWoodcutter {
         Optional.ofNullable(compo.logName()).ifPresent(logName -> addRecipe(recipes, logName, output, count, compo.isLogTag()));
     }
 
-    private double getWeight(Recipe<CraftingContainer> recipe) {
+    private double getWeight(Recipe<CraftingContainer> recipe, RegistryAccess registryAccess) {
         final NonNullList<Ingredient> ingredients = recipe.getIngredients();
         double weight = 0d;
-        double maxWeight = 5d * recipe.getResultItem().getCount();
+        double maxWeight = 5d * recipe.getResultItem(registryAccess).getCount();
         for (Ingredient ingredient : ingredients) {
             if (!ingredient.isEmpty()) {
                 ItemStack[] stacks = ingredient.getItems();
@@ -462,14 +464,15 @@ public class CommandWoodcutter {
                 }
             }
         }
-        return weight / (double) recipe.getResultItem().getCount();
+        return weight / (double) recipe.getResultItem(registryAccess).getCount();
     }
 
     private int testRecipe(CommandContext<CommandSourceStack> context) {
-        initPlanksToLogs(context.getSource().getServer());
+        RegistryAccess registryAccess = context.getSource().getLevel().registryAccess();
+        initPlanksToLogs(context.getSource().getServer(), registryAccess);
         ResourceLocation recipeRL = ResourceLocationArgument.getId(context, RECIPE_PARAM);
         Recipe<CraftingContainer> recipe = context.getSource().getServer().getRecipeManager().byType(RecipeType.CRAFTING).values().stream().filter(r -> r.getId().equals(recipeRL)).findFirst().orElseThrow(() -> new CommandRuntimeException(Component.literal("[" + recipeRL + "] is not a crafting recipe")));
-        final Map<String, WoodcuttingJsonRecipe> recipes = getJsonRecipes(Collections.singleton(recipe));
+        final Map<String, WoodcuttingJsonRecipe> recipes = getJsonRecipes(Collections.singleton(recipe), registryAccess);
         if (recipes.isEmpty()) {
             throw new CommandRuntimeException(Component.literal("[" + recipeRL + "] is not a wood recipe"));
         }

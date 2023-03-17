@@ -1,7 +1,6 @@
 package ovh.corail.woodcutter.helper;
 
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -23,6 +22,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.StreamSupport;
 
 public class Helper {
@@ -35,14 +35,14 @@ public class Helper {
         return level.getRecipeManager().byType(ModRecipeTypes.WOODCUTTING)
                 .values().stream()
                 .filter(recipe -> recipe.matches(inventory, level))
-                .sorted(RECIPE_COMPARATOR)
+                .sorted(RECIPE_COMPARATOR.apply(level))
                 .toList();
     }
 
-    public static final Comparator<Recipe<Container>> RECIPE_COMPARATOR = Comparator.<Recipe<Container>, String>comparing(recipe -> {
-        String[] name = getRegistryPath(recipe.getResultItem().getItem()).split("_");
+    public static final Function<Level, Comparator<Recipe<Container>>> RECIPE_COMPARATOR = level -> Comparator.<Recipe<Container>, String>comparing(recipe -> {
+        String[] name = getRegistryPath(recipe.getResultItem(level.registryAccess()).getItem()).split("_");
         return name[name.length - 1];
-    }).thenComparing(recipe -> getRegistryName(recipe.getResultItem().getItem()));
+    }).thenComparing(recipe -> getRegistryName(recipe.getResultItem(level.registryAccess()).getItem()));
 
     public static ResourceLocation getRegistryRL(ItemStack stack) {
         return getRegistryRL(stack.getItem());

@@ -8,12 +8,13 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.SingleItemRecipe;
 
-public class CustomRecipeCategory<T extends SingleItemRecipe> implements IRecipeCategory<T> {
+public class CustomRecipeCategory <T extends SingleItemRecipe> implements IRecipeCategory<T> {
     private static final ResourceLocation RECIPE_GUI_VANILLA = new ResourceLocation("jei", "textures/gui/gui_vanilla.png");
     private static final int WIDTH = 116, HEIGHT = 18;
     private final RecipeType<T> recipeType;
@@ -50,7 +51,7 @@ public class CustomRecipeCategory<T extends SingleItemRecipe> implements IRecipe
     @Override
     public void setRecipe(IRecipeLayoutBuilder recipeLayoutBuilder, T recipe, IFocusGroup focuses) {
         recipeLayoutBuilder.addSlot(RecipeIngredientRole.INPUT, 41, 1).addIngredients(recipe.getIngredients().get(0));
-        recipeLayoutBuilder.addSlot(RecipeIngredientRole.OUTPUT, 99, 1).addItemStack(recipe.getResultItem());
+        recipeLayoutBuilder.addSlot(RecipeIngredientRole.OUTPUT, 99, 1).addItemStack(recipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
     }
 
     @Override

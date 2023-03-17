@@ -1,6 +1,7 @@
 package ovh.corail.woodcutter.registry;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
@@ -13,7 +14,7 @@ public class ModMenuTypes {
     public static MenuType<WoodcutterContainer> WOODCUTTER = Helper.unsafeNullCast();
 
     static void onRegister(final RegisterEvent event) {
-        WOODCUTTER = new MenuType<>(WoodcutterContainer::new);
+        WOODCUTTER = new MenuType<>(WoodcutterContainer::new, FeatureFlags.DEFAULT_FLAGS);
         event.register(ForgeRegistries.Keys.MENU_TYPES, new ResourceLocation(MOD_ID, "woodcutter"), () -> WOODCUTTER);
     }
 }

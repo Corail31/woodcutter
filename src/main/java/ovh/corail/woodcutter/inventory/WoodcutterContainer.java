@@ -142,8 +142,13 @@ public class WoodcutterContainer extends AbstractContainerMenu {
     private void setupResultSlot() {
         if (!this.recipes.isEmpty() && isValidRecipeIndex(this.selectedRecipeIndex.get())) {
             WoodcuttingRecipe recipe = this.recipes.get(this.selectedRecipeIndex.get());
-            this.resultContainer.setRecipeUsed(recipe);
-            this.resultSlot.set(recipe.assemble(this.inputInventory));
+            ItemStack stack = recipe.assemble(this.inputInventory, this.level.registryAccess());
+            if (stack.isItemEnabled(this.level.enabledFeatures())) {
+                this.resultContainer.setRecipeUsed(recipe);
+                this.resultSlot.set(stack);
+            } else {
+                this.resultSlot.set(ItemStack.EMPTY);
+            }
         } else {
             this.resultSlot.set(ItemStack.EMPTY);
         }

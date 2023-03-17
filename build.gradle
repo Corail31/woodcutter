@@ -1,86 +1,70 @@
-buildscript {
-  repositories {
-    maven { url = 'https://maven.minecraftforge.net' }
-    mavenCentral()
-  }
-  dependencies {
-    classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-  }
+plugins {
+    id 'eclipse'
+    id 'net.minecraftforge.gradle' version '5.1.+'
 }
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'idea'
 
-version = '2.6.0'
+version = '2.7.0'
 group = 'ovh.corail'
 archivesBaseName = 'corail_woodcutter'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
-  mappings channel: 'official', version: '1.19.3'
-  accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-  runs {
-    client {
-      workingDirectory project.file('run')
-      property 'forge.logging.markers', 'REGISTRIES'
-      property 'forge.logging.console.level', 'debug'
-      //property 'mixin.env.remapRefMap', 'true'
-      //property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-      mods {
-        corail_woodcutter {
-          source sourceSets.main
+    mappings channel: 'official', version: '1.19.4'
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                corail_woodcutter {
+                    source sourceSets.main
+                }
+            }
         }
-      }
-    }
-    server {
-      workingDirectory project.file('run')
-      property 'forge.logging.markers', 'REGISTRIES'
-      property 'forge.logging.console.level', 'debug'
-      mods {
-        corail_woodcutter {
-          source sourceSets.main
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                corail_woodcutter {
+                    source sourceSets.main
+                }
+            }
         }
-      }
     }
-  }
 }
 
 repositories {
-  flatDir { dirs 'modlib' }
-  maven { url = "https://dvs1.progwml6.com/files/maven" } // JEI
+    flatDir { dirs 'modlib' }
+    maven { url = "https://modmaven.dev" } // JEI
 }
 
 dependencies {
-  minecraft 'net.minecraftforge:forge:1.19.3-44.0.0'
-  //runtimeOnly fg.deobf("mezz.jei:jei-1.19.2-common:11.2.0.256")
-  //runtimeOnly fg.deobf("mezz.jei:jei-1.19.2-forge:11.2.0.256")
-  compileOnly fg.deobf("mezz.jei:jei-1.19.2-common-api:11.2.0.256")
-  compileOnly fg.deobf("mezz.jei:jei-1.19.2-forge-api:11.2.0.256")
-  //runtimeOnly fg.deobf("modlib:twilightforest-1.19:4.2.1392:universal")
-  //runtimeOnly fg.deobf("modlib:TerraBlender-1.19.2:2.0.1.123")
-  //runtimeOnly fg.deobf("modlib:byg-1.19.2:2.0.0.9")
-  //runtimeOnly fg.deobf("modlib:BiomesOPlenty-1.19.2:17.1.1.150")
-  //runtimeOnly fg.deobf("modlib:corail_woodcutter_extension_byg:1.0.3")
-  //runtimeOnly fg.deobf("modlib:moonlight-1.19.2:2.1.3")
-  //runtimeOnly fg.deobf("modlib:everycomp-1.19.2:2.0.10")
+    minecraft 'net.minecraftforge:forge:1.19.4-45.0.6'
+    //runtimeOnly fg.deobf("mezz.jei:jei-1.19.3-common:12.1.1.13")
+    // runtimeOnly fg.deobf("mezz.jei:jei-1.19.3-forge:12.1.1.13")
+    compileOnly fg.deobf("mezz.jei:jei-1.19.3-common-api:12.1.1.13")
+    compileOnly fg.deobf("mezz.jei:jei-1.19.3-forge-api:12.1.1.13")
 }
 
 jar {
-  manifest {
-    attributes([
-        "Specification-Title"     : "corail_woodcutter",
-        "Specification-Vendor"    : "Corail31",
-        "Specification-Version"   : "1",
-        "Implementation-Title"    : "corail_woodcutter",
-        "Implementation-Version"  : "${version}",
-        "Implementation-Vendor"   : "Corail31",
-        "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-    ])
-  }
+    manifest {
+        attributes([
+                "Specification-Title"     : "corail_woodcutter",
+                "Specification-Vendor"    : "Corail31",
+                "Specification-Version"   : "1",
+                "Implementation-Title"    : "corail_woodcutter",
+                "Implementation-Version"  : project.jar.archiveVersion,
+                "Implementation-Vendor"   : "Corail31",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
 }
 
 jar.finalizedBy('reobfJar')
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+    options.encoding = 'UTF-8'
 }

@@ -42,7 +42,7 @@ public class IntegrationJEI implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        Optional.ofNullable(Minecraft.getInstance().level).ifPresent(level -> registration.addRecipes(recipeType, level.getRecipeManager().byType(ModRecipeTypes.WOODCUTTING).values().stream().map(WoodcuttingRecipe.class::cast).sorted(Helper.RECIPE_COMPARATOR).collect(Collectors.toList())));
+        Optional.ofNullable(Minecraft.getInstance().level).ifPresent(level -> registration.addRecipes(recipeType, level.getRecipeManager().byType(ModRecipeTypes.WOODCUTTING).values().stream().map(WoodcuttingRecipe.class::cast).sorted(Helper.RECIPE_COMPARATOR.apply(level)).collect(Collectors.toList())));
     }
 
     @Override

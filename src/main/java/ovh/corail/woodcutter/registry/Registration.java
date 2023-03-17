@@ -38,6 +38,6 @@ public class Registration {
 
     @SubscribeEvent
     public static void onCreativeTab(CreativeModeTabEvent.Register event) {
-        event.registerCreativeModeTab(TAB_ID, builder -> builder.title(Component.literal(MOD_NAME)).icon(ModBlocks::createRandomStack).displayItems((featureFlagSet, toAdd, flag) -> ModBlocks.WOODCUTTER_ITEMS.forEach(toAdd::accept)).build());
+        event.registerCreativeModeTab(TAB_ID, builder -> builder.title(Component.literal(MOD_NAME)).icon(ModBlocks::createRandomStack).displayItems((params, output) -> ModBlocks.WOODCUTTER_ITEMS.forEach(output::accept)).build());
     }
 }
