@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-version = '2.5.0'
+version = '2.5.2'
 group = 'ovh.corail'
 archivesBaseName = 'corail_woodcutter'
 
@@ -47,19 +47,22 @@ minecraft {
 
 repositories {
   flatDir { dirs 'modlib' }
-  maven { url = "https://dvs1.progwml6.com/files/maven" } // JEI
+  maven { url = "https://modmaven.dev/" } // JEI
 }
 
 dependencies {
-  minecraft 'net.minecraftforge:forge:1.19.2-43.1.3'
-  runtimeOnly fg.deobf("mezz.jei:jei-1.19.2-common:11.2.0.256")
-  runtimeOnly fg.deobf("mezz.jei:jei-1.19.2-forge:11.2.0.256")
-  compileOnly fg.deobf("mezz.jei:jei-1.19.2-common-api:11.2.0.256")
-  compileOnly fg.deobf("mezz.jei:jei-1.19.2-forge-api:11.2.0.256")
+  minecraft 'net.minecraftforge:forge:1.19.2-43.2.4'
+  runtimeOnly fg.deobf("mezz.jei:jei-1.19.2-common:11.5.2.1007")
+  runtimeOnly fg.deobf("mezz.jei:jei-1.19.2-forge:11.5.2.1007")
+  compileOnly fg.deobf("mezz.jei:jei-1.19.2-common-api:11.5.2.1007")
+  compileOnly fg.deobf("mezz.jei:jei-1.19.2-forge-api:11.5.2.1007")
+  //runtimeOnly fg.deobf("modlib:twilightforest-1.19:4.2.1392:universal")
   //runtimeOnly fg.deobf("modlib:TerraBlender-1.19.2:2.0.1.123")
   //runtimeOnly fg.deobf("modlib:byg-1.19.2:2.0.0.9")
   //runtimeOnly fg.deobf("modlib:BiomesOPlenty-1.19.2:17.1.1.150")
   //runtimeOnly fg.deobf("modlib:corail_woodcutter_extension_byg:1.0.3")
+  //runtimeOnly fg.deobf("modlib:moonlight-1.19.2:2.1.3")
+  //runtimeOnly fg.deobf("modlib:everycomp-1.19.2:2.0.10")
 }
 
 jar {

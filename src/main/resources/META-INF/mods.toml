@@ -16,12 +16,12 @@ The wooden version of the StoneCutter
 [[dependencies.corail_woodcutter]]
     modId="forge"
     mandatory=true
-    versionRange="[43,)"
+    versionRange="[43.2.0,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.corail_woodcutter]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.1,1.20)"
+    versionRange="[1.19.2,1.20)"
     ordering="NONE"
     side="BOTH"
