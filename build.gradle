@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 
-version = '2.3.8'
+version = '2.3.9'
 group = 'ovh.corail'
 archivesBaseName = 'corail_woodcutter'
 
@@ -47,13 +47,15 @@ minecraft {
 
 repositories {
   flatDir { dirs 'modlib' }
-  maven { url = "https://dvs1.progwml6.com/files/maven" } // JEI
+  maven { url = "https://modmaven.dev/" } // JEI
 }
 
 dependencies {
-  minecraft 'net.minecraftforge:forge:1.18.2-40.1.86'
-  runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.2.281")
-  compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.2.281:api")
+  minecraft 'net.minecraftforge:forge:1.18.2-40.2.1'
+  runtimeOnly fg.deobf("mezz.jei:jei-1.18.2-common:10.2.1.1002")
+  runtimeOnly fg.deobf("mezz.jei:jei-1.18.2-forge:10.2.1.1002")
+  compileOnly fg.deobf("mezz.jei:jei-1.18.2-common-api:10.2.1.1002")
+  compileOnly fg.deobf("mezz.jei:jei-1.18.2-forge-api:10.2.1.1002")
   //runtimeOnly fg.deobf("modlib:Architects-Palette-1.18.2:1.2.0")
   //runtimeOnly fg.deobf("modlib:selene-1.18.2:1.17.9")
   //runtimeOnly fg.deobf("modlib:everycomp-1.18.2:1.5.13")
