@@ -10,7 +10,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"tag": "forge:planks/oak"
+					"item": "minecraft:oak_planks"
 				}]
 			}
 		}

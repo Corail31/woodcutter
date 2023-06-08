@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:item_exists","item":"quark:blossom_planks_vertical_slab"},{"type":"quark:flag","flag":"vertical_slabs"},{"type":"quark:flag","flag":"blossom_trees"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"quark:blossom_planks"},"result":"quark:blossom_planks_vertical_slab","count":2}

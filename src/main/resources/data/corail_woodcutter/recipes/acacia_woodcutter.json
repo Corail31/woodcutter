@@ -7,7 +7,7 @@
   ],
   "key": {
     "0": {
-      "tag": "forge:planks/acacia"
+      "item": "minecraft:acacia_planks"
     },
     "1": {
       "tag": "forge:ingots/iron"

@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:item_exists","item":"quark:vertical_crimson_planks"},{"type":"quark:flag","flag":"vertical_slabs"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:crimson_planks"},"result":"quark:vertical_crimson_planks","count":1}

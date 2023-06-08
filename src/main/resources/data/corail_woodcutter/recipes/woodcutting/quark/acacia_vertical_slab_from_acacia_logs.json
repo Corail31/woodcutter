@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:item_exists","item":"quark:acacia_vertical_slab"},{"type":"quark:flag","flag":"vertical_slabs"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:acacia_logs"},"result":"quark:acacia_vertical_slab","count":8}

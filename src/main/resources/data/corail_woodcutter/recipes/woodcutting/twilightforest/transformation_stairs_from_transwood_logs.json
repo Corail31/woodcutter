@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:transformation_stairs"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"twilightforest:transwood_logs"},"result":"twilightforest:transformation_stairs","count":4}

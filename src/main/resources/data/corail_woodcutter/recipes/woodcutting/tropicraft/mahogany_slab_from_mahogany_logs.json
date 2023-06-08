@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"tropicraft"},{"type":"forge:item_exists","item":"tropicraft:mahogany_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"tropicraft:mahogany_logs"},"result":"tropicraft:mahogany_slab","count":8}

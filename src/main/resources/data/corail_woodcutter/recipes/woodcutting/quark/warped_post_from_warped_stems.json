@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:item_exists","item":"quark:warped_post"},{"type":"quark:flag","flag":"wooden_posts"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:warped_stems"},"result":"quark:warped_post","count":4}

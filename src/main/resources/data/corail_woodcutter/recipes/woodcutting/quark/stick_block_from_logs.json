@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:item_exists","item":"quark:stick_block"},{"type":"quark:flag","flag":"stick_block"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:logs"},"result":"quark:stick_block","count":1}

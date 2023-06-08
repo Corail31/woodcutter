@@ -10,7 +10,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"tag": "forge:planks/crimson"
+					"item": "minecraft:crimson_planks"
 				}]
 			}
 		}

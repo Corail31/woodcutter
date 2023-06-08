@@ -7,7 +7,7 @@
   ],
   "key": {
     "0": {
-      "tag": "forge:planks/warped"
+      "item": "minecraft:warped_planks"
     },
     "1": {
       "tag": "forge:ingots/iron"

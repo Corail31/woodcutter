@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:item_exists","item":"quark:spruce_vertical_slab"},{"type":"quark:flag","flag":"vertical_slabs"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:spruce_logs"},"result":"quark:spruce_vertical_slab","count":8}

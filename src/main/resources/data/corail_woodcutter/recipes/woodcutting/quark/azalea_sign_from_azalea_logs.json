@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:item_exists","item":"quark:azalea_sign"},{"type":"quark:flag","flag":"azalea_wood"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"quark:azalea_logs"},"result":"quark:azalea_sign","count":4}

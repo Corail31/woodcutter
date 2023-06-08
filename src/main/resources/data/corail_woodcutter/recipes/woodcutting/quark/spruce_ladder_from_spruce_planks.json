@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:item_exists","item":"quark:spruce_ladder"},{"type":"quark:flag","flag":"variant_ladders"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"forge:planks/spruce"},"result":"quark:spruce_ladder","count":1}

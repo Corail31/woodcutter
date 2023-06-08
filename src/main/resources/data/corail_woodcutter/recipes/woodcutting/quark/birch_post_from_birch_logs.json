@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:item_exists","item":"quark:birch_post"},{"type":"quark:flag","flag":"wooden_posts"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:birch_logs"},"result":"quark:birch_post","count":4}

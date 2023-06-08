@@ -1,22 +1,27 @@
 plugins {
     id 'eclipse'
-    id 'net.minecraftforge.gradle' version '5.1.+'
+	  id 'idea'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
 
-version = '2.7.0'
+version = '3.0.0'
 group = 'ovh.corail'
-archivesBaseName = 'corail_woodcutter'
+base {
+    archivesName = 'corail_woodcutter'
+}
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
-    mappings channel: 'official', version: '1.19.4'
+    mappings channel: 'official', version: '1.20'
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+            //property 'mixin.env.remapRefMap', 'true'
+            //property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
                 corail_woodcutter {
                     source sourceSets.main
@@ -42,11 +47,13 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.19.4-45.0.6'
-    //runtimeOnly fg.deobf("mezz.jei:jei-1.19.3-common:12.1.1.13")
-    // runtimeOnly fg.deobf("mezz.jei:jei-1.19.3-forge:12.1.1.13")
-    compileOnly fg.deobf("mezz.jei:jei-1.19.3-common-api:12.1.1.13")
-    compileOnly fg.deobf("mezz.jei:jei-1.19.3-forge-api:12.1.1.13")
+    minecraft 'net.minecraftforge:forge:1.20-46.0.1'
+    //runtimeOnly fg.deobf("mezz.jei:jei-1.19.4-common:13.1.0.11")
+    //runtimeOnly fg.deobf("mezz.jei:jei-1.19.4-forge:13.1.0.11")
+    compileOnly fg.deobf("mezz.jei:jei-1.19.4-common-api:13.1.0.11")
+    compileOnly fg.deobf("mezz.jei:jei-1.19.4-forge-api:13.1.0.11")
+    //runtimeOnly fg.deobf("modlib:TerraBlender-1.19.4:2.2.0.154")
+    //runtimeOnly fg.deobf("modlib:BiomesOPlenty-1.19.4:17.3.0.542")
 }
 
 jar {

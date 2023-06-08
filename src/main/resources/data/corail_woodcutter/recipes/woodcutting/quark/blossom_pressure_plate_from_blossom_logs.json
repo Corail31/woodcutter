@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:item_exists","item":"quark:blossom_pressure_plate"},{"type":"quark:flag","flag":"blossom_trees"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"quark:blossom_logs"},"result":"quark:blossom_pressure_plate","count":4}

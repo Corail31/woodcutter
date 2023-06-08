@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:darkwood_sign"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"twilightforest:darkwood_logs"},"result":"twilightforest:darkwood_sign","count":4}

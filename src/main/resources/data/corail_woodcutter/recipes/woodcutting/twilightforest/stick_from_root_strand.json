@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:root_strand"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"twilightforest:root_strand"},"result":"minecraft:stick","count":1}

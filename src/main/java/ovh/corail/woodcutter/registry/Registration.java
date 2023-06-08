@@ -1,9 +1,10 @@
 package ovh.corail.woodcutter.registry;
 
 import com.google.common.reflect.Reflection;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -33,11 +34,12 @@ public class Registration {
             ModRecipeSerializers.onRegister(event);
         } else if (event.getRegistryKey().equals(ForgeRegistries.Keys.RECIPE_TYPES)) {
             ModRecipeTypes.onRegister(event);
+        } else if (event.getRegistryKey().equals(Registries.CREATIVE_MODE_TAB)) {
+            onRegisterCreativeTab(event);
         }
     }
 
-    @SubscribeEvent
-    public static void onCreativeTab(CreativeModeTabEvent.Register event) {
-        event.registerCreativeModeTab(TAB_ID, builder -> builder.title(Component.literal(MOD_NAME)).icon(ModBlocks::createRandomStack).displayItems((params, output) -> ModBlocks.WOODCUTTER_ITEMS.forEach(output::accept)).build());
+    private static void onRegisterCreativeTab(RegisterEvent event) {
+        event.register(Registries.CREATIVE_MODE_TAB, TAB_ID, () -> CreativeModeTab.builder().title(Component.literal(MOD_NAME)).icon(ModBlocks::createRandomStack).displayItems((params, output) -> ModBlocks.WOODCUTTER_ITEMS.forEach(output::accept)).build());
     }
 }

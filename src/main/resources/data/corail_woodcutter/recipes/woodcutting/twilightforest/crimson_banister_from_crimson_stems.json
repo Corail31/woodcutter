@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:crimson_banister"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"minecraft:crimson_stems"},"result":"twilightforest:crimson_banister","count":4}

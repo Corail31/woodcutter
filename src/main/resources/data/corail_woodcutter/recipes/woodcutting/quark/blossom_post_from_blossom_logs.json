@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:item_exists","item":"quark:blossom_post"},{"type":"quark:flag","flag":"wooden_posts"},{"type":"quark:flag","flag":"blossom_trees"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"quark:blossom_logs"},"result":"quark:blossom_post","count":4}

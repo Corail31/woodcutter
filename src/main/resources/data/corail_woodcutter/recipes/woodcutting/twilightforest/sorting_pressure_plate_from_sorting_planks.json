@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:sorting_pressure_plate"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"twilightforest:sorting_planks"},"result":"twilightforest:sorting_pressure_plate","count":1}

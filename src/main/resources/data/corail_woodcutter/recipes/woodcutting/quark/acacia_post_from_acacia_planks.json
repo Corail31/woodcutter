@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:item_exists","item":"quark:acacia_post"},{"type":"quark:flag","flag":"wooden_posts"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"forge:planks/acacia"},"result":"quark:acacia_post","count":1}

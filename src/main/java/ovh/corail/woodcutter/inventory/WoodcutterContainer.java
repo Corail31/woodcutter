@@ -53,7 +53,7 @@ public class WoodcutterContainer extends AbstractContainerMenu {
     public WoodcutterContainer(int id, Inventory playerInventory, final ContainerLevelAccess access) {
         super(ModMenuTypes.WOODCUTTER, id);
         this.access = access;
-        this.level = playerInventory.player.level;
+        this.level = playerInventory.player.level();
         this.inputSlot = addSlot(new Slot(this.inputInventory, 0, 20, 33));
         this.resultSlot = addSlot(new Slot(this.resultContainer, 1, 143, 33) {
             @Override
@@ -62,9 +62,9 @@ public class WoodcutterContainer extends AbstractContainerMenu {
             }
 
             @Override
-            public void onTake(Player thePlayer, ItemStack stack) {
-                stack.onCraftedBy(thePlayer.level, thePlayer, stack.getCount());
-                resultContainer.awardUsedRecipes(thePlayer);
+            public void onTake(Player playerIn, ItemStack stack) {
+                stack.onCraftedBy(playerIn.level(), playerIn, stack.getCount());
+                resultContainer.awardUsedRecipes(playerIn, getRelevantItems());
                 ItemStack itemstack = inputSlot.remove(1);
                 if (!itemstack.isEmpty()) {
                     setupResultSlot();
@@ -76,7 +76,11 @@ public class WoodcutterContainer extends AbstractContainerMenu {
                         lastSoundTime = l;
                     }
                 });
-                super.onTake(thePlayer, stack);
+                super.onTake(playerIn, stack);
+            }
+
+            private List<ItemStack> getRelevantItems() {
+                return List.of(inputSlot.getItem());
             }
         });
         for (int i = 0; i < 3; ++i) {
@@ -178,7 +182,7 @@ public class WoodcutterContainer extends AbstractContainerMenu {
             Item item = itemstack1.getItem();
             stack = itemstack1.copy();
             if (index == 1) {
-                item.onCraftedBy(itemstack1, playerIn.level, playerIn);
+                item.onCraftedBy(itemstack1, playerIn.level(), playerIn);
                 if (!this.moveItemStackTo(itemstack1, 2, 38, true)) {
                     return ItemStack.EMPTY;
                 }

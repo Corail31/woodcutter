@@ -10,7 +10,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"tag": "forge:planks/dark_oak"
+					"item": "minecraft:dark_oak_planks"
 				}]
 			}
 		}

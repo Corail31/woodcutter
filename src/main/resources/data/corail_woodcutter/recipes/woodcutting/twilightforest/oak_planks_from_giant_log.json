@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:giant_log"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"twilightforest:giant_log"},"result":"minecraft:oak_planks","count":64}

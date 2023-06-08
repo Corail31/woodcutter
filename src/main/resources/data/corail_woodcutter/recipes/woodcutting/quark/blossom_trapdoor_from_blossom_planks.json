@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"quark"},{"type":"forge:item_exists","item":"quark:blossom_trapdoor"},{"type":"quark:flag","flag":"blossom_trees"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"quark:blossom_planks"},"result":"quark:blossom_trapdoor","count":1}

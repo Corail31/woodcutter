@@ -7,7 +7,7 @@
   ],
   "key": {
     "0": {
-      "tag": "forge:planks/birch"
+      "item": "minecraft:birch_planks"
     },
     "1": {
       "tag": "forge:ingots/iron"

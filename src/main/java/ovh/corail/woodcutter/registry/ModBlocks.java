@@ -1,7 +1,6 @@
 package ovh.corail.woodcutter.registry;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -14,11 +13,10 @@ import ovh.corail.woodcutter.helper.Helper;
 import ovh.corail.woodcutter.item.WoodcutterItem;
 
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Function;
 
-import static ovh.corail.woodcutter.WoodCutterMod.LOGGER;
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
 
 public class ModBlocks {
@@ -28,33 +26,9 @@ public class ModBlocks {
     private static ItemStack RANDOM_STACK = ItemStack.EMPTY;
 
     static void onRegisterBlocks(final RegisterEvent event) {
-        for (VanillaWoodVariant variant : VanillaWoodVariant.values()) {
-            registerWoodcutter(event, variant.getSerializedName());
-        }
+        registerWoodcutter(event, "", "acacia", "birch", "cherry", "crimson", "dark_oak", "jungle", "spruce", "mangrove", "oak", "warped");
         if (SupportMods.BIOMESOPLENTY.isLoaded()) {
-            for (BOPWoodVariant variant : BOPWoodVariant.values()) {
-                registerWoodcutter(event, variant.getSerializedName());
-            }
-        }
-        if (SupportMods.TWILIGHT_FOREST.isLoaded()) {
-            for (TFWoodVariant variant : TFWoodVariant.values()) {
-                if (variant != TFWoodVariant.MANGROVE) {
-                    registerWoodcutter(event, variant.getSerializedName());
-                }
-            }
-        }
-        if (SupportMods.TROPICRAFT.isLoaded()) {
-            registerWoodcutter(event, SupportMods.TROPICRAFT.getSerializedName() + "_" + TropicraftVariant.PALM.getSerializedName());
-            registerWoodcutter(event, SupportMods.TROPICRAFT.getSerializedName() + "_" + TropicraftVariant.MAHOGANY.getSerializedName());
-        }
-        if (SupportMods.BYG.isLoaded()) {
-            if (SupportMods.EXTENSION_BYG.isLoaded()) {
-                for (BYGWoodVariant variant : BYGWoodVariant.values()) {
-                    registerWoodcutter(event, SupportMods.BYG.getSerializedName() + "_" + variant.getSerializedName());
-                }
-            } else {
-                LOGGER.info("missing extension for \"Oh Biome You'll Go\" recipes");
-            }
+            registerWoodcutter(event, "bop", "cherry", "dead", "fir", "hellbark", "jacaranda", "magic", "mahogany", "palm", "redwood", "umbran", "willow");
         }
     }
 
@@ -66,10 +40,13 @@ public class ModBlocks {
         });
     }
 
-    private static void registerWoodcutter(final RegisterEvent event, String name) {
-        Block woodcutter = new WoodcutterBlock();
-        WOODCUTTERS.add(woodcutter);
-        event.register(ForgeRegistries.Keys.BLOCKS, new ResourceLocation(MOD_ID, name + "_woodcutter"), () -> woodcutter);
+    private static void registerWoodcutter(final RegisterEvent event, String folder, String... names) {
+        final Function<String, String> funcName = folder.isEmpty() ? name -> name + "_woodcutter" : name -> folder + "_" + name + "_woodcutter";
+        for (String name : names) {
+            Block woodcutter = new WoodcutterBlock();
+            WOODCUTTERS.add(woodcutter);
+            event.register(ForgeRegistries.Keys.BLOCKS, new ResourceLocation(MOD_ID, funcName.apply(name)), () -> woodcutter);
+        }
     }
 
     public static ItemStack createRandomStack() {
@@ -77,75 +54,5 @@ public class ModBlocks {
             RANDOM_STACK = new ItemStack(WOODCUTTERS.stream().skip(RANDOM.nextInt(WOODCUTTERS.size())).findFirst().orElse(Blocks.STONECUTTER));
         }
         return RANDOM_STACK;
-    }
-
-    public enum VanillaWoodVariant implements StringRepresentable {
-        OAK, BIRCH, SPRUCE, JUNGLE, ACACIA, DARK_OAK, CRIMSON, WARPED, MANGROVE;
-        private final String name;
-
-        VanillaWoodVariant() {
-            this.name = name().toLowerCase(Locale.US);
-        }
-
-        @Override
-        public String getSerializedName() {
-            return this.name;
-        }
-    }
-
-    public enum BOPWoodVariant implements StringRepresentable {
-        CHERRY, DEAD, FIR, HELLBARK, JACARANDA, MAGIC, MAHOGANY, PALM, REDWOOD, UMBRAN, WILLOW;
-        private final String name;
-
-        BOPWoodVariant() {
-            this.name = name().toLowerCase(Locale.US);
-        }
-
-        @Override
-        public String getSerializedName() {
-            return this.name;
-        }
-    }
-
-    public enum TFWoodVariant implements StringRepresentable {
-        TWILIGHT_OAK, CANOPY, MANGROVE, DARK, TIME, TRANSFORMATION, MINING, SORTING;
-        private final String name;
-
-        TFWoodVariant() {
-            this.name = name().toLowerCase(Locale.US);
-        }
-
-        @Override
-        public String getSerializedName() {
-            return this.name;
-        }
-    }
-
-    public enum TropicraftVariant implements StringRepresentable {
-        PALM, MAHOGANY, BAMBOO, THATCH;
-        private final String name;
-
-        TropicraftVariant() {
-            this.name = name().toLowerCase(Locale.US);
-        }
-
-        @Override
-        public String getSerializedName() {
-            return this.name;
-        }
-    }
-
-    public enum BYGWoodVariant implements StringRepresentable {
-        ASPEN, BAOBAB, BLUE_ENCHANTED, CHERRY, CIKA, CYPRESS, EBONY, FIR, GREEN_ENCHANTED, HOLLY, JACARANDA, MAHOGANY, MANGROVE, MAPLE, PINE, RAINBOW_EUCALYPTUS, REDWOOD, SKYRIS, WILLOW, WITCH_HAZEL, ZELKOVA, SYTHIAN, EMBUR, PALM, LAMENT, BULBIS, NIGHTSHADE, ETHER, IMPARIUS;
-        private final String name;
-
-        BYGWoodVariant() {
-            this.name = name().toLowerCase(Locale.US);
-        }
-
-        @Override
-        public String getSerializedName() {
-            return this.name;
-        }
     }
 }

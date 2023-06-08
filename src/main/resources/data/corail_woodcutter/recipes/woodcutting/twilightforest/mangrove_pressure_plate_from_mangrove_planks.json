@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"twilightforest"},{"type":"forge:item_exists","item":"twilightforest:mangrove_pressure_plate"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"twilightforest:mangrove_planks"},"result":"twilightforest:mangrove_pressure_plate","count":1}

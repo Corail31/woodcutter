@@ -79,7 +79,7 @@ public class Helper {
     }
 
     public static boolean isInTag(Item item, TagKey<Item> tagKey) {
-        // TODO re-evaluate
+        //noinspection deprecation
         return StreamSupport.stream(BuiltInRegistries.ITEM.getTagOrEmpty(tagKey).spliterator(), false).anyMatch(holder -> holder.value() == item);
     }
 

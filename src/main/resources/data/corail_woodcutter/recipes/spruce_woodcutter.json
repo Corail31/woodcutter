@@ -7,7 +7,7 @@
   ],
   "key": {
     "0": {
-      "tag": "forge:planks/spruce"
+      "item": "minecraft:spruce_planks"
     },
     "1": {
       "tag": "forge:ingots/iron"

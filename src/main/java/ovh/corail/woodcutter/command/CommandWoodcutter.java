@@ -99,7 +99,7 @@ public class CommandWoodcutter {
     }
 
     private int showUsage(CommandContext<CommandSourceStack> context) {
-        context.getSource().sendSuccess(LangKey.COMMAND_USAGE.getText(), false);
+        context.getSource().sendSuccess(LangKey.COMMAND_USAGE::getText, false);
         return 1;
     }
 
@@ -124,7 +124,7 @@ public class CommandWoodcutter {
         try {
             FileUtils.copyFile(configDatapackZip, destination);
             discoverNewDataPack(context.getSource().getServer());
-            context.getSource().sendSuccess(LangKey.DATAPACK_APPLY_SUCCESS.getText(), false);
+            context.getSource().sendSuccess(LangKey.DATAPACK_APPLY_SUCCESS::getText, false);
             return 1;
         } catch (IOException e) {
             e.printStackTrace();
@@ -146,7 +146,7 @@ public class CommandWoodcutter {
         if (!destination.delete()) {
             throw LangKey.DATAPACK_REMOVE_FAIL.asCommandException(LangKey.FILE_DELETE_FAIL.getText(destination.getAbsolutePath()));
         }
-        context.getSource().sendSuccess(LangKey.DATAPACK_REMOVE_SUCCESS.getText(), false);
+        context.getSource().sendSuccess(LangKey.DATAPACK_REMOVE_SUCCESS::getText, false);
         return 1;
     }
 
@@ -165,14 +165,13 @@ public class CommandWoodcutter {
         }
         File datapackFolder = CONFIG_FOLDER.apply(MOD_ID + "_" + modid);
         File dataFolder = new File(datapackFolder, "data");
-        File recipeFolder = new File(dataFolder, MOD_ID + "_" + modid + File.separatorChar + "recipes");
-        if (recipeFolder.exists()) {
+        if (dataFolder.exists()) {
             try {
-                FileUtils.cleanDirectory(recipeFolder);
-            } catch (Exception e) {
-                e.printStackTrace();
+                FileUtils.cleanDirectory(dataFolder);
+            } catch (Exception ignored) {
             }
         }
+        File recipeFolder = new File(dataFolder, MOD_ID + "_" + modid + File.separatorChar + "recipes" + File.separatorChar + modid);
         if (!recipeFolder.exists() && !recipeFolder.mkdirs()) {
             throw LangKey.DATAPACK_GENERATE_FAIL.asCommandException(LangKey.FOLDER_CREATE_FAIL.getText(recipeFolder.getAbsolutePath()));
         }
@@ -190,7 +189,7 @@ public class CommandWoodcutter {
         }
         try {
             toZip(datapackFolder.toPath(), modid);
-            context.getSource().sendSuccess(LangKey.DATAPACK_GENERATE_SUCCESS.getText(recipes.size()), false);
+            context.getSource().sendSuccess(() -> LangKey.DATAPACK_GENERATE_SUCCESS.getText(recipes.size()), false);
             return 1;
         } catch (IOException e) {
             e.printStackTrace();
@@ -231,6 +230,14 @@ public class CommandWoodcutter {
 
     private record WoodCompo(ResourceLocation plankName, boolean isPlankTag, @Nullable ResourceLocation logName, boolean isLogTag) {
         private static final WoodCompo ANY_WOOD = new WoodCompo(ItemTags.PLANKS.location(), true, ItemTags.LOGS.location(), true);
+
+        public static WoodCompo of(Item item, TagKey<Item> tagKey) {
+            return of(item, tagKey.location(), true);
+        }
+
+        public static WoodCompo of(Item item, @Nullable ResourceLocation logName, boolean isLogTag) {
+            return new WoodCompo(Helper.getRegistryRL(item), false, logName, isLogTag);
+        }
     }
 
     private void initPlanksToLogs(MinecraftServer server, RegistryAccess registryAccess) {
@@ -268,17 +275,17 @@ public class CommandWoodcutter {
                 return new WoodCompo(plankName, false, logNames.stream().min(Comparator.comparingInt(rl -> Levenshtein.distance(rl.getPath(), plankName.getPath()))).orElse(null), false);
             }))
         ;
-        this.plankToLog.put(Items.ACACIA_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/acacia"), true, ItemTags.ACACIA_LOGS.location(), true));
-        this.plankToLog.put(Items.BIRCH_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/birch"), true, ItemTags.BIRCH_LOGS.location(), true));
-        this.plankToLog.put(Items.DARK_OAK_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/dark_oak"), true, ItemTags.DARK_OAK_LOGS.location(), true));
-        this.plankToLog.put(Items.JUNGLE_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/jungle"), true, ItemTags.JUNGLE_LOGS.location(), true));
-        this.plankToLog.put(Items.OAK_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/oak"), true, ItemTags.OAK_LOGS.location(), true));
-        this.plankToLog.put(Items.SPRUCE_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/spruce"), true, ItemTags.SPRUCE_LOGS.location(), true));
-        this.plankToLog.put(Items.CRIMSON_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/crimson"), true, ItemTags.CRIMSON_STEMS.location(), true));
-        this.plankToLog.put(Items.WARPED_PLANKS, new WoodCompo(new ResourceLocation("forge", "planks/warped"), true, ItemTags.WARPED_STEMS.location(), true));
-        this.plankToLog.put(Items.MANGROVE_PLANKS, new WoodCompo(new ResourceLocation("minecraft", "mangrove_planks"), false, ItemTags.MANGROVE_LOGS.location(), true));
+        this.plankToLog.put(Items.ACACIA_PLANKS, WoodCompo.of(Items.ACACIA_PLANKS, ItemTags.ACACIA_LOGS));
+        this.plankToLog.put(Items.BIRCH_PLANKS, WoodCompo.of(Items.BIRCH_PLANKS, ItemTags.BIRCH_LOGS));
+        this.plankToLog.put(Items.DARK_OAK_PLANKS, WoodCompo.of(Items.DARK_OAK_PLANKS, ItemTags.DARK_OAK_LOGS));
+        this.plankToLog.put(Items.JUNGLE_PLANKS, WoodCompo.of(Items.JUNGLE_PLANKS, ItemTags.JUNGLE_LOGS));
+        this.plankToLog.put(Items.OAK_PLANKS, WoodCompo.of(Items.OAK_PLANKS, ItemTags.OAK_LOGS));
+        this.plankToLog.put(Items.SPRUCE_PLANKS, WoodCompo.of(Items.SPRUCE_PLANKS, ItemTags.SPRUCE_LOGS));
+        this.plankToLog.put(Items.CRIMSON_PLANKS, WoodCompo.of(Items.CRIMSON_PLANKS, ItemTags.CRIMSON_STEMS));
+        this.plankToLog.put(Items.WARPED_PLANKS, WoodCompo.of(Items.WARPED_PLANKS, ItemTags.WARPED_STEMS));
+        this.plankToLog.put(Items.MANGROVE_PLANKS, WoodCompo.of(Items.MANGROVE_PLANKS, ItemTags.MANGROVE_LOGS));
         // planks with no log recipe
-        Helper.getItems(ItemTags.PLANKS).forEach(key -> this.plankToLog.computeIfAbsent(key.value(), item -> new WoodCompo(Helper.getRegistryRL(item), false, null, false)));
+        Helper.getItems(ItemTags.PLANKS).forEach(key -> this.plankToLog.computeIfAbsent(key.value(), item -> WoodCompo.of(item, null, false)));
     }
 
     private Set<ResourceLocation> getCommonTags(ItemStack[] stacks, String namespace) {
@@ -385,7 +392,11 @@ public class CommandWoodcutter {
         JsonObject json = new JsonObject();
         JsonObject pack = new JsonObject();
         json.add("pack", pack);
-        pack.addProperty("description", MOD_NAME + ": " + StringUtils.capitalize(modid) + " Resources");
+
+        JsonObject text = new JsonObject();
+        text.addProperty("text", MOD_NAME + ": " + StringUtils.capitalize(modid) + " Resources");
+        pack.add("description", text);
+
         pack.addProperty("pack_format", PACK_FORMAT);
         return toFile(file, json);
     }
@@ -468,7 +479,7 @@ public class CommandWoodcutter {
     }
 
     private int testRecipe(CommandContext<CommandSourceStack> context) {
-        RegistryAccess registryAccess = context.getSource().getLevel().registryAccess();
+        RegistryAccess registryAccess = context.getSource().registryAccess();
         initPlanksToLogs(context.getSource().getServer(), registryAccess);
         ResourceLocation recipeRL = ResourceLocationArgument.getId(context, RECIPE_PARAM);
         Recipe<CraftingContainer> recipe = context.getSource().getServer().getRecipeManager().byType(RecipeType.CRAFTING).values().stream().filter(r -> r.getId().equals(recipeRL)).findFirst().orElseThrow(() -> new CommandRuntimeException(Component.literal("[" + recipeRL + "] is not a crafting recipe")));
@@ -479,12 +490,13 @@ public class CommandWoodcutter {
         boolean genericTag = false;
         for (Map.Entry<String, WoodcuttingJsonRecipe> entry : recipes.entrySet()) {
             String ingredient = Optional.ofNullable(entry.getValue().ingredient.tag).orElse(entry.getValue().ingredient.item);
-            context.getSource().sendSuccess(Component.literal("name=" + entry.getKey()).append("\n").append("ingredient=" + ingredient + " (" + (entry.getValue().ingredient.tag == null ? "item" : "tag") + ")").append("\n").append("result=" + entry.getValue().result + "*" + entry.getValue().count), false);
+            context.getSource().sendSuccess(() -> Component.literal("name=" + entry.getKey()).append("\n").append("ingredient=" + ingredient + " (" + (entry.getValue().ingredient.tag == null ? "item" : "tag") + ")").append("\n").append("result=" + entry.getValue().result + "*" + entry.getValue().count), false);
             if (entry.getValue().ingredient.tag != null && (ingredient.equals("minecraft:logs") || ingredient.equals("minecraft:planks"))) {
                 genericTag = true;
             }
         }
-        context.getSource().sendSuccess(Component.literal(genericTag ? "check this recipe as it uses a generic tag that may be incorrect" : "[" + recipeRL + "] is a valid recipe"), false);
+        Component successText = Component.literal(genericTag ? "check this recipe as it uses a generic tag that may be incorrect" : "[" + recipeRL + "] is a valid recipe");
+        context.getSource().sendSuccess(() -> successText, false);
         return 1;
     }
 
@@ -556,7 +568,7 @@ public class CommandWoodcutter {
 
     private static final String MODID_PARAM = "modid";
     private static final String RECIPE_PARAM = "recipe";
-    private static final int PACK_FORMAT = 12;
+    private static final int PACK_FORMAT = 15;
     private static final Predicate<ItemStack> VANILLA_ITEM = stack -> !stack.isEmpty() && "minecraft".equals(Helper.getRegistryNamespace(stack.getItem()));
     private static final Predicate<ItemStack> NOT_VANILLA_ITEM = stack -> !stack.isEmpty() && !"minecraft".equals(Helper.getRegistryNamespace(stack.getItem()));
     private static final Predicate<String> INVALID_MODID = modid -> modid == null || "minecraft".equals(modid) || !ModList.get().isLoaded(modid) || SupportMods.hasSupport(modid);
