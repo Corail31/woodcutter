@@ -4,7 +4,7 @@ plugins {
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
 
-version = '3.0.0'
+version = '3.0.1'
 group = 'ovh.corail'
 base {
     archivesName = 'corail_woodcutter'
@@ -47,7 +47,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.20-46.0.1'
+    minecraft 'net.minecraftforge:forge:1.20.1-47.1.1'
     //runtimeOnly fg.deobf("mezz.jei:jei-1.19.4-common:13.1.0.11")
     //runtimeOnly fg.deobf("mezz.jei:jei-1.19.4-forge:13.1.0.11")
     compileOnly fg.deobf("mezz.jei:jei-1.19.4-common-api:13.1.0.11")

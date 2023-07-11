@@ -1,1 +1,1 @@
-{"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"forge:planks/acacia"},"result":"minecraft:acacia_trapdoor","count":1}
+{"type":"corail_woodcutter:woodcutting","ingredient":{"item":"minecraft:acacia_planks"},"result":"minecraft:acacia_trapdoor","count":1}
