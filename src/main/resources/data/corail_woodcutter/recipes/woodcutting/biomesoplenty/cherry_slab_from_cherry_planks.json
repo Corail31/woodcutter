@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:cherry_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:cherry_planks"},"result":"biomesoplenty:cherry_slab","count":2}

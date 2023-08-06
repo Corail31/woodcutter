@@ -1,12 +1,8 @@
 {
-	"conditions": [{
-		"type": "forge:item_exists",
-		"item": "biomesoplenty:cherry_planks"
-	}],
 	"parent": "corail_woodcutter:recipes/root",
 	"rewards": {
 		"recipes": [
-			"corail_woodcutter:bop_cherry_woodcutter"
+			"corail_woodcutter:bamboo_mosaic_woodcutter"
 		]
 	},
 	"criteria": {
@@ -14,7 +10,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"item": "biomesoplenty:cherry_planks"
+					"item": "minecraft:bamboo_mosaic"
 				}]
 			}
 		}

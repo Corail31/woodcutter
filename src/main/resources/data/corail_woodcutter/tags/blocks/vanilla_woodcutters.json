@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "corail_woodcutter:acacia_woodcutter",
+	"corail_woodcutter:bamboo_woodcutter",
+	"corail_woodcutter:bamboo_mosaic_woodcutter",
 	"corail_woodcutter:birch_woodcutter",
 	"corail_woodcutter:cherry_woodcutter",
 	"corail_woodcutter:crimson_woodcutter",

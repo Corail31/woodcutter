@@ -1,8 +1,4 @@
 {
-  "conditions": [{
-	"type": "forge:mod_loaded",
-	"modid": "biomesoplenty"
-  }],
   "type": "minecraft:crafting_shaped",
   "group": "woodcutter",
   "pattern": [
@@ -11,13 +7,13 @@
   ],
   "key": {
     "0": {
-      "item": "biomesoplenty:cherry_planks"
+      "item": "minecraft:bamboo_planks"
     },
     "1": {
       "tag": "forge:ingots/iron"
     }
   },
   "result": {
-    "item": "corail_woodcutter:bop_cherry_woodcutter"
+    "item": "corail_woodcutter:bamboo_woodcutter"
   }
 }

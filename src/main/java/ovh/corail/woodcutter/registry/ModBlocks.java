@@ -26,9 +26,9 @@ public class ModBlocks {
     private static ItemStack RANDOM_STACK = ItemStack.EMPTY;
 
     static void onRegisterBlocks(final RegisterEvent event) {
-        registerWoodcutter(event, "", "acacia", "birch", "cherry", "crimson", "dark_oak", "jungle", "spruce", "mangrove", "oak", "warped");
+        registerWoodcutter(event, "", "acacia", "bamboo", "bamboo_mosaic", "birch", "cherry", "crimson", "dark_oak", "jungle", "spruce", "mangrove", "oak", "warped");
         if (SupportMods.BIOMESOPLENTY.isLoaded()) {
-            registerWoodcutter(event, "bop", "cherry", "dead", "fir", "hellbark", "jacaranda", "magic", "mahogany", "palm", "redwood", "umbran", "willow");
+            registerWoodcutter(event, "bop", "dead", "fir", "hellbark", "jacaranda", "magic", "mahogany", "palm", "redwood", "umbran", "willow");
         }
     }
 

@@ -15,8 +15,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.SingleItemRecipe;
 
 public class CustomRecipeCategory <T extends SingleItemRecipe> implements IRecipeCategory<T> {
-    private static final ResourceLocation RECIPE_GUI_VANILLA = new ResourceLocation("jei", "textures/gui/gui_vanilla.png");
-    private static final int WIDTH = 116, HEIGHT = 18;
+    private static final ResourceLocation RECIPE_GUI_VANILLA = new ResourceLocation("jei", "textures/jei/gui/gui_vanilla.png");
+    private static final int WIDTH = 82, HEIGHT = 34;
     private final RecipeType<T> recipeType;
     private final Component translation;
     private final IDrawable icon, background;
@@ -25,7 +25,7 @@ public class CustomRecipeCategory <T extends SingleItemRecipe> implements IRecip
         this.recipeType = recipeType;
         this.translation = translation;
         this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, icon);
-        this.background = guiHelper.drawableBuilder(RECIPE_GUI_VANILLA, 49, 168, WIDTH, HEIGHT).addPadding(0, 0, 40, 0).build();
+        this.background = guiHelper.createDrawable(RECIPE_GUI_VANILLA, 0, 220, WIDTH, HEIGHT);
     }
 
     @Override
@@ -49,9 +49,9 @@ public class CustomRecipeCategory <T extends SingleItemRecipe> implements IRecip
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder recipeLayoutBuilder, T recipe, IFocusGroup focuses) {
-        recipeLayoutBuilder.addSlot(RecipeIngredientRole.INPUT, 41, 1).addIngredients(recipe.getIngredients().get(0));
-        recipeLayoutBuilder.addSlot(RecipeIngredientRole.OUTPUT, 99, 1).addItemStack(recipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
+    public void setRecipe(IRecipeLayoutBuilder builder, T recipe, IFocusGroup focuses) {
+        builder.addSlot(RecipeIngredientRole.INPUT, 1, 9).addIngredients(recipe.getIngredients().get(0));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 9).addItemStack(recipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
     }
 
     @Override

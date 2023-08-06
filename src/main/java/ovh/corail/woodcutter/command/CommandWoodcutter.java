@@ -230,6 +230,7 @@ public class CommandWoodcutter {
 
     private record WoodCompo(ResourceLocation plankName, boolean isPlankTag, @Nullable ResourceLocation logName, boolean isLogTag) {
         private static final WoodCompo ANY_WOOD = new WoodCompo(ItemTags.PLANKS.location(), true, ItemTags.LOGS.location(), true);
+        private static final WoodCompo BAMBOO = WoodCompo.of(Items.BAMBOO_PLANKS, ItemTags.BAMBOO_BLOCKS);
 
         public static WoodCompo of(Item item, TagKey<Item> tagKey) {
             return of(item, tagKey.location(), true);
@@ -284,6 +285,9 @@ public class CommandWoodcutter {
         this.plankToLog.put(Items.CRIMSON_PLANKS, WoodCompo.of(Items.CRIMSON_PLANKS, ItemTags.CRIMSON_STEMS));
         this.plankToLog.put(Items.WARPED_PLANKS, WoodCompo.of(Items.WARPED_PLANKS, ItemTags.WARPED_STEMS));
         this.plankToLog.put(Items.MANGROVE_PLANKS, WoodCompo.of(Items.MANGROVE_PLANKS, ItemTags.MANGROVE_LOGS));
+        this.plankToLog.put(Items.CHERRY_PLANKS, WoodCompo.of(Items.CHERRY_PLANKS, ItemTags.CHERRY_LOGS));
+        this.plankToLog.put(Items.BAMBOO_PLANKS, WoodCompo.BAMBOO);
+        this.plankToLog.put(Items.BAMBOO_MOSAIC, WoodCompo.of(Items.BAMBOO_MOSAIC, null, false));
         // planks with no log recipe
         Helper.getItems(ItemTags.PLANKS).forEach(key -> this.plankToLog.computeIfAbsent(key.value(), item -> WoodCompo.of(item, null, false)));
     }
@@ -424,10 +428,11 @@ public class CommandWoodcutter {
             }
             WoodCompo compo = getWoodCompo(ingredients);
             final int count = weight < 1d ? Mth.floor(1d / weight) : 1;
+            boolean isBamboo = compo.equals(WoodCompo.BAMBOO);
             if (weight < 3.1d) {
                 addPlankRecipe(jsonRecipes, compo, outputName, count);
-                addLogRecipe(jsonRecipes, compo, outputName, count * 4);
-            } else {
+                addLogRecipe(jsonRecipes, compo, outputName, count * (isBamboo ? 2 : 4));
+            } else if (!isBamboo) {
                 addLogRecipe(jsonRecipes, compo, outputName, count);
             }
         }
@@ -455,7 +460,10 @@ public class CommandWoodcutter {
                 ItemStack[] stacks = ingredient.getItems();
                 ItemStack stack = stacks[0];
                 final Predicate<Item> predicate;
-                if (this.logs.contains(stack.getItem())) {
+                if (stack.is(ItemTags.BAMBOO_BLOCKS)) {
+                    predicate = item -> Helper.isInTag(item, ItemTags.BAMBOO_BLOCKS);
+                    weight += 2d * stack.getCount();
+                } else if (this.logs.contains(stack.getItem())) {
                     predicate = this.logs::contains;
                     weight += 4d * stack.getCount();
                 } else if (this.plankToLog.containsKey(stack.getItem())) {
