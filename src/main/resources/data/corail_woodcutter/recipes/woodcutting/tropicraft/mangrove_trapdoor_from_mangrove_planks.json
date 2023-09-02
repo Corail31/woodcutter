@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"tropicraft"},{"type":"forge:item_exists","item":"tropicraft:mangrove_trapdoor"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"tropicraft:mangrove_planks"},"result":"tropicraft:mangrove_trapdoor","count":1}

@@ -469,6 +469,9 @@ public class CommandWoodcutter {
                 } else if (this.plankToLog.containsKey(stack.getItem())) {
                     predicate = this.plankToLog::containsKey;
                     weight += 1d * stack.getCount();
+                } else if (stack.is(Items.BAMBOO)) {
+                    predicate = item -> item == Items.BAMBOO;
+                    weight += 0.25d * stack.getCount();
                 } else if (stack.is(Tags.Items.RODS_WOODEN)) {
                     predicate = item -> Helper.isInTag(item, Tags.Items.RODS_WOODEN);
                     weight += 0.5d * stack.getCount();

@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"tropicraft"},{"type":"forge:item_exists","item":"tropicraft:palm_stairs"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"tropicraft:palm_logs"},"result":"tropicraft:palm_stairs","count":4}

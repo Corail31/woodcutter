@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"tropicraft"},{"type":"forge:item_exists","item":"tropicraft:bamboo_button"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"tropicraft:bamboo_bundle"},"result":"tropicraft:bamboo_button","count":1}

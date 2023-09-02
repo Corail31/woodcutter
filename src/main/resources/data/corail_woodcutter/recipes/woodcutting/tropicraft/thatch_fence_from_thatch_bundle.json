@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"tropicraft"},{"type":"forge:item_exists","item":"tropicraft:thatch_fence"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"tropicraft:thatch_bundle"},"result":"tropicraft:thatch_fence","count":1}

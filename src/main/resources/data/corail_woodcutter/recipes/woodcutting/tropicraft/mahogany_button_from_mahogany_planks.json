@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"tropicraft"},{"type":"forge:item_exists","item":"tropicraft:mahogany_button"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"tropicraft:mahogany_planks"},"result":"tropicraft:mahogany_button","count":1}

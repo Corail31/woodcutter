@@ -1,0 +1,1 @@
+{"conditions":[{"type":"forge:mod_loaded","modid":"tropicraft"},{"type":"forge:item_exists","item":"tropicraft:thatch_button"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"tropicraft:thatch_bundle"},"result":"tropicraft:thatch_button","count":1}
