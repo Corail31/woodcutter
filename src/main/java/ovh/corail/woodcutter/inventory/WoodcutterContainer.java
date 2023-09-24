@@ -14,6 +14,7 @@ import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.ItemHandlerHelper;
 import ovh.corail.woodcutter.helper.Helper;
@@ -30,7 +31,7 @@ public class WoodcutterContainer extends AbstractContainerMenu {
     private final ContainerLevelAccess access;
     private final DataSlot selectedRecipeIndex = DataSlot.standalone();
     private final Level level;
-    private List<WoodcuttingRecipe> recipes = new ArrayList<>();
+    private List<RecipeHolder<WoodcuttingRecipe>> recipes = new ArrayList<>();
     private ItemStack input = ItemStack.EMPTY;
     private long lastSoundTime;
     private final Slot inputSlot;
@@ -98,7 +99,7 @@ public class WoodcutterContainer extends AbstractContainerMenu {
         return this.selectedRecipeIndex.get();
     }
 
-    public List<WoodcuttingRecipe> getRecipes() {
+    public List<RecipeHolder<WoodcuttingRecipe>> getRecipes() {
         return this.recipes;
     }
 
@@ -145,10 +146,10 @@ public class WoodcutterContainer extends AbstractContainerMenu {
 
     private void setupResultSlot() {
         if (!this.recipes.isEmpty() && isValidRecipeIndex(this.selectedRecipeIndex.get())) {
-            WoodcuttingRecipe recipe = this.recipes.get(this.selectedRecipeIndex.get());
-            ItemStack stack = recipe.assemble(this.inputInventory, this.level.registryAccess());
+            RecipeHolder<WoodcuttingRecipe> recipeHolder = this.recipes.get(this.selectedRecipeIndex.get());
+            ItemStack stack = recipeHolder.value().assemble(this.inputInventory, this.level.registryAccess());
             if (stack.isItemEnabled(this.level.enabledFeatures())) {
-                this.resultContainer.setRecipeUsed(recipe);
+                this.resultContainer.setRecipeUsed(recipeHolder);
                 this.resultSlot.set(stack);
             } else {
                 this.resultSlot.set(ItemStack.EMPTY);

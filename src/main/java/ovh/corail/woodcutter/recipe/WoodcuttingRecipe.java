@@ -1,6 +1,5 @@
 package ovh.corail.woodcutter.recipe;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -12,8 +11,8 @@ import ovh.corail.woodcutter.registry.ModRecipeTypes;
 
 public class WoodcuttingRecipe extends SingleItemRecipe {
 
-    public WoodcuttingRecipe(ResourceLocation id, String group, Ingredient ingredient, ItemStack result) {
-        super(ModRecipeTypes.WOODCUTTING, ModRecipeSerializers.WOODCUTTING, id, group, ingredient, result);
+    public WoodcuttingRecipe(String group, Ingredient ingredient, ItemStack result) {
+        super(ModRecipeTypes.WOODCUTTING, ModRecipeSerializers.WOODCUTTING, group, ingredient, result);
     }
 
     @Override

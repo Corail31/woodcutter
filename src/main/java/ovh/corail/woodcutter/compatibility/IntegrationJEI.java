@@ -9,6 +9,7 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import ovh.corail.woodcutter.block.WoodcutterBlock;
 import ovh.corail.woodcutter.helper.Helper;
 import ovh.corail.woodcutter.recipe.WoodcuttingRecipe;
@@ -42,7 +43,7 @@ public class IntegrationJEI implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        Optional.ofNullable(Minecraft.getInstance().level).ifPresent(level -> registration.addRecipes(recipeType, level.getRecipeManager().byType(ModRecipeTypes.WOODCUTTING).values().stream().map(WoodcuttingRecipe.class::cast).sorted(Helper.RECIPE_COMPARATOR.apply(level)).collect(Collectors.toList())));
+        Optional.ofNullable(Minecraft.getInstance().level).ifPresent(level -> registration.addRecipes(recipeType, level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.WOODCUTTING).stream().sorted(Helper.RECIPE_COMPARATOR.apply(level)).map(RecipeHolder::value).map(WoodcuttingRecipe.class::cast).collect(Collectors.toList())));
     }
 
     @Override

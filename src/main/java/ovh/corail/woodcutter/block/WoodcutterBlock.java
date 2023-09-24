@@ -149,7 +149,7 @@ public class WoodcutterBlock extends HorizontalDirectionalBlock implements Bucke
     }
 
     @Override
-    public ItemStack pickupBlock(LevelAccessor levelAccessor, BlockPos pos, BlockState state) {
+    public ItemStack pickupBlock(@Nullable Player player, LevelAccessor levelAccessor, BlockPos pos, BlockState state) {
         if (state.getValue(WATERLOGGED)) {
             levelAccessor.setBlock(pos, state.setValue(WATERLOGGED, false), 3);
             return new ItemStack(Items.WATER_BUCKET);
@@ -163,7 +163,7 @@ public class WoodcutterBlock extends HorizontalDirectionalBlock implements Bucke
     }
 
     @Override
-    public boolean canPlaceLiquid(BlockGetter blockGetter, BlockPos pos, BlockState state, Fluid fluid) {
+    public boolean canPlaceLiquid(@Nullable Player player, BlockGetter blockGetter, BlockPos pos, BlockState state, Fluid fluid) {
         return !state.getValue(WATERLOGGED) && fluid == Fluids.WATER;
     }
 

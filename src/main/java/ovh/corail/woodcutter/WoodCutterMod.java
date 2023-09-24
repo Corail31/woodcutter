@@ -30,7 +30,7 @@ public class WoodCutterMod {
     }
 
     private void onServerStarting(ServerStartingEvent event) {
-        int count = event.getServer().overworld().getRecipeManager().byType(ModRecipeTypes.WOODCUTTING).size();
+        int count = event.getServer().overworld().getRecipeManager().getAllRecipesFor(ModRecipeTypes.WOODCUTTING).size();
         LOGGER.info(count + " woodcutting recipes loaded");
     }
 }

@@ -7,7 +7,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -31,18 +31,18 @@ public class Helper {
         ctx.getActiveContainer().addConfig(new CustomConfig(ConfigWoodcutter.GENERAL_SPEC, ctx.getActiveContainer()));
     }
 
-    public static List<WoodcuttingRecipe> getSortedMatchingRecipes(Level level, Container inventory) {
-        return level.getRecipeManager().byType(ModRecipeTypes.WOODCUTTING)
-                .values().stream()
-                .filter(recipe -> recipe.matches(inventory, level))
+    public static List<RecipeHolder<WoodcuttingRecipe>> getSortedMatchingRecipes(Level level, Container inventory) {
+        return level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.WOODCUTTING)
+                .stream()
+                .filter(recipe -> recipe.value().matches(inventory, level))
                 .sorted(RECIPE_COMPARATOR.apply(level))
                 .toList();
     }
 
-    public static final Function<Level, Comparator<Recipe<Container>>> RECIPE_COMPARATOR = level -> Comparator.<Recipe<Container>, String>comparing(recipe -> {
-        String[] name = getRegistryPath(recipe.getResultItem(level.registryAccess()).getItem()).split("_");
+    public static final Function<Level, Comparator<RecipeHolder<WoodcuttingRecipe>>> RECIPE_COMPARATOR = level -> Comparator.<RecipeHolder<WoodcuttingRecipe>, String>comparing(recipeHolder -> {
+        String[] name = getRegistryPath(recipeHolder.value().getResultItem(level.registryAccess()).getItem()).split("_");
         return name[name.length - 1];
-    }).thenComparing(recipe -> getRegistryName(recipe.getResultItem(level.registryAccess()).getItem()));
+    }).thenComparing(recipe -> getRegistryName(recipe.value().getResultItem(level.registryAccess()).getItem()));
 
     public static ResourceLocation getRegistryRL(ItemStack stack) {
         return getRegistryRL(stack.getItem());

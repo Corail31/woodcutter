@@ -2,7 +2,6 @@ package ovh.corail.woodcutter.item;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -20,7 +19,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 import ovh.corail.woodcutter.block.WoodcutterBlock;
 import ovh.corail.woodcutter.config.ConfigWoodcutter;
@@ -52,7 +50,7 @@ public class WoodcutterItem extends BlockItem {
         if (ConfigWoodcutter.general.openWoodcutterInInventory.get() && hand == InteractionHand.MAIN_HAND && player.isDiscrete()) {
             ItemStack heldItem = player.getItemInHand(hand);
             if (!world.isClientSide()) {
-                NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider((id, playerInventory, p) -> new WoodcutterContainer(id, playerInventory), WoodcutterBlock.TRANSLATION));
+                player.openMenu(new SimpleMenuProvider((id, playerInventory, p) -> new WoodcutterContainer(id, playerInventory), WoodcutterBlock.TRANSLATION));
             }
             return InteractionResultHolder.success(heldItem);
         }

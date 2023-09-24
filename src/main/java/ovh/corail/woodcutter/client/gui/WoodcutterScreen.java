@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import ovh.corail.woodcutter.inventory.WoodcutterContainer;
@@ -22,6 +23,11 @@ import java.util.List;
 @OnlyIn(Dist.CLIENT)
 public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContainer> {
     private static final ResourceLocation BG_LOCATION = new ResourceLocation("textures/gui/container/stonecutter.png");
+    private static final ResourceLocation SCROLLER_SPRITE = new ResourceLocation("container/stonecutter/scroller");
+    private static final ResourceLocation SCROLLER_DISABLED_SPRITE = new ResourceLocation("container/stonecutter/scroller_disabled");
+    private static final ResourceLocation RECIPE_SELECTED_SPRITE = new ResourceLocation("container/stonecutter/recipe_selected");
+    private static final ResourceLocation RECIPE_HIGHLIGHTED_SPRITE = new ResourceLocation("container/stonecutter/recipe_highlighted");
+    private static final ResourceLocation RECIPE_SPRITE = new ResourceLocation("container/stonecutter/recipe");
     private float scrollOffs;
     private boolean scrolling;
     private int startIndex;
@@ -41,12 +47,11 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
-        renderBackground(guiGraphics);
         int i = this.leftPos;
         int j = this.topPos;
         guiGraphics.blit(BG_LOCATION, i, j, 0, 0, this.imageWidth, this.imageHeight);
         int k = (int) (41f * this.scrollOffs);
-        guiGraphics.blit(BG_LOCATION, i + 119, j + 15 + k, 176 + (this.isScrollBarActive() ? 0 : 12), 0, 12, 15);
+        guiGraphics.blitSprite(isScrollBarActive() ? SCROLLER_SPRITE : SCROLLER_DISABLED_SPRITE, i + 119, j + 15 + k, 12, 15);
         int l = this.leftPos + 52;
         int i1 = this.topPos + 14;
         int j1 = this.startIndex + 12;
@@ -61,14 +66,14 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
             int i = this.leftPos + 52;
             int j = this.topPos + 14;
             int k = this.startIndex + 12;
-            List<WoodcuttingRecipe> list = this.menu.getRecipes();
+            List<RecipeHolder<WoodcuttingRecipe>> list = this.menu.getRecipes();
             for (int l = this.startIndex; l < k && l < this.menu.getNumRecipes(); ++l) {
                 int i1 = l - this.startIndex;
                 int j1 = i + i1 % 4 * 16;
                 int k1 = j + i1 / 4 * 18 + 2;
                 if (x >= j1 && x < j1 + 16 && y >= k1 && y < k1 + 18) {
                     assert  this.minecraft != null && this.minecraft.level != null;
-                    guiGraphics.renderTooltip(this.font, list.get(l).getResultItem(this.minecraft.level.registryAccess()), x, y);
+                    guiGraphics.renderTooltip(this.font, list.get(l).value().getResultItem(this.minecraft.level.registryAccess()), x, y);
                 }
             }
         }
@@ -80,25 +85,27 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
             int k = x + j % 4 * 16;
             int l = j / 4;
             int i1 = y + l * 18 + 2;
-            int j1 = this.imageHeight;
+            ResourceLocation rl;
             if (i == this.menu.getSelectedRecipeIndex()) {
-                j1 += 18;
+                rl = RECIPE_SELECTED_SPRITE;
             } else if (mouseX >= k && mouseY >= i1 && mouseX < k + 16 && mouseY < i1 + 18) {
-                j1 += 36;
+                rl = RECIPE_HIGHLIGHTED_SPRITE;
+            } else {
+                rl = RECIPE_SPRITE;
             }
-            guiGraphics.blit(BG_LOCATION, k, i1 - 1, 0, j1, 16, 18);
+            guiGraphics.blitSprite(rl, k, i1 - 1, 16, 18);
         }
     }
 
     private void renderRecipes(GuiGraphics guiGraphics, int x, int y, int scrollOffset) {
-        List<WoodcuttingRecipe> list = this.menu.getRecipes();
+        List<RecipeHolder<WoodcuttingRecipe>> list = this.menu.getRecipes();
         for (int i = this.startIndex; i < scrollOffset && i < this.menu.getNumRecipes(); ++i) {
             int j = i - this.startIndex;
             int k = x + j % 4 * 16;
             int l = j / 4;
             int i1 = y + l * 18 + 2;
             assert  this.minecraft != null && this.minecraft.level != null;
-            guiGraphics.renderItem(list.get(i).getResultItem(this.minecraft.level.registryAccess()), k, i1);
+            guiGraphics.renderItem(list.get(i).value().getResultItem(this.minecraft.level.registryAccess()), k, i1);
         }
     }
 
@@ -148,10 +155,10 @@ public class WoodcutterScreen extends AbstractContainerScreen<WoodcutterContaine
     }
 
     @Override
-    public boolean mouseScrolled(double p_mouseScrolled_1_, double p_mouseScrolled_3_, double p_mouseScrolled_5_) {
+    public boolean mouseScrolled(double p_99314_, double p_99315_, double p_99316_, double p_297300_) {
         if (isScrollBarActive()) {
             int i = getOffscreenRows();
-            float f = (float) p_mouseScrolled_5_ / (float) i;
+            float f = (float) p_297300_ / (float) i;
             this.scrollOffs = Mth.clamp(this.scrollOffs - f, 0f, 1f);
             this.startIndex = (int) ((double) (this.scrollOffs * (float) i) + 0.5d) * 4;
         }
