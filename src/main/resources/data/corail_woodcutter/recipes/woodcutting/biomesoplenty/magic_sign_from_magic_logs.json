@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:magic_sign"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:magic_logs"},"result":"biomesoplenty:magic_sign","count":4}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:magic_sign"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:magic_logs"},"result":"biomesoplenty:magic_sign","count":4}

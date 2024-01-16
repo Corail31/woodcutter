@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:redwood_boat"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:redwood_logs"},"result":"biomesoplenty:redwood_boat","count":1}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:redwood_boat"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:redwood_logs"},"result":"biomesoplenty:redwood_boat","count":1}

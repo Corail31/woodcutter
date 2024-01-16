@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:umbran_fence"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:umbran_planks"},"result":"biomesoplenty:umbran_fence","count":1}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:umbran_fence"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:umbran_planks"},"result":"biomesoplenty:umbran_fence","count":1}

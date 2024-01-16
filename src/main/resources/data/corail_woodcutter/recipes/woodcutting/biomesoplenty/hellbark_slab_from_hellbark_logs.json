@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:hellbark_slab"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:hellbark_logs"},"result":"biomesoplenty:hellbark_slab","count":8}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:hellbark_slab"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:hellbark_logs"},"result":"biomesoplenty:hellbark_slab","count":8}

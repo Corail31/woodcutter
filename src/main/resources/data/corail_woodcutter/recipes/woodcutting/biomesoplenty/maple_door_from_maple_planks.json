@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:maple_door"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:maple_planks"},"result":"biomesoplenty:maple_door","count":1}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:maple_door"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:maple_planks"},"result":"biomesoplenty:maple_door","count":1}

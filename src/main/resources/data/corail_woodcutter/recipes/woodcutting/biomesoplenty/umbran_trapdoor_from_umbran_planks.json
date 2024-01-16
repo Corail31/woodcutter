@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:umbran_trapdoor"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:umbran_planks"},"result":"biomesoplenty:umbran_trapdoor","count":1}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:umbran_trapdoor"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:umbran_planks"},"result":"biomesoplenty:umbran_trapdoor","count":1}

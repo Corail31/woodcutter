@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:jacaranda_sign"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:jacaranda_planks"},"result":"biomesoplenty:jacaranda_sign","count":1}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:jacaranda_sign"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:jacaranda_planks"},"result":"biomesoplenty:jacaranda_sign","count":1}

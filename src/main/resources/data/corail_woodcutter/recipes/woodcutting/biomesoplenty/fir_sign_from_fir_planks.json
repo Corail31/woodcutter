@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:fir_sign"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:fir_planks"},"result":"biomesoplenty:fir_sign","count":1}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:fir_sign"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:fir_planks"},"result":"biomesoplenty:fir_sign","count":1}

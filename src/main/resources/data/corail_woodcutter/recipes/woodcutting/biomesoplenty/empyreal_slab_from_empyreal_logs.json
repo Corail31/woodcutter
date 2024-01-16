@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:empyreal_slab"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:empyreal_logs"},"result":"biomesoplenty:empyreal_slab","count":8}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:empyreal_slab"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:empyreal_logs"},"result":"biomesoplenty:empyreal_slab","count":8}

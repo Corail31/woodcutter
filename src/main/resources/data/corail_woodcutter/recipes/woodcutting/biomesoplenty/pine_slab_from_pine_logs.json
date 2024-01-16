@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:pine_slab"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:pine_logs"},"result":"biomesoplenty:pine_slab","count":8}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:pine_slab"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:pine_logs"},"result":"biomesoplenty:pine_slab","count":8}

@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:palm_door"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:palm_planks"},"result":"biomesoplenty:palm_door","count":1}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:palm_door"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:palm_planks"},"result":"biomesoplenty:palm_door","count":1}

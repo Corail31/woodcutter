@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:maple_sign"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:maple_logs"},"result":"biomesoplenty:maple_sign","count":4}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:maple_sign"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:maple_logs"},"result":"biomesoplenty:maple_sign","count":4}

@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:pine_trapdoor"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:pine_planks"},"result":"biomesoplenty:pine_trapdoor","count":1}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:pine_trapdoor"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:pine_planks"},"result":"biomesoplenty:pine_trapdoor","count":1}

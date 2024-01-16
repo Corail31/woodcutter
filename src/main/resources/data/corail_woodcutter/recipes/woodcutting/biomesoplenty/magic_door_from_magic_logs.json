@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:magic_door"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:magic_logs"},"result":"biomesoplenty:magic_door","count":4}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:magic_door"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:magic_logs"},"result":"biomesoplenty:magic_door","count":4}

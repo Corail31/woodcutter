@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:willow_fence"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:willow_planks"},"result":"biomesoplenty:willow_fence","count":1}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:willow_fence"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:willow_planks"},"result":"biomesoplenty:willow_fence","count":1}

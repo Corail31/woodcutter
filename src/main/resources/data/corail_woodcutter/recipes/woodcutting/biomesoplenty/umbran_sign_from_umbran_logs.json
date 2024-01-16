@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:umbran_sign"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:umbran_logs"},"result":"biomesoplenty:umbran_sign","count":4}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:umbran_sign"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:umbran_logs"},"result":"biomesoplenty:umbran_sign","count":4}

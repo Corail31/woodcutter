@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:fir_stairs"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:fir_logs"},"result":"biomesoplenty:fir_stairs","count":4}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:fir_stairs"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:fir_logs"},"result":"biomesoplenty:fir_stairs","count":4}

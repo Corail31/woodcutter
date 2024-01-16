@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:mahogany_slab"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:mahogany_planks"},"result":"biomesoplenty:mahogany_slab","count":2}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:mahogany_slab"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:mahogany_planks"},"result":"biomesoplenty:mahogany_slab","count":2}

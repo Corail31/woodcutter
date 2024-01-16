@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:jacaranda_door"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:jacaranda_logs"},"result":"biomesoplenty:jacaranda_door","count":4}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:jacaranda_door"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:jacaranda_logs"},"result":"biomesoplenty:jacaranda_door","count":4}

@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:hellbark_trapdoor"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:hellbark_logs"},"result":"biomesoplenty:hellbark_trapdoor","count":4}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:hellbark_trapdoor"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:hellbark_logs"},"result":"biomesoplenty:hellbark_trapdoor","count":4}

@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:empyreal_sign"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:empyreal_planks"},"result":"biomesoplenty:empyreal_sign","count":1}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:empyreal_sign"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:empyreal_planks"},"result":"biomesoplenty:empyreal_sign","count":1}

@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:dead_boat"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:dead_logs"},"result":"biomesoplenty:dead_boat","count":1}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:dead_boat"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:dead_logs"},"result":"biomesoplenty:dead_boat","count":1}

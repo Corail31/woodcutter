@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:pine_sign"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:pine_logs"},"result":"biomesoplenty:pine_sign","count":4}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:pine_sign"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:pine_logs"},"result":"biomesoplenty:pine_sign","count":4}

@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:maple_slab"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:maple_logs"},"result":"biomesoplenty:maple_slab","count":8}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:maple_slab"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:maple_logs"},"result":"biomesoplenty:maple_slab","count":8}

@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:dead_fence"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:dead_planks"},"result":"biomesoplenty:dead_fence","count":1}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:dead_fence"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:dead_planks"},"result":"biomesoplenty:dead_fence","count":1}

@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:maple_boat"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:maple_logs"},"result":"biomesoplenty:maple_boat","count":1}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:maple_boat"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:maple_logs"},"result":"biomesoplenty:maple_boat","count":1}

@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:willow_trapdoor"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:willow_logs"},"result":"biomesoplenty:willow_trapdoor","count":4}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:willow_trapdoor"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:willow_logs"},"result":"biomesoplenty:willow_trapdoor","count":4}

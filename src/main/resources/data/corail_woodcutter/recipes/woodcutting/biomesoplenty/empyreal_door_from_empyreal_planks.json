@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:empyreal_door"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:empyreal_planks"},"result":"biomesoplenty:empyreal_door","count":1}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:empyreal_door"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:empyreal_planks"},"result":"biomesoplenty:empyreal_door","count":1}

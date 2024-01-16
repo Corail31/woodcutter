@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:fir_trapdoor"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:fir_logs"},"result":"biomesoplenty:fir_trapdoor","count":4}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:fir_trapdoor"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:fir_logs"},"result":"biomesoplenty:fir_trapdoor","count":4}

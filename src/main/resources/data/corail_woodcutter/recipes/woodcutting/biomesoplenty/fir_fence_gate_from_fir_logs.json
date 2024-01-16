@@ -1,1 +1,1 @@
-{"conditions":{"type":"item_exists","modid":"biomesoplenty:fir_fence_gate"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:fir_logs"},"result":"biomesoplenty:fir_fence_gate","count":1}
+{"conditions":{"type":"item_exists","item":"biomesoplenty:fir_fence_gate"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:fir_logs"},"result":"biomesoplenty:fir_fence_gate","count":1}
