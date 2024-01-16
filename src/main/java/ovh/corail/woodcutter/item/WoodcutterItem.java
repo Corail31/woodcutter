@@ -14,7 +14,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -22,6 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.Nullable;
 import ovh.corail.woodcutter.block.WoodcutterBlock;
 import ovh.corail.woodcutter.config.ConfigWoodcutter;
+import ovh.corail.woodcutter.helper.Helper;
 import ovh.corail.woodcutter.inventory.WoodcutterContainer;
 import ovh.corail.woodcutter.registry.ModBlocks;
 
@@ -59,7 +59,7 @@ public class WoodcutterItem extends BlockItem {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        if (context.getPlayer() != null && !(context.getPlayer() instanceof FakePlayer) && context.getHand() == InteractionHand.MAIN_HAND && context.getPlayer().isDiscrete()) {
+        if (Helper.isValidPlayer(context.getPlayer()) && context.getHand() == InteractionHand.MAIN_HAND && context.getPlayer().isDiscrete()) {
             return use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
         }
         return super.useOn(context);
@@ -67,7 +67,7 @@ public class WoodcutterItem extends BlockItem {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onPlayerInteractEntity(PlayerInteractEvent.EntityInteract event) {
-        if (ConfigWoodcutter.general.openWoodcutterInInventory.get() && event.getEntity() != null && !(event.getEntity() instanceof FakePlayer) && event.getEntity().isDiscrete()) {
+        if (ConfigWoodcutter.general.openWoodcutterInInventory.get() && Helper.isValidPlayer(event.getEntity()) && event.getEntity().isDiscrete()) {
             ItemStack heldStack = event.getEntity().getItemInHand(event.getHand());
             /* prevents to interact with entities based on the held item */
             if (ModBlocks.WOODCUTTER_ITEMS.contains(heldStack.getItem())) {

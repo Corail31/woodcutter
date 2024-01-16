@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:redwood_door"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:redwood_logs"},"result":"biomesoplenty:redwood_door","count":4}
+{"conditions":{"type":"item_exists","modid":"biomesoplenty:redwood_door"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:redwood_logs"},"result":"biomesoplenty:redwood_door","count":4}

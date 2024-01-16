@@ -1,5 +1,6 @@
 package ovh.corail.woodcutter.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -182,5 +183,10 @@ public class WoodcutterBlock extends HorizontalDirectionalBlock implements Bucke
     @Override
     public boolean propagatesSkylightDown(BlockState state, BlockGetter blockGetter, BlockPos pos) {
         return true;
+    }
+
+    @Override
+    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+        return null;
     }
 }

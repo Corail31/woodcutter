@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:mahogany_door"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:mahogany_planks"},"result":"biomesoplenty:mahogany_door","count":1}
+{"conditions":{"type":"item_exists","modid":"biomesoplenty:mahogany_door"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:mahogany_planks"},"result":"biomesoplenty:mahogany_door","count":1}

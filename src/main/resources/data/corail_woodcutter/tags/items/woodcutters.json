@@ -45,6 +45,18 @@
     {
       "id": "corail_woodcutter:bop_willow_woodcutter",
       "required": false
+    },
+    {
+      "id": "corail_woodcutter:bop_pine_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:bop_maple_woodcutter",
+      "required": false
+    },
+    {
+      "id": "corail_woodcutter:bop_empyreal_woodcutter",
+      "required": false
     }
   ]
 }

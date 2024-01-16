@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:willow_sign"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:willow_planks"},"result":"biomesoplenty:willow_sign","count":1}
+{"conditions":{"type":"item_exists","modid":"biomesoplenty:willow_sign"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:willow_planks"},"result":"biomesoplenty:willow_sign","count":1}

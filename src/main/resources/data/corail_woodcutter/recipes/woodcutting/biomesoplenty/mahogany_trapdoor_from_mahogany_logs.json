@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:mahogany_trapdoor"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:mahogany_logs"},"result":"biomesoplenty:mahogany_trapdoor","count":4}
+{"conditions":{"type":"item_exists","modid":"biomesoplenty:mahogany_trapdoor"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:mahogany_logs"},"result":"biomesoplenty:mahogany_trapdoor","count":4}

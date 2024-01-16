@@ -1,0 +1,1 @@
+{"conditions":{"type":"item_exists","modid":"biomesoplenty:empyreal_button"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:empyreal_logs"},"result":"biomesoplenty:empyreal_button","count":4}

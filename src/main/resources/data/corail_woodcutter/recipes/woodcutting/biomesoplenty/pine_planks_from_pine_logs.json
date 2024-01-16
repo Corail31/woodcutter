@@ -1,0 +1,1 @@
+{"conditions":{"type":"item_exists","modid":"biomesoplenty:pine_planks"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:pine_logs"},"result":"biomesoplenty:pine_planks","count":4}

@@ -1,0 +1,1 @@
+{"conditions":{"type":"item_exists","modid":"biomesoplenty:maple_door"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:maple_logs"},"result":"biomesoplenty:maple_door","count":4}

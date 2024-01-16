@@ -14,8 +14,8 @@ class WoodcuttingJsonRecipe {
     }
 
     static class Ingredient {
-        String item;
-        String tag;
+        public String item;
+        public String tag;
 
         Ingredient(String name, boolean isTag) {
             if (isTag) {
@@ -36,8 +36,8 @@ class WoodcuttingJsonRecipe {
     }
 
     static class ConditionMod implements Conditions {
-        final String type = "forge:mod_loaded";
-        final String modid;
+        public final String type = "forge:mod_loaded";
+        public final String modid;
 
         ConditionMod(String modid) {
             this.modid = modid;

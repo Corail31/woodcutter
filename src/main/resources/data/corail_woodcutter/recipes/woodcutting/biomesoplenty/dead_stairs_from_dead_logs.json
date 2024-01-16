@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:dead_stairs"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:dead_logs"},"result":"biomesoplenty:dead_stairs","count":4}
+{"conditions":{"type":"item_exists","modid":"biomesoplenty:dead_stairs"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:dead_logs"},"result":"biomesoplenty:dead_stairs","count":4}

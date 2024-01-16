@@ -8,9 +8,9 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import net.minecraft.commands.CommandRuntimeException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
@@ -105,7 +105,7 @@ public class CommandWoodcutter {
         return 1;
     }
 
-    private int applyDataPack(CommandContext<CommandSourceStack> context) {
+    private int applyDataPack(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         // copy the generated datapack in the datapack folder
         String modid = StringArgumentType.getString(context, MODID_PARAM);
         if (INVALID_MODID.test(modid)) {
@@ -134,7 +134,7 @@ public class CommandWoodcutter {
         throw LangKey.DATAPACK_APPLY_FAIL.asCommandException(LangKey.FILE_COPY_FAIL.getText(destination.getAbsolutePath()));
     }
 
-    private int removeDataPack(CommandContext<CommandSourceStack> context) {
+    private int removeDataPack(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         // delete the datapack from the datapack folder
         String modid = StringArgumentType.getString(context, MODID_PARAM);
         if (INVALID_MODID.test(modid)) {
@@ -152,7 +152,7 @@ public class CommandWoodcutter {
         return 1;
     }
 
-    private int generateDataPack(CommandContext<CommandSourceStack> context) {
+    private int generateDataPack(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         // try to determine the existing wooden recipes, then generate these recipes in the woodcutter format in the config folder and finalize that folder in a zip
         String modid = StringArgumentType.getString(context, MODID_PARAM);
         if (INVALID_MODID.test(modid)) {
@@ -182,7 +182,7 @@ public class CommandWoodcutter {
             if (file.exists() && !file.delete()) {
                 throw LangKey.DATAPACK_GENERATE_FAIL.asCommandException(LangKey.FILE_DELETE_FAIL.getText(file.getAbsolutePath()));
             }
-            if (!toFile(file, entry.getValue().withConditions(new ConditionMod(modid), new ConditionMod(MOD_ID), new ConditionItem(entry.getValue().result)))) {
+            if (!generateJson(file, entry.getValue().withConditions(new ConditionItem(entry.getValue().result), new ConditionMod(modid), new ConditionMod(MOD_ID)))) {
                 throw LangKey.DATAPACK_GENERATE_FAIL.asCommandException(LangKey.FILE_WRITE_FAIL.getText(file.getAbsolutePath()));
             }
         }
@@ -384,11 +384,35 @@ public class CommandWoodcutter {
         server.reloadResources(selectedPackIds);
     }
 
-    private <T> boolean toFile(File file, T object) {
+    private boolean generateJson(File file, WoodcuttingJsonRecipe jsonRecipe) {
+        JsonObject json = new JsonObject();
+
+        JsonObject data = new JsonObject();
+        data.addProperty("type", "item_exists"); // TODO multiple conditions
+        data.addProperty("modid", ((ConditionItem) jsonRecipe.conditions[0]).item);
+        json.add("conditions", data);
+
+        json.addProperty("type", jsonRecipe.type);
+
+        JsonObject ingredient = new JsonObject();
+        if (jsonRecipe.ingredient.tag == null) {
+            ingredient.addProperty("item", jsonRecipe.ingredient.item);
+        } else {
+            ingredient.addProperty("tag", jsonRecipe.ingredient.tag);
+        }
+        json.add("ingredient", ingredient);
+
+        json.addProperty("result", jsonRecipe.result);
+        json.addProperty("count", jsonRecipe.count);
+        return toFile(file, json);
+    }
+
+    private <T> boolean toFile(File file, JsonObject jsonObject) {
         try (FileWriter fw = new FileWriter(file, StandardCharsets.UTF_8)) {
-            fw.write(GSON.toJson(object));
+            fw.write(GSON.toJson(jsonObject));
             return true;
         } catch (IOException e) {
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
         return false;
@@ -496,14 +520,14 @@ public class CommandWoodcutter {
         return weight / (double) recipe.getResultItem(registryAccess).getCount();
     }
 
-    private int testRecipe(CommandContext<CommandSourceStack> context) {
+    private int testRecipe(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         RegistryAccess registryAccess = context.getSource().registryAccess();
         initPlanksToLogs(context.getSource().getServer(), registryAccess);
         ResourceLocation recipeRL = ResourceLocationArgument.getId(context, RECIPE_PARAM);
-        RecipeHolder<CraftingRecipe> recipe = context.getSource().getServer().getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING).stream().filter(r -> r.id().equals(recipeRL)).findFirst().orElseThrow(() -> new CommandRuntimeException(Component.literal("[" + recipeRL + "] is not a crafting recipe")));
+        RecipeHolder<CraftingRecipe> recipe = context.getSource().getServer().getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING).stream().filter(r -> r.id().equals(recipeRL)).findFirst().orElseThrow(() -> LangKey.asStringCommandException(String.format("[ %s ] is not a crafting recipe", recipeRL)));
         final Map<String, WoodcuttingJsonRecipe> recipes = getJsonRecipes(Collections.singleton(recipe), registryAccess);
         if (recipes.isEmpty()) {
-            throw new CommandRuntimeException(Component.literal("[" + recipeRL + "] is not a wood recipe"));
+            throw LangKey.asStringCommandException(String.format("[ %s ] is not a wood recipe", recipeRL));
         }
         boolean genericTag = false;
         for (Map.Entry<String, WoodcuttingJsonRecipe> entry : recipes.entrySet()) {

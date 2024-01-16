@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:palm_sign"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:palm_logs"},"result":"biomesoplenty:palm_sign","count":4}
+{"conditions":{"type":"item_exists","modid":"biomesoplenty:palm_sign"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:palm_logs"},"result":"biomesoplenty:palm_sign","count":4}

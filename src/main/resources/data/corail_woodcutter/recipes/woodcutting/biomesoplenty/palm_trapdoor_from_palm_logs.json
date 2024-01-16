@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:palm_trapdoor"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:palm_logs"},"result":"biomesoplenty:palm_trapdoor","count":4}
+{"conditions":{"type":"item_exists","modid":"biomesoplenty:palm_trapdoor"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:palm_logs"},"result":"biomesoplenty:palm_trapdoor","count":4}

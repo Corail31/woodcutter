@@ -1,6 +1,7 @@
 package ovh.corail.woodcutter.helper;
 
-import net.minecraft.commands.CommandRuntimeException;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.minecraft.network.chat.Component;
 
 import static ovh.corail.woodcutter.WoodCutterMod.MOD_ID;
@@ -38,7 +39,11 @@ public enum LangKey {
         return Component.translatable(this.getKey(), args);
     }
 
-    public CommandRuntimeException asCommandException(Object... args) {
-        return new CommandRuntimeException(getText(args));
+    public CommandSyntaxException asCommandException(Object... args) {
+        return new SimpleCommandExceptionType(getText(args)).create();
+    }
+
+    public static CommandSyntaxException asStringCommandException(String text) {
+        return new SimpleCommandExceptionType(Component.literal(text)).create();
     }
 }

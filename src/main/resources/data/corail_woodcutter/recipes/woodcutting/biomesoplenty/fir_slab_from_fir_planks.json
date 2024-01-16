@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:fir_slab"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:fir_planks"},"result":"biomesoplenty:fir_slab","count":2}
+{"conditions":{"type":"item_exists","modid":"biomesoplenty:fir_slab"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:fir_planks"},"result":"biomesoplenty:fir_slab","count":2}

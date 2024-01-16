@@ -1,0 +1,1 @@
+{"advancements":[{"parent":"minecraft:recipes/root","criteria":{"has_planks":{"conditions":{"items":[{"items":["biomesoplenty:maple_planks"]}]},"trigger":"minecraft:inventory_changed"}},"forge:condition":{"type":"forge:item_exists","item":"biomesoplenty:maple_planks"},"requirements":[["has_planks"]],"rewards":{"recipes":["corail_woodcutter:bop_maple_woodcutter"]}}]}

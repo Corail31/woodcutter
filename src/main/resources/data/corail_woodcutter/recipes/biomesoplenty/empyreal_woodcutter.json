@@ -1,0 +1,1 @@
+{"type":"forge:conditional","forge:condition":{"type":"forge:item_exists","item":"biomesoplenty:empyreal_planks"},"recipes":[{"type":"minecraft:crafting_shaped","category":"woodcutter","key":{"0":{"item":"biomesoplenty:empyreal_planks"},"1":{"tag": "forge:ingots/iron"}},"pattern":[" 1 ","000"],"result":{"item":"corail_woodcutter:bop_empyreal_woodcutter"}}]}

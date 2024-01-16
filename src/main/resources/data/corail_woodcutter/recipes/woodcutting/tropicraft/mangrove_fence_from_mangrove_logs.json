@@ -1,1 +1,0 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"tropicraft"},{"type":"forge:item_exists","item":"tropicraft:mangrove_fence"}],"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"tropicraft:mangrove_logs"},"result":"tropicraft:mangrove_fence","count":4}

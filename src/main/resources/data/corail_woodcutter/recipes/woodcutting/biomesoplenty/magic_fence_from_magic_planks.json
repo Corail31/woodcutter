@@ -1,1 +1,1 @@
-{"conditions":[{"type":"forge:mod_loaded","modid":"biomesoplenty"},{"type":"forge:item_exists","item":"biomesoplenty:magic_fence"}],"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:magic_planks"},"result":"biomesoplenty:magic_fence","count":1}
+{"conditions":{"type":"item_exists","modid":"biomesoplenty:magic_fence"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:magic_planks"},"result":"biomesoplenty:magic_fence","count":1}

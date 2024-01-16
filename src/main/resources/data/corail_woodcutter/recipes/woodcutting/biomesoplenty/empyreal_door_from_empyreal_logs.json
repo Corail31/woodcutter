@@ -1,0 +1,1 @@
+{"conditions":{"type":"item_exists","modid":"biomesoplenty:empyreal_door"},"type":"corail_woodcutter:woodcutting","ingredient":{"tag":"biomesoplenty:empyreal_logs"},"result":"biomesoplenty:empyreal_door","count":4}

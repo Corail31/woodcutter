@@ -1,0 +1,1 @@
+{"conditions":{"type":"item_exists","modid":"biomesoplenty:maple_fence"},"type":"corail_woodcutter:woodcutting","ingredient":{"item":"biomesoplenty:maple_planks"},"result":"biomesoplenty:maple_fence","count":1}
