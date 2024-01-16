@@ -389,7 +389,7 @@ public class CommandWoodcutter {
 
         JsonObject data = new JsonObject();
         data.addProperty("type", "item_exists"); // TODO multiple conditions
-        data.addProperty("modid", ((ConditionItem) jsonRecipe.conditions[0]).item);
+        data.addProperty("item", ((ConditionItem) jsonRecipe.conditions[0]).item);
         json.add("conditions", data);
 
         json.addProperty("type", jsonRecipe.type);
